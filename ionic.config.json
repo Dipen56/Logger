@@ -1,7 +1,0 @@
-{
-  "name": "blank-tabs",
-  "integrations": {
-    "cordova": {}
-  },
-  "type": "ionic-angular"
-}
