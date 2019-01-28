@@ -4,17 +4,12 @@ import { Routes, RouterModule } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'home',
+    redirectTo: 'log_info_page',
     pathMatch: 'full'
   },
-  {
-    path: 'home',
-    loadChildren: './home/home.module#HomePageModule'
-  },
-  {
-    path: 'list',
-    loadChildren: './list/list.module#ListPageModule'
-  }
+  { path: 'log-info-page', loadChildren: './log-info-page/log-info-page.module#LogInfoPagePageModule' },
+  { path: 'view-logs-page', loadChildren: './view-logs-page/view-logs-page.module#ViewLogsPagePageModule' },
+  { path: 'settings-page', loadChildren: './settings-page/settings-page.module#SettingsPagePageModule' }
 ];
 
 @NgModule({
