@@ -9,19 +9,20 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
     templateUrl: 'app.component.html'
 })
 export class AppComponent {
+    // these are the pages that gets loaded in teh menu
     public appPages = [
         {
-            title: 'Log Information',
-            url: '/log_info_page'
+            title: 'Subscribe',
+            url: '/log-info-page'
         },
         {
             title: 'View Logs',
-            url: '/view_logs_page'
+            url: '/view-logs-page'
         },
         {
             title: 'Settings',
-            url: '/settings_page',
-            icon: 'setting'
+            url: '/settings-page',
+            icon: 'settings'
         }
     ];
 
