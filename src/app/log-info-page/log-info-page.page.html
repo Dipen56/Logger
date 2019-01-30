@@ -8,5 +8,32 @@
 </ion-header>
 
 <ion-content padding>
-
+    <ion-item>
+       <ion-label>{{title}}</ion-label>
+    </ion-item>
+    <ion-item>
+        <ion-label position="floating">Full Name *</ion-label>
+        <ion-input required [(ngModel)]="fullName"></ion-input>
+    </ion-item>
+    <ion-item>
+        <ion-label position="floating">Email Address *</ion-label>
+        <ion-input required [(ngModel)]="email"></ion-input>
+    </ion-item>
+    <ion-item>
+        <ion-label position="floating" >Home Number</ion-label>
+        <ion-input type="number" [(ngModel)]="homeNumber" ></ion-input>
+    </ion-item>
+    <ion-item>
+        <ion-label position="floating">Work Number</ion-label>
+        <ion-input type="number" [()]></ion-input>
+    </ion-item>
+    <ion-item>
+        <ion-label position="floating" type="number">Mobile Number</ion-label>
+        <ion-input></ion-input>
+    </ion-item>
+    <ion-item>
+        <ion-label position="floating">Additional Information</ion-label>
+        <ion-textarea></ion-textarea>
+    </ion-item>
+    <ion-button color="primary" (click)="subscribe()">Subscribe</ion-button>
 </ion-content>
