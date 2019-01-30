@@ -9,10 +9,16 @@ export class LogInfoPagePage implements OnInit {
     title: any = 'Enter details here...';
     fullName: string;
     email: any;
+    homeNumber: number;
+    workNumber: number;
+    mobileNumber: number;
+    additionalInfo: any;
     constructor() {     }
 
     ngOnInit() {
     }
-    subscribe(){    }
+    subscribe(){
+      
+    }
 
 }
