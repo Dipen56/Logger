@@ -1,5 +1,7 @@
 {
   "name": "LoggerApp",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }

@@ -8,5 +8,13 @@
 </ion-header>
 
 <ion-content padding>
+    <ion-item (click)="goToLogDetailPage(log.email)" detail *ngFor="let log of logs">
+        <ion-label>
+            {{log.fullName}}
+        </ion-label>
+        <ion-label>
+            {{log.date}}
+        </ion-label>
 
+    </ion-item>
 </ion-content>

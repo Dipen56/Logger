@@ -6,12 +6,17 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { ViewLogsPagePage } from './view-logs-page.page';
+import { LogDetailPageComponent } from './log-detail-page/log-detail-page.component';
 
 const routes: Routes = [
   {
     path: '',
     component: ViewLogsPagePage
-  }
+  },
+    {
+      path: ':id',
+        component: LogDetailPageComponent
+    }
 ];
 
 @NgModule({
@@ -21,6 +26,6 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [ViewLogsPagePage]
+  declarations: [ViewLogsPagePage, LogDetailPageComponent]
 })
 export class ViewLogsPagePageModule {}
