@@ -1,20 +1,33 @@
 <ion-header>
-  <ion-toolbar>
-      <ion-buttons slot="start">
-          <ion-menu-button></ion-menu-button>
-      </ion-buttons>
-    <ion-title>View Logs</ion-title>
-  </ion-toolbar>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+        <ion-title>View Logs</ion-title>
+    </ion-toolbar>
 </ion-header>
 
 <ion-content padding>
-    <ion-item (click)="goToLogDetailPage(log.email)" detail *ngFor="let log of logs">
-        <ion-label>
-            {{log.fullName}}
-        </ion-label>
-        <ion-label>
-            {{log.date}}
-        </ion-label>
-
-    </ion-item>
+    <div *ngIf="!isSelectMode; else selectModeBlock">
+        <ion-item (press)="pressEvent(log.email)" (click)="goToLogDetailPage(log.email)" detail *ngFor="let log of logs">
+            <ion-checkbox [hidden]="isHidden"  slot="start"></ion-checkbox>
+            <ion-label>
+                {{log.fullName}}
+            </ion-label>
+            <ion-label>
+                {{log.date}}
+            </ion-label>
+        </ion-item>
+    </div>
+    <ng-template #selectModeBlock>
+        <ion-item detail *ngFor="let log of logs">
+            <ion-checkbox (click)="addSelectedLog(log.email)" [hidden]="isHidden" [checked]="false"  slot="start"></ion-checkbox>
+            <ion-label>
+                {{log.fullName}}
+            </ion-label>
+            <ion-label>
+                {{log.date}}
+            </ion-label>
+        </ion-item>
+    </ng-template>
 </ion-content>
