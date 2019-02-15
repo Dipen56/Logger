@@ -56,7 +56,6 @@ export class ViewLogsPagePage implements OnInit {
         } else {
             this.selcetedLogs.push(key);
         }
-        console.log(this.selcetedLogs);
     }
     // this not workign yet
     selectALl(){
@@ -65,6 +64,7 @@ export class ViewLogsPagePage implements OnInit {
         } else {
             this.isChecked = false;
         }
+
         this.events.publish('updateScreen');
     }
     deleteLog(){

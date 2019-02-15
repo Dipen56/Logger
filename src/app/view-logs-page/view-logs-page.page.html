@@ -24,7 +24,7 @@
 <ion-content padding>
     <div *ngIf="!isSelectMode; else selectModeBlockBody">
         <ion-item (press)="pressEvent(log.email)" (click)="goToLogDetailPage(log.email)" detail *ngFor="let log of logs">
-            <ion-checkbox [hidden]="isHidden" slot="start"></ion-checkbox>
+
             <ion-label>
                 {{log.fullName}}
             </ion-label>
@@ -35,7 +35,7 @@
     </div>
     <ng-template #selectModeBlockBody>
         <ion-item detail *ngFor="let log of logs">
-            <ion-checkbox (click)="addSelectedLog(log.email)" [hidden]="isHidden" [checked]="false"  slot="start"></ion-checkbox>
+            <ion-checkbox  (click)="addSelectedLog(log.email)" [hidden]="isHidden" [checked]="isChecked"  slot="start"></ion-checkbox>
             <ion-label>
                 {{log.fullName}}
             </ion-label>
