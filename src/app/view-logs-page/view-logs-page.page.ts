@@ -13,12 +13,13 @@ export class ViewLogsPagePage implements OnInit {
     isSelectMode = false;
     isHidden= true;
     selcetedLogs = [];
+    isChecked = false;
     constructor(private storage: Storage, private router: Router,
                 private events: Events, private zone: NgZone) {
         // used to refresh the screen.
         this.events.subscribe('updateScreen', () => {
-            this.zone.run(() => {
 
+            this.zone.run(() => {
                 console.log('force update the screen');
             });
         });
@@ -32,6 +33,7 @@ export class ViewLogsPagePage implements OnInit {
         }
     }
     loadAllLogs() {
+        this.logs = [];
         this.storage.forEach((value, key, index) => {
             this.logs.push(value);
             console.log(value);
@@ -56,4 +58,25 @@ export class ViewLogsPagePage implements OnInit {
         }
         console.log(this.selcetedLogs);
     }
+    // this not workign yet
+    selectALl(){
+        if(!this.isChecked) {
+            this.isChecked = true;
+        } else {
+            this.isChecked = false;
+        }
+        this.events.publish('updateScreen');
+    }
+    deleteLog(){
+        let count = 0;
+        if(this.selcetedLogs.length != 0) {
+            for(let log of this.selcetedLogs){
+                this.storage.remove(log);
+                count++;
+            }
+        }
+        this.loadAllLogs();
+        this.events.publish('updateScreen');
+    }
+
 }
