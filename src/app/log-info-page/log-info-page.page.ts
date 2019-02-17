@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import {NavigationEnd, Router} from '@angular/router';
 import {NavController} from '@ionic/angular';
+import { ToastController} from '@ionic/angular';
 
 @Component({
     selector: 'app-log-info-page',
@@ -16,7 +17,8 @@ export class LogInfoPagePage implements OnInit {
     workNumber: number;
     mobileNumber: number;
     additionalInfo: any;
-    constructor(private storage: Storage, private router: Router, private navController: NavController) { }
+    constructor(private storage: Storage, private router: Router,
+                private navController: NavController, private toastController: ToastController) { }
 
     ngOnInit() {
     }
@@ -32,8 +34,16 @@ export class LogInfoPagePage implements OnInit {
             additionalInfo: this.additionalInfo,
             date: date,
         };
-      this.storage.set(this.email, data);
-      this.clearInput();
+        this.storage.get(this.email).then((val) => {
+
+            if(val == null){
+                this.storage.set(this.email, data).then((val) =>{
+                    this.clearInput();
+                });
+            } else {
+                this.presentToastUnsuccessful(this.email);
+            }
+        });
     }
     /* Testing code for storage*/
     printAll(email) {
@@ -56,5 +66,20 @@ export class LogInfoPagePage implements OnInit {
         this.workNumber = null;
         this.homeNumber = null;
         this.additionalInfo = '';
+        this.presentToast();
+    }
+    async presentToast() {
+        const toast = await this.toastController.create({
+            message: 'Successful your subscription have been saved.',
+            duration: 1500
+        });
+        toast.present();
+    }
+    async presentToastUnsuccessful(val) {
+        const toast = await this.toastController.create({
+            message: 'Unsuccessful subscription for email "' + val + '" exists.',
+            duration: 1500
+        });
+        toast.present();
     }
 }
