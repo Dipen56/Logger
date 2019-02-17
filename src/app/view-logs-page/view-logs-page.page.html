@@ -11,11 +11,14 @@
         <ion-toolbar>
             <ion-checkbox [hidden]="isHidden" (click)="selectALl()" ></ion-checkbox>
             <ion-title>View Logs</ion-title>
-            <ion-buttons slot="end" (click)="deleteLog()">
+            <ion-buttons slot="end" (click)="deleteAllLogsAlert()">
                 <ion-icon slot="icon-only" name="trash"></ion-icon>
             </ion-buttons>
             <ion-buttons slot="end">
                 <ion-icon slot="icon-only" name="mail"></ion-icon>
+            </ion-buttons>
+            <ion-buttons slot="end" (click)="exitSelectAll()">
+                <ion-icon slot="icon-only" name="exit"></ion-icon>
             </ion-buttons>
         </ion-toolbar>
     </ng-template>

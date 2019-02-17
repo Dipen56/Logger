@@ -1,7 +1,8 @@
 import { Component, OnInit, NgZone } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import {Router} from '@angular/router';
-import {Events} from '@ionic/angular';
+import {Events, AlertController, PopoverController} from '@ionic/angular';
+
 
 @Component({
     selector: 'app-view-logs-page',
@@ -15,7 +16,8 @@ export class ViewLogsPagePage implements OnInit {
     selcetedLogs = [];
     isChecked = false;
     constructor(private storage: Storage, private router: Router,
-                private events: Events, private zone: NgZone) {
+                private events: Events, private zone: NgZone,
+                private alertController: AlertController) {
         // used to refresh the screen.
         this.events.subscribe('updateScreen', () => {
 
@@ -36,7 +38,6 @@ export class ViewLogsPagePage implements OnInit {
         this.logs = [];
         this.storage.forEach((value, key, index) => {
             this.logs.push(value);
-            console.log(value);
         });
     }
     clearAllValue() {
@@ -56,27 +57,68 @@ export class ViewLogsPagePage implements OnInit {
         } else {
             this.selcetedLogs.push(key);
         }
+        console.log(this.selcetedLogs);
     }
     // this not workign yet
     selectALl(){
         if(!this.isChecked) {
+            for(let log of this.logs ){
+                let key = log.email;
+                this.selcetedLogs.push(key);
+            }
             this.isChecked = true;
         } else {
+            this.selcetedLogs = [];
             this.isChecked = false;
         }
-
         this.events.publish('updateScreen');
     }
     deleteLog(){
-        let count = 0;
-        if(this.selcetedLogs.length != 0) {
-            for(let log of this.selcetedLogs){
-                this.storage.remove(log);
-                count++;
+        if(!this.isChecked) {
+            if (this.selcetedLogs.length != 0) {
+                for (let key of this.selcetedLogs) {
+                    this.removeFromStorage(key);
+                }
+            }
+        } else {
+            for (let key of this.selcetedLogs) {
+                this.removeFromStorage(key);
             }
         }
         this.loadAllLogs();
+        if(this.logs.length === 0){
+            this.isSelectMode = false;
+        }
         this.events.publish('updateScreen');
     }
+   async deleteAllLogsAlert(){
+       const alert = await this.alertController.create({
+           header: 'Confirm!',
+           message: '<strong>Are you sure this will delete logs</strong>!',
+           buttons: [
+               {
+                   text: 'Cancel',
+                   role: 'cancel',
+                   cssClass: 'secondary',
+                   handler: (blah) => {
+                       console.log('Confirm Cancel: blah');
+                   }
+               }, {
+                   text: 'Okay',
+                   handler: () => {
+                       this.deleteLog();
+                   }
+               }
+           ]
+       });
 
+       await alert.present();
+    }
+    removeFromStorage(key){
+        this.storage.remove(key);
+    }
+    exitSelectAll(){
+        this.isSelectMode = false;
+        this.events.publish('updateScreen');
+    }
 }
