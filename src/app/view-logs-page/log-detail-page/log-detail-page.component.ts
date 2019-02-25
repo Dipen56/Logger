@@ -4,8 +4,8 @@ import { Storage } from '@ionic/storage';
 import { CallNumber } from '@ionic-native/call-number';
 import {PopoverController} from '@ionic/angular';
 import {PopoverComponent} from '../../popover/popover.component';
-
-
+import { SocialSharing } from '@ionic-native/social-sharing/ngx';
+import {Alert} from 'selenium-webdriver';
 
 @Component({
     selector: 'app-log-detail-page',
@@ -13,6 +13,7 @@ import {PopoverComponent} from '../../popover/popover.component';
     styleUrls: ['./log-detail-page.component.scss']
 })
 export class LogDetailPageComponent implements OnInit {
+
     log: any;
     key: any;
     fullName: any;
@@ -23,7 +24,8 @@ export class LogDetailPageComponent implements OnInit {
     addtionalInformation: any;
     date: any;
 
-    constructor(private storage: Storage, private route: ActivatedRoute, private popoverController: PopoverController) {
+    constructor(private storage: Storage, private route: ActivatedRoute,
+                private popoverController: PopoverController, private socialSharing: SocialSharing) {
         this.key = this.route.snapshot.paramMap.get('id');
         // Or to get a key/value pair
         storage.get(this.key).then((val) => {
@@ -53,4 +55,22 @@ export class LogDetailPageComponent implements OnInit {
     }
     makeCall(number) {
     }
+    sendEmail() {
+        // Check if sharing via email is supported
+        this.socialSharing.canShareViaEmail().then(() => {
+            // Share via email
+            this.socialSharing.shareViaEmail('Body', 'Subject', ['recipient@example.org']).then(() => {
+                // Success!
+                console.log("here");
+            }).catch(() => {
+                // Error!
+                console.log("here 1")
+            });
+        }).catch(() => {
+            // Sharing via email is not possible
+            console.log("here 2")
+        });
+
+    }
+
 }
