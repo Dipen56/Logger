@@ -13,15 +13,19 @@ import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { PopoverComponent } from './popover/popover.component';
+import { ChangePasswordPopoverComponent } from './change-password-popover/change-password-popover.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
-    declarations: [AppComponent, PopoverComponent],
-    entryComponents: [PopoverComponent],
+
+    declarations: [AppComponent, PopoverComponent, ChangePasswordPopoverComponent],
+    entryComponents: [PopoverComponent, ChangePasswordPopoverComponent],
     imports: [
         BrowserModule,
         IonicModule.forRoot(),
         AppRoutingModule,
         IonicStorageModule.forRoot(),
+        FormsModule,
     ],
     providers: [
         StatusBar,

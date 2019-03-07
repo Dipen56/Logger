@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import {NavigationEnd, Router} from '@angular/router';
-import {NavController} from '@ionic/angular';
-import { ToastController} from '@ionic/angular';
+import {NavController, ToastController, AlertController} from '@ionic/angular';
+import {logWarnings} from 'protractor/built/driverProviders';
 
 @Component({
     selector: 'app-log-info-page',
@@ -18,10 +18,19 @@ export class LogInfoPagePage implements OnInit {
     mobileNumber: number;
     additionalInfo: any;
     constructor(private storage: Storage, private router: Router,
-                private navController: NavController, private toastController: ToastController) { }
+                private navController: NavController, private toastController: ToastController,
+                private alertController: AlertController) {
+        //this.storage.clear()
+    }
 
     ngOnInit() {
+        this.storage.get("password").then((val) => {
+            if(val == null){
+                this.presentAlertPrompt();
+            }
+        });
     }
+
 
     subscribe() {
         let date = new Date();
@@ -68,9 +77,14 @@ export class LogInfoPagePage implements OnInit {
         this.additionalInfo = '';
         this.presentToast();
     }
+    setPassword(password){
+        this.storage.set('password', password).then((val)=>{
+            this.presentToast();
+        });
+    }
     async presentToast() {
         const toast = await this.toastController.create({
-            message: 'Successful your subscription have been saved.',
+            message: 'Successful, information have been saved.',
             duration: 1500
         });
         toast.present();
@@ -81,5 +95,44 @@ export class LogInfoPagePage implements OnInit {
             duration: 1500
         });
         toast.present();
+    }
+    async presentAlertPrompt() {
+        const alert = await this.alertController.create({
+            header: 'Setup New Password',
+            subHeader: "",
+            inputs: [
+                {
+                    name: 'password1',
+                    type: 'password',
+                    placeholder: 'Enter Password',
+                },
+                {
+                    name: 'password2',
+                    type: 'password',
+                    placeholder: 'Re-enter Password',
+                },
+            ],
+            buttons: [
+                {
+                    text: 'Ok',
+                    handler: data => {
+                        if(data.password1 != data.password2) {
+                            alert.subHeader = 'Password Do Not Match!';
+                            return false;
+                        } else if (data.password1 == "" || data.password2 == ""){
+                            alert.subHeader = 'Password Connot Be Empty';
+                            return false;
+                        } else {
+                            this.setPassword(data.password1);
+                            return true;
+                        }
+                    },
+
+                }
+            ],
+            backdropDismiss: false,
+        });
+
+        await alert.present();
     }
 }
