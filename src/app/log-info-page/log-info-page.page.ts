@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Storage } from '@ionic/storage';
-import {NavigationEnd, Router} from '@angular/router';
+import {Router} from '@angular/router';
 import {NavController, ToastController, AlertController} from '@ionic/angular';
-import {logWarnings} from 'protractor/built/driverProviders';
 
 @Component({
     selector: 'app-log-info-page',
@@ -20,7 +19,7 @@ export class LogInfoPagePage implements OnInit {
     constructor(private storage: Storage, private router: Router,
                 private navController: NavController, private toastController: ToastController,
                 private alertController: AlertController) {
-        //this.storage.clear()
+       // this.storage.clear();
     }
 
     ngOnInit() {

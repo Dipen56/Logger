@@ -15,7 +15,7 @@ export class SettingsPagePage implements OnInit {
     ngOnInit() {
     }
     async presentChangePasswordPopover(ev: Event) {
-        const popover = await this.popoverController.create({
+        var popover = await this.popoverController.create({
             component: ChangePasswordPopoverComponent,
             event: ev,
             translucent: true,
@@ -26,12 +26,12 @@ export class SettingsPagePage implements OnInit {
         await popover.present();
     }
     async presentTitlePopover(ev: Event){
-        const popover = await this.popoverController.create({
+        var popover = await this.popoverController.create({
             component: SetTitlePopoverComponent,
             event: ev,
             translucent: true,
             componentProps: {
-                popover: popover
+               // popover: popover
             }
         });
         await popover.present();
