@@ -13,7 +13,7 @@ export class ChangePasswordPopoverComponent implements OnInit {
     reenteredPassword: any;
     oldPassword: any;
     popover:any
-    constructor(private storage: Storage, private navParams: NavParams,) {
+    constructor(private storage: Storage, private navParams: NavParams) {
       this.popover = this.navParams.get('popover');
     }
 

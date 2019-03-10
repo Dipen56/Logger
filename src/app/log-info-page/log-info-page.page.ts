@@ -10,13 +10,13 @@ import {logWarnings} from 'protractor/built/driverProviders';
     styleUrls: ['./log-info-page.page.scss'],
 })
 export class LogInfoPagePage implements OnInit {
-    title: any = 'Enter details here...';
     fullName: string;
     email: any;
     homeNumber: number;
     workNumber: number;
     mobileNumber: number;
     additionalInfo: any;
+    subscriptionTitle: 'Set Title from settings';
     constructor(private storage: Storage, private router: Router,
                 private navController: NavController, private toastController: ToastController,
                 private alertController: AlertController) {
@@ -27,6 +27,11 @@ export class LogInfoPagePage implements OnInit {
         this.storage.get("password").then((val) => {
             if(val == null){
                 this.presentAlertPrompt();
+            }
+        });
+        this.storage.get("title").then((val)=>{
+            if(val != null){
+                this.subscriptionTitle = val;
             }
         });
     }

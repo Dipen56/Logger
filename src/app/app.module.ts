@@ -15,11 +15,12 @@ import { AppRoutingModule } from './app-routing.module';
 import { PopoverComponent } from './popover/popover.component';
 import { ChangePasswordPopoverComponent } from './change-password-popover/change-password-popover.component';
 import { FormsModule } from '@angular/forms';
+import { SetTitlePopoverComponent } from './set-title-popover/set-title-popover.component';
 
 @NgModule({
 
-    declarations: [AppComponent, PopoverComponent, ChangePasswordPopoverComponent],
-    entryComponents: [PopoverComponent, ChangePasswordPopoverComponent],
+    declarations: [AppComponent, PopoverComponent, ChangePasswordPopoverComponent, SetTitlePopoverComponent],
+    entryComponents: [PopoverComponent, ChangePasswordPopoverComponent, SetTitlePopoverComponent],
     imports: [
         BrowserModule,
         IonicModule.forRoot(),

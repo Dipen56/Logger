@@ -10,14 +10,14 @@
 <ion-content padding>
     <ion-item>
         Change Password
-        <ion-button slot="end" (click)="presentPopover()">
+        <ion-button slot="end" (click)="presentChangePasswordPopover()">
             <ion-icon slot="icon-only" name="create">
             </ion-icon>
         </ion-button>
     </ion-item>
     <ion-item>
-        Add Title
-        <ion-button slot="end">
+        Set Subscription Title
+        <ion-button slot="end" (click)="presentTitlePopover()">
             <ion-icon slot="icon-only" name="create">
             </ion-icon>
         </ion-button>
