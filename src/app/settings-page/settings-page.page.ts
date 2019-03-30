@@ -19,9 +19,9 @@ export class SettingsPagePage implements OnInit {
             component: ChangePasswordPopoverComponent,
             event: ev,
             translucent: true,
-            componentProps: {
-                popover: popover
-            }
+            // componentProps: {
+            //     //popover: popover
+            // }
         });
         await popover.present();
     }
@@ -29,10 +29,7 @@ export class SettingsPagePage implements OnInit {
         var popover = await this.popoverController.create({
             component: SetTitlePopoverComponent,
             event: ev,
-            translucent: true,
-            componentProps: {
-               // popover: popover
-            }
+            translucent: true
         });
         await popover.present();
     }

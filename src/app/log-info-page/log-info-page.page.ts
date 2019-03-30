@@ -19,7 +19,7 @@ export class LogInfoPagePage implements OnInit {
     constructor(private storage: Storage, private router: Router,
                 private navController: NavController, private toastController: ToastController,
                 private alertController: AlertController) {
-       // this.storage.clear();
+       //this.storage.clear();
     }
 
     ngOnInit() {
@@ -29,6 +29,7 @@ export class LogInfoPagePage implements OnInit {
             }
         });
         this.storage.get("title").then((val)=>{
+            console.log("title");
             if(val != null){
                 this.subscriptionTitle = val;
             }

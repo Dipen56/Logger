@@ -13,6 +13,7 @@ export class SetTitlePopoverComponent implements OnInit {
   constructor(private storage: Storage, private navParams: NavParams,
               private toastController: ToastController) {
     this.popover = this.navParams.get('popover');
+    console.log(this.popover)
   }
 
   ngOnInit() {
