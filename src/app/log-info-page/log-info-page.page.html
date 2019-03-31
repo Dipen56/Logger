@@ -11,9 +11,10 @@
     <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
         <ion-refresher-content></ion-refresher-content>
     </ion-refresher>
-    <!--<ion-item>-->
-        <!--<ion-img [src]="default-logo.png"></ion-img>-->
-    <!--</ion-item>-->
+    <ion-item>
+        <!--../assets/img/default-logo.png-->
+        <ion-img src={{imageURL}}></ion-img>
+    </ion-item>
     <ion-item>
         <ion-label>{{subscriptionTitle}}</ion-label>
     </ion-item>

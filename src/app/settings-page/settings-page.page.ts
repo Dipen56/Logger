@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { PopoverController} from '@ionic/angular';
 import {ChangePasswordPopoverComponent} from '../change-password-popover/change-password-popover.component';
 import {SetTitlePopoverComponent} from '../set-title-popover/set-title-popover.component';
+import {FileChooser} from '@ionic-native/file-chooser/ngx';
+import {Storage} from '@ionic/storage';
+import {ToastController} from '@ionic/angular';
 
 @Component({
     selector: 'app-settings-page',
@@ -9,8 +12,8 @@ import {SetTitlePopoverComponent} from '../set-title-popover/set-title-popover.c
     styleUrls: ['./settings-page.page.scss'],
 })
 export class SettingsPagePage implements OnInit {
-
-    constructor(private popoverController: PopoverController) { }
+    constructor(private popoverController: PopoverController, private fileChooser: FileChooser,
+                private storage: Storage, private toastController: ToastController) { }
 
     ngOnInit() {
     }
@@ -32,5 +35,22 @@ export class SettingsPagePage implements OnInit {
             translucent: true
         });
         await popover.present();
+    }
+
+    async persentFileChooser(){
+        await this.fileChooser.open().then((uri) =>{
+            this.storage.set("logo", uri).then((val)=> {
+                if(val != null){
+                    this.presentToast();
+                }
+            });
+        });
+    }
+    async presentToast() {
+        const toast = await this.toastController.create({
+            message: 'Successful, information have been saved.',
+            duration: 1500
+        });
+        toast.present();
     }
 }

@@ -7,6 +7,7 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { IonicStorageModule } from '@ionic/storage';
 //import { CallNumber } from '@ionic-native/call-number';
+import {FileChooser} from '@ionic-native/file-chooser/ngx';
 
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 
@@ -16,6 +17,7 @@ import { PopoverComponent } from './popover/popover.component';
 import { ChangePasswordPopoverComponent } from './change-password-popover/change-password-popover.component';
 import { FormsModule } from '@angular/forms';
 import { SetTitlePopoverComponent } from './set-title-popover/set-title-popover.component';
+import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
 
 @NgModule({
 
@@ -27,6 +29,7 @@ import { SetTitlePopoverComponent } from './set-title-popover/set-title-popover.
         AppRoutingModule,
         IonicStorageModule.forRoot(),
         FormsModule,
+
     ],
     providers: [
         StatusBar,
@@ -34,6 +37,8 @@ import { SetTitlePopoverComponent } from './set-title-popover/set-title-popover.
         { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
         // CallNumber
         SocialSharing,
+        FileChooser,
+        AndroidPermissions
     ],
     bootstrap: [AppComponent]
 })

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import {Router} from '@angular/router';
 import {NavController, ToastController, AlertController} from '@ionic/angular';
+import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
 
 @Component({
     selector: 'app-log-info-page',
@@ -16,10 +17,17 @@ export class LogInfoPagePage implements OnInit {
     mobileNumber: number;
     additionalInfo: any;
     subscriptionTitle: 'Set Title from settings';
+    imageURL = '../assets/img/default-logo.png';
     constructor(private storage: Storage, private router: Router,
                 private navController: NavController, private toastController: ToastController,
-                private alertController: AlertController) {
+                private alertController: AlertController, private androidPermissions: AndroidPermissions) {
        //this.storage.clear();
+        this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.WRITE_EXTERNAL_STORAGE).then(
+            result => console.log('Has permission?',result.hasPermission),
+            err => this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.WRITE_EXTERNAL_STORAGE)
+        );
+
+        this.androidPermissions.requestPermissions([this.androidPermissions.PERMISSION.WRITE_EXTERNAL_STORAGE, this.androidPermissions.PERMISSION.GET_ACCOUNTS]);
     }
 
     ngOnInit() {
@@ -32,6 +40,12 @@ export class LogInfoPagePage implements OnInit {
             console.log("title");
             if(val != null){
                 this.subscriptionTitle = val;
+            }
+        });
+        this.storage.get("logo").then((val)=> {
+            if(val != null){
+                console.log(val);
+                this.imageURL = val;
             }
         });
     }
