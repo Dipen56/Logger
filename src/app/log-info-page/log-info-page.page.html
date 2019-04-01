@@ -15,9 +15,13 @@
         <!--../assets/img/default-logo.png-->
         <ion-img src={{imageURL}}></ion-img>
     </ion-item>
-    <ion-item>
+
+    <div *ngIf="showTitle; else elseBlock">
+    <ion-item ng-show='true'>
         <ion-label>{{subscriptionTitle}}</ion-label>
     </ion-item>
+    </div>
+
     <ion-item>
         <ion-label position="floating">Full Name *</ion-label>
         <ion-input required [(ngModel)]="fullName"></ion-input>
@@ -43,4 +47,9 @@
         <ion-textarea [(ngModel)]="additionalInfo"></ion-textarea>
     </ion-item>
     <ion-button color="primary" (click)="subscribe()">Subscribe</ion-button>
+    <ng-template #elseBlock>
+        <ion-item hidden>
+        <ion-label>{{subscriptionTitle}} here</ion-label>
+    </ion-item>
+    </ng-template>
 </ion-content>

@@ -12,11 +12,27 @@ import {ToastController} from '@ionic/angular';
     styleUrls: ['./settings-page.page.scss'],
 })
 export class SettingsPagePage implements OnInit {
+    showTitle: any;
+    showLogo: any;
     constructor(private popoverController: PopoverController, private fileChooser: FileChooser,
                 private storage: Storage, private toastController: ToastController) { }
 
     ngOnInit() {
+        this.storage.get("showTitle").then((val)=>{
+            if(val != null){
+                this.showTitle = val;
+            }
+            console.log(val);
+        });
+        this.showLogo = this.storage.get("showLogo");
     }
+    toggleTitle(event){
+        console.log(event)
+        this.storage.set('showTitle', this.showTitle).then((val)=>{
+           console.log(val);
+        });
+    }
+
     async presentChangePasswordPopover(ev: Event) {
         var popover = await this.popoverController.create({
             component: ChangePasswordPopoverComponent,

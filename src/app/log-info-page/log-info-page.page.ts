@@ -18,10 +18,11 @@ export class LogInfoPagePage implements OnInit {
     additionalInfo: any;
     subscriptionTitle: 'Set Title from settings';
     imageURL = '../assets/img/default-logo.png';
+    showTitle: any;
     constructor(private storage: Storage, private router: Router,
                 private navController: NavController, private toastController: ToastController,
                 private alertController: AlertController, private androidPermissions: AndroidPermissions) {
-       //this.storage.clear();
+        //this.storage.clear();
         this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.WRITE_EXTERNAL_STORAGE).then(
             result => console.log('Has permission?',result.hasPermission),
             err => this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.WRITE_EXTERNAL_STORAGE)
@@ -37,7 +38,6 @@ export class LogInfoPagePage implements OnInit {
             }
         });
         this.storage.get("title").then((val)=>{
-            console.log("title");
             if(val != null){
                 this.subscriptionTitle = val;
             }
@@ -48,6 +48,12 @@ export class LogInfoPagePage implements OnInit {
                 this.imageURL = val;
             }
         });
+      this.storage.get("showTitle").then((val)=>{
+           if(val !=null){
+               this.showTitle = val;
+               console.log(this.showTitle);
+           }
+       });
     }
 
 
