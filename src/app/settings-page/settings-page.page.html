@@ -42,6 +42,13 @@
         <ion-toggle [(ngModel)]="showLogo" (ionChange)="toggleLogo()"></ion-toggle>
     </ion-item>
     <ion-item>
+        Clear Data
+        <ion-button slot="end" (click)="presentDeleteConformationAlert()">
+            <ion-icon slot="icon-only" name="trash">
+            </ion-icon>
+        </ion-button>
+    </ion-item>
+    <ion-item>
         Feedback
         <ion-button slot="end">
             <ion-icon slot="icon-only" name="create">

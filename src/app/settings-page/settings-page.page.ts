@@ -4,7 +4,7 @@ import {ChangePasswordPopoverComponent} from '../change-password-popover/change-
 import {SetTitlePopoverComponent} from '../set-title-popover/set-title-popover.component';
 import {FileChooser} from '@ionic-native/file-chooser/ngx';
 import {Storage} from '@ionic/storage';
-import {ToastController} from '@ionic/angular';
+import {ToastController, AlertController} from '@ionic/angular';
 
 @Component({
     selector: 'app-settings-page',
@@ -15,7 +15,8 @@ export class SettingsPagePage implements OnInit {
     showTitle: any;
     showLogo: any;
     constructor(private popoverController: PopoverController, private fileChooser: FileChooser,
-                private storage: Storage, private toastController: ToastController) { }
+                private storage: Storage, private toastController: ToastController,
+                private alertController: AlertController) { }
 
     ngOnInit() {
         this.storage.get("showTitle").then((val)=>{
@@ -47,6 +48,38 @@ export class SettingsPagePage implements OnInit {
         });
         await popover.present();
     }
+    async clearData(){
+        await this.storage.clear();
+        this.presentToastDeleteData();
+    }
+
+   async presentDeleteConformationAlert(){
+
+            const alert = await this.alertController.create({
+                header: 'Warning! Clearing Data',
+                message: '<strong>This action will permanently delete all the stored data.</strong>',
+                buttons: [
+                    {
+                        text: 'Cancel',
+                        role: 'cancel',
+                        cssClass: 'secondary',
+                        handler: (blah) => {
+                            console.log('Confirm Cancel: blah');
+                        }
+                    }, {
+                        text: 'Okay',
+                        handler: () => {
+                            this.clearData();
+                        }
+                    }
+                ],
+                backdropDismiss: false,
+            });
+
+            await alert.present();
+
+    }
+
     async presentTitlePopover(ev: Event){
         var popover = await this.popoverController.create({
             component: SetTitlePopoverComponent,
@@ -68,6 +101,13 @@ export class SettingsPagePage implements OnInit {
     async presentToast() {
         const toast = await this.toastController.create({
             message: 'Successful, information have been saved.',
+            duration: 1500
+        });
+        toast.present();
+    }
+    async presentToastDeleteData() {
+        const toast = await this.toastController.create({
+            message: 'Successful, all data is cleared',
             duration: 1500
         });
         toast.present();
