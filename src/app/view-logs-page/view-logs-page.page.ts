@@ -34,15 +34,15 @@ export class ViewLogsPagePage implements OnInit {
             this.router.navigateByUrl('/view-logs-page/' + id);
         }
     }
-    loadAllLogs() {
+    async loadAllLogs() {
         this.logs = [];
-        this.storage.forEach((value, key, index) => {
-            this.logs.push(value);
+        await this.storage.forEach((value, key, index) => {
+            if(key != 'password' && key != 'showTitle' && key != 'showLogo'){
+                this.logs.push(value);
+            }
         });
     }
-    clearAllValue() {
-        this.storage.clear();
-    }
+
     pressEvent(key){
         this.isHidden = false;
         this.isSelectMode = true;

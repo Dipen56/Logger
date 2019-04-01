@@ -61,7 +61,6 @@ export class LogInfoPagePage implements OnInit {
     }
 
     subscribe() {
-        console.log("here");
         let date = new Date();
         let data = {
             fullName: this.fullName,
