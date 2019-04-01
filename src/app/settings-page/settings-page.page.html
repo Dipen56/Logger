@@ -26,14 +26,20 @@
     </div>
     <ion-item>
         <ion-label>Show Title</ion-label>
-        <ion-toggle [(ngModel)]="showTitle" (ionChange)="toggleTitle($event)"></ion-toggle>
+        <ion-toggle [(ngModel)]="showTitle" (ionChange)="toggleTitle()"></ion-toggle>
     </ion-item>
+    <div *ngIf="showLogo; else elseBlock2">
     <ion-item>
         Add Logo
         <ion-button slot="end" (click)="persentFileChooser()">
             <ion-icon slot="icon-only" name="create">
             </ion-icon>
         </ion-button>
+    </ion-item>
+    </div>
+    <ion-item>
+        <ion-label>Show Logo</ion-label>
+        <ion-toggle [(ngModel)]="showLogo" (ionChange)="toggleLogo()"></ion-toggle>
     </ion-item>
     <ion-item>
         Feedback
@@ -63,5 +69,17 @@
                 <ion-icon slot="icon-only" name="create">
                 </ion-icon>
             </ion-button>
-        </ion-item></ng-template>
+        </ion-item>
+        </ng-template>
+
+    <ng-template #elseBlock2>
+        <ion-item [disabled]=true>
+            Add Logo
+            <ion-button slot="end" (click)="persentFileChooser()">
+                <ion-icon slot="icon-only" name="create">
+                </ion-icon>
+            </ion-button>
+        </ion-item>
+    </ng-template>
+
 </ion-content>

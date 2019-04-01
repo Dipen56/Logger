@@ -22,17 +22,20 @@ export class SettingsPagePage implements OnInit {
             if(val != null){
                 this.showTitle = val;
             }
-            console.log(val);
         });
-        this.showLogo = this.storage.get("showLogo");
+        this.storage.get("showLogo").then((val)=>{
+            if(val != null){
+                this.showLogo = val;
+            }
+        });
     }
-    toggleTitle(event){
-        console.log(event)
-        this.storage.set('showTitle', this.showTitle).then((val)=>{
-           console.log(val);
-        });
+    toggleTitle(){
+        this.storage.set('showTitle', this.showTitle);
     }
 
+    toggleLogo(){
+        this.storage.set('showLogo', this.showLogo);
+    }
     async presentChangePasswordPopover(ev: Event) {
         var popover = await this.popoverController.create({
             component: ChangePasswordPopoverComponent,

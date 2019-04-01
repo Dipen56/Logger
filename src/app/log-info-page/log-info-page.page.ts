@@ -19,6 +19,7 @@ export class LogInfoPagePage implements OnInit {
     subscriptionTitle: 'Set Title from settings';
     imageURL = '../assets/img/default-logo.png';
     showTitle: any;
+    showLogo: any;
     constructor(private storage: Storage, private router: Router,
                 private navController: NavController, private toastController: ToastController,
                 private alertController: AlertController, private androidPermissions: AndroidPermissions) {
@@ -44,7 +45,6 @@ export class LogInfoPagePage implements OnInit {
         });
         this.storage.get("logo").then((val)=> {
             if(val != null){
-                console.log(val);
                 this.imageURL = val;
             }
         });
@@ -54,6 +54,11 @@ export class LogInfoPagePage implements OnInit {
                console.log(this.showTitle);
            }
        });
+      this.storage.get("showLogo").then((val)=>{
+          if(val !=null){
+              this.showLogo = val;
+          }
+      })
     }
 
 

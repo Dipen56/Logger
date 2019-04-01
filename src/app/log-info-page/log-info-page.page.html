@@ -11,10 +11,11 @@
     <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
         <ion-refresher-content></ion-refresher-content>
     </ion-refresher>
-    <ion-item>
-        <!--../assets/img/default-logo.png-->
+    <div *ngIf="showLogo; else elseBlock2">
+    <ion-item ng-show='true'>
         <ion-img src={{imageURL}}></ion-img>
     </ion-item>
+    </div>
 
     <div *ngIf="showTitle; else elseBlock">
     <ion-item ng-show='true'>
@@ -47,9 +48,17 @@
         <ion-textarea [(ngModel)]="additionalInfo"></ion-textarea>
     </ion-item>
     <ion-button color="primary" (click)="subscribe()">Subscribe</ion-button>
+
     <ng-template #elseBlock>
         <ion-item hidden>
         <ion-label>{{subscriptionTitle}} here</ion-label>
     </ion-item>
     </ng-template>
+
+    <ng-template #elseBlock2>
+        <ion-item hidden>
+            <ion-img src={{imageURL}}></ion-img>
+        </ion-item>
+    </ng-template>
+
 </ion-content>
