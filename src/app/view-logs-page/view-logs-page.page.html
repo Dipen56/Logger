@@ -25,6 +25,12 @@
 </ion-header>
 
 <ion-content padding>
+    <ion-item>
+    <ion-button slot="end">
+        <ion-icon slot="icon-only" name="search"></ion-icon>
+    </ion-button>
+    <ion-input type="search" placeholder="Search by email" [(ngModel)]="searchQuery" (ngModelChange)="searchLogs()"></ion-input>
+    </ion-item>
     <div *ngIf="!isSelectMode; else selectModeBlockBody">
         <ion-item (press)="pressEvent(log.email)" (click)="goToLogDetailPage(log.email)" detail *ngFor="let log of logs">
 

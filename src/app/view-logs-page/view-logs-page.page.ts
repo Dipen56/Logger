@@ -11,10 +11,12 @@ import {Events, AlertController, PopoverController} from '@ionic/angular';
 })
 export class ViewLogsPagePage implements OnInit {
     logs = [];
+    copyLogs = [];
     isSelectMode = false;
     isHidden= true;
     selcetedLogs = [];
     isChecked = false;
+    searchQuery: any
     constructor(private storage: Storage, private router: Router,
                 private events: Events, private zone: NgZone,
                 private alertController: AlertController) {
@@ -29,6 +31,22 @@ export class ViewLogsPagePage implements OnInit {
     ngOnInit() {
         this.loadAllLogs();
     }
+    searchLogs(){
+        let tempLogs = [];
+
+       if(this.searchQuery == ""){
+           this.loadAllLogs();
+        } else {
+           for(let log of this.copyLogs){
+               if(log.email.startsWith(this.searchQuery)){
+                   tempLogs.push(log);
+               }
+           }
+       }
+       this.logs = [];
+       this.logs = tempLogs;
+        console.log(this.logs);
+    }
     goToLogDetailPage(id) {
         if(!this.isSelectMode){
             this.router.navigateByUrl('/view-logs-page/' + id);
@@ -41,6 +59,7 @@ export class ViewLogsPagePage implements OnInit {
                 this.logs.push(value);
             }
         });
+        this.copyLogs = this.logs;
     }
 
     pressEvent(key){
@@ -57,7 +76,6 @@ export class ViewLogsPagePage implements OnInit {
         } else {
             this.selcetedLogs.push(key);
         }
-        console.log(this.selcetedLogs);
     }
     // this not workign yet
     selectALl(){
