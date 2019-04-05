@@ -19,7 +19,7 @@ export class ViewLogsPagePage implements OnInit {
     searchQuery: any
     constructor(private storage: Storage, private router: Router,
                 private events: Events, private zone: NgZone,
-                private alertController: AlertController) {
+                private alertController: AlertController, ) {
         // used to refresh the screen.
         this.events.subscribe('updateScreen', () => {
 
