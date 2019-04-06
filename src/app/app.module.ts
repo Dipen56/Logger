@@ -19,7 +19,6 @@ import { FormsModule } from '@angular/forms';
 import { SetTitlePopoverComponent } from './set-title-popover/set-title-popover.component';
 import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
 
-
 @NgModule({
 
     declarations: [AppComponent, PopoverComponent, ChangePasswordPopoverComponent, SetTitlePopoverComponent],
@@ -39,7 +38,7 @@ import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
         // CallNumber
         SocialSharing,
         FileChooser,
-        AndroidPermissions
+        AndroidPermissions,
     ],
     bootstrap: [AppComponent]
 })

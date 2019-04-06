@@ -30,6 +30,11 @@ export class ViewLogsPagePage implements OnInit {
     }
     ngOnInit() {
         this.loadAllLogs();
+        this.storage.get('logViewAuth').then((val)=>{
+           if(!val){
+               this.presentAlertPrompt('\'Enter admin password to access logs\'');
+           }
+        });
     }
     searchLogs(){
         let tempLogs = [];
@@ -55,7 +60,7 @@ export class ViewLogsPagePage implements OnInit {
     async loadAllLogs() {
         this.logs = [];
         await this.storage.forEach((value, key, index) => {
-            if(key != 'password' && key != 'showTitle' && key != 'showLogo'){
+            if(key != 'password' && key != 'showTitle' && key != 'showLogo' && key != 'logViewAuth'){
                 this.logs.push(value);
             }
         });
@@ -138,5 +143,38 @@ export class ViewLogsPagePage implements OnInit {
     exitSelectAll(){
         this.isSelectMode = false;
         this.events.publish('updateScreen');
+    }
+    async presentAlertPrompt(errMessage) {
+        const alert = await this.alertController.create({
+            header: 'Authentication!',
+            subHeader: errMessage,
+            inputs: [
+                {
+                    name: 'password1',
+                    type: 'password',
+                    placeholder: 'Enter Password',
+                }
+            ],
+            buttons: [
+                {
+                    text: 'Ok',
+                    handler: data => {
+                        this.storage.get('password').then((val)=>{
+                            if(data.password1 != val) {
+                                this.presentAlertPrompt('Password is incorrect try again')
+                                return false;
+                            } else {
+                                this.storage.set('logViewAuth', true);
+                                return true;
+                            }
+                        });
+                    },
+
+                }
+            ],
+            backdropDismiss: false,
+        });
+
+        await alert.present();
     }
 }

@@ -33,6 +33,7 @@ export class LogInfoPagePage implements OnInit {
     }
 
     ngOnInit() {
+        this.storage.set('logViewAuth', false);
         this.storage.get("password").then((val) => {
             if(val == null){
                 this.presentAlertPrompt();

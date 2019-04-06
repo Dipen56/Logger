@@ -46,6 +46,7 @@ export class AppComponent {
                }
             });
             this.storage.set("showLogo", false);
+            this.storage.set('logViewAuth', false);
         });
     }
 }

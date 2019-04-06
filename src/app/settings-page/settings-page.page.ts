@@ -19,6 +19,7 @@ export class SettingsPagePage implements OnInit {
                 private alertController: AlertController) { }
 
     ngOnInit() {
+        this.storage.set('logViewAuth', false);
         this.storage.get("showTitle").then((val)=>{
             if(val != null){
                 this.showTitle = val;
