@@ -55,7 +55,8 @@ export class LogInfoPagePage implements OnInit {
            }
        });
       this.storage.get("showLogo").then((val)=>{
-          if(val !=null){
+          if(val !=  null){
+              console.log(val);
               this.showLogo = val;
           }
       });
