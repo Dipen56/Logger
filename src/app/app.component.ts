@@ -45,7 +45,7 @@ export class AppComponent {
                    this.storage.set("showTitle", true);
                }
             });
-            this.storage.set("showLogo", false);
+            this.storage.set("showLogo", true);
             this.storage.set('logViewAuth', false);
         });
     }

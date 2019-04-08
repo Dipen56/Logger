@@ -5,6 +5,7 @@ import {SetTitlePopoverComponent} from '../set-title-popover/set-title-popover.c
 import {FileChooser} from '@ionic-native/file-chooser/ngx';
 import {Storage} from '@ionic/storage';
 import {ToastController, AlertController} from '@ionic/angular';
+import { FilePath } from '@ionic-native/file-path/ngx';
 
 @Component({
     selector: 'app-settings-page',
@@ -16,7 +17,7 @@ export class SettingsPagePage implements OnInit {
     showLogo: any;
     constructor(private popoverController: PopoverController, private fileChooser: FileChooser,
                 private storage: Storage, private toastController: ToastController,
-                private alertController: AlertController) { }
+                private alertController: AlertController, private filePath: FilePath) { }
 
     ngOnInit() {
         this.storage.set('logViewAuth', false);
@@ -92,9 +93,14 @@ export class SettingsPagePage implements OnInit {
 
     async persentFileChooser(){
         await this.fileChooser.open().then((uri) =>{
-            this.storage.set("logo", uri).then((val)=> {
-                if(val != null){
-                    this.presentToast();
+            this.filePath.resolveNativePath(uri).then((file) =>{
+                let fileLoc: string = file;
+                if(fileLoc){
+                this.storage.set("logo", fileLoc).then((val)=> {
+                    if(val != null){
+                        this.presentToast();
+                    }
+                });
                 }
             });
         });

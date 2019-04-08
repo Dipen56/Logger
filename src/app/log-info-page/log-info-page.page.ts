@@ -4,6 +4,7 @@ import {Router} from '@angular/router';
 import {NavController, ToastController, AlertController} from '@ionic/angular';
 import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
 
+
 @Component({
     selector: 'app-log-info-page',
     templateUrl: './log-info-page.page.html',
@@ -25,7 +26,7 @@ export class LogInfoPagePage implements OnInit {
                 private alertController: AlertController, private androidPermissions: AndroidPermissions) {
 
         this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.WRITE_EXTERNAL_STORAGE).then(
-            result => console.log('Has permission?',result.hasPermission),
+            result => console.log('Has permission?', result.hasPermission),
             err => this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.WRITE_EXTERNAL_STORAGE)
         );
 
@@ -44,8 +45,10 @@ export class LogInfoPagePage implements OnInit {
                 this.subscriptionTitle = val;
             }
         });
+        console.log("here");
         this.storage.get("logo").then((val)=> {
             if(val != null){
+                console.log(val);
                 this.imageURL = val;
             }
         });
@@ -54,9 +57,10 @@ export class LogInfoPagePage implements OnInit {
                this.showTitle = val;
            }
        });
+
       this.storage.get("showLogo").then((val)=>{
           if(val !=  null){
-              console.log(val);
+
               this.showLogo = val;
           }
       });
