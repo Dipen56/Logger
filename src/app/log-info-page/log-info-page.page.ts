@@ -18,7 +18,7 @@ export class LogInfoPagePage implements OnInit {
     mobileNumber: number;
     additionalInfo: any;
     subscriptionTitle = 'Set Title from settings';
-    imageURL = '../assets/img/default-logo.png';
+    imageURL = 'assets/img/default-logo.png';
     showTitle: any;
     showLogo: any;
     constructor(private storage: Storage, private router: Router,
