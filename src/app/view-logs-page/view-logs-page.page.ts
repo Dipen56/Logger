@@ -1,5 +1,5 @@
-import { Component, OnInit, NgZone } from '@angular/core';
-import { Storage } from '@ionic/storage';
+import {Component, OnInit, NgZone} from '@angular/core';
+import {Storage} from '@ionic/storage';
 import {Router} from '@angular/router';
 import {Events, AlertController, PopoverController} from '@ionic/angular';
 
@@ -13,13 +13,15 @@ export class ViewLogsPagePage implements OnInit {
     logs = [];
     copyLogs = [];
     isSelectMode = false;
-    isHidden= true;
+    isHidden = true;
     selcetedLogs = [];
     isChecked = false;
-    searchQuery: any
+    searchQuery: any;
+    allData: any;
+
     constructor(private storage: Storage, private router: Router,
                 private events: Events, private zone: NgZone,
-                private alertController: AlertController, ) {
+                private alertController: AlertController,) {
         // used to refresh the screen.
         this.events.subscribe('updateScreen', () => {
 
@@ -28,64 +30,71 @@ export class ViewLogsPagePage implements OnInit {
             });
         });
     }
+
     ngOnInit() {
         this.loadAllLogs();
-        this.storage.get('logViewAuth').then((val)=>{
-           if(!val){
-               this.presentAlertPrompt('\'Enter admin password to access logs\'');
-           }
+        this.storage.get('logViewAuth').then((val) => {
+            if (!val) {
+                this.presentAlertPrompt('\'Enter admin password to access logs\'');
+            }
         });
     }
-    searchLogs(){
+
+    searchLogs() {
         let tempLogs = [];
 
-       if(this.searchQuery == ""){
-           this.loadAllLogs();
+        if (this.searchQuery == '') {
+            this.loadAllLogs();
         } else {
-           for(let log of this.copyLogs){
-               if(log.email.startsWith(this.searchQuery)){
-                   tempLogs.push(log);
-               }
-           }
-       }
-       this.logs = [];
-       this.logs = tempLogs;
+            for (let log of this.copyLogs) {
+                if (log.email.startsWith(this.searchQuery)) {
+                    tempLogs.push(log);
+                }
+            }
+        }
+        this.logs = [];
+        this.logs = tempLogs;
         console.log(this.logs);
     }
+
     goToLogDetailPage(id) {
-        if(!this.isSelectMode){
+        if (!this.isSelectMode) {
             this.router.navigateByUrl('/view-logs-page/' + id);
         }
     }
+
     async loadAllLogs() {
         this.logs = [];
         await this.storage.forEach((value, key, index) => {
-            if(key != 'password' && key != 'showTitle' && key != 'showLogo' && key != 'logViewAuth'){
+            this.allData = this.allData + key;
+            if (key != 'password' && key != 'showTitle' && key != 'showLogo' && key != 'logViewAuth' && key != 'logo') {
                 this.logs.push(value);
             }
         });
         this.copyLogs = this.logs;
     }
 
-    pressEvent(key){
+    pressEvent(key) {
         this.isHidden = false;
         this.isSelectMode = true;
         this.events.publish('updateScreen');
         //window.location.reload();
     }
-    addSelectedLog(key){
-        if(this.selcetedLogs.includes(key)){
-            this.selcetedLogs = this.selcetedLogs.filter(function(value, index, arr){
+
+    addSelectedLog(key) {
+        if (this.selcetedLogs.includes(key)) {
+            this.selcetedLogs = this.selcetedLogs.filter(function (value, index, arr) {
                 return value !== key;
             });
         } else {
             this.selcetedLogs.push(key);
         }
     }
+
     // this not workign yet
-    selectALl(){
-        if(!this.isChecked) {
-            for(let log of this.logs ){
+    selectALl() {
+        if (!this.isChecked) {
+            for (let log of this.logs) {
                 let key = log.email;
                 this.selcetedLogs.push(key);
             }
@@ -96,8 +105,9 @@ export class ViewLogsPagePage implements OnInit {
         }
         this.events.publish('updateScreen');
     }
-    deleteLog(){
-        if(!this.isChecked) {
+
+    deleteLog() {
+        if (!this.isChecked) {
             if (this.selcetedLogs.length != 0) {
                 for (let key of this.selcetedLogs) {
                     this.removeFromStorage(key);
@@ -109,41 +119,45 @@ export class ViewLogsPagePage implements OnInit {
             }
         }
         this.loadAllLogs();
-        if(this.logs.length === 0){
+        if (this.logs.length === 0) {
             this.isSelectMode = false;
         }
         this.events.publish('updateScreen');
     }
-   async deleteAllLogsAlert(){
-       const alert = await this.alertController.create({
-           header: 'Confirm!',
-           message: '<strong>Are you sure this will delete logs</strong>!',
-           buttons: [
-               {
-                   text: 'Cancel',
-                   role: 'cancel',
-                   cssClass: 'secondary',
-                   handler: (blah) => {
-                       console.log('Confirm Cancel: blah');
-                   }
-               }, {
-                   text: 'Okay',
-                   handler: () => {
-                       this.deleteLog();
-                   }
-               }
-           ]
-       });
 
-       await alert.present();
+    async deleteAllLogsAlert() {
+        const alert = await this.alertController.create({
+            header: 'Confirm!',
+            message: '<strong>Are you sure this will delete logs</strong>!',
+            buttons: [
+                {
+                    text: 'Cancel',
+                    role: 'cancel',
+                    cssClass: 'secondary',
+                    handler: (blah) => {
+                        console.log('Confirm Cancel: blah');
+                    }
+                }, {
+                    text: 'Okay',
+                    handler: () => {
+                        this.deleteLog();
+                    }
+                }
+            ]
+        });
+
+        await alert.present();
     }
-    removeFromStorage(key){
+
+    removeFromStorage(key) {
         this.storage.remove(key);
     }
-    exitSelectAll(){
+
+    exitSelectAll() {
         this.isSelectMode = false;
         this.events.publish('updateScreen');
     }
+
     async presentAlertPrompt(errMessage) {
         const alert = await this.alertController.create({
             header: 'Authentication!',
@@ -159,9 +173,9 @@ export class ViewLogsPagePage implements OnInit {
                 {
                     text: 'Ok',
                     handler: data => {
-                        this.storage.get('password').then((val)=>{
-                            if(data.password1 != val) {
-                                this.presentAlertPrompt('Password is incorrect try again')
+                        this.storage.get('password').then((val) => {
+                            if (data.password1 != val) {
+                                this.presentAlertPrompt('Password is incorrect try again');
                                 return false;
                             } else {
                                 this.storage.set('logViewAuth', true);

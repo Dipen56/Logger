@@ -31,6 +31,7 @@
     </ion-button>
     <ion-input type="search" placeholder="Search by email" [(ngModel)]="searchQuery" (ngModelChange)="searchLogs()"></ion-input>
     </ion-item>
+    <ion-label>{{allData}}</ion-label>
     <div *ngIf="!isSelectMode; else selectModeBlockBody">
         <ion-item (press)="pressEvent(log.email)" (click)="goToLogDetailPage(log.email)" detail *ngFor="let log of logs">
 

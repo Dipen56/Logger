@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import { Storage } from '@ionic/storage';
-import { CallNumber } from '@ionic-native/call-number';
+import {Storage} from '@ionic/storage';
+import {CallNumber} from '@ionic-native/call-number';
 import {PopoverController} from '@ionic/angular';
 import {PopoverComponent} from '../../popover/popover.component';
-import { SocialSharing } from '@ionic-native/social-sharing/ngx';
+import {SocialSharing} from '@ionic-native/social-sharing/ngx';
 import {Alert} from 'selenium-webdriver';
 
 @Component({
@@ -42,6 +42,7 @@ export class LogDetailPageComponent implements OnInit {
 
     ngOnInit() {
     }
+
     async presentPopover(ev: Event) {
         const popover = await this.popoverController.create({
             component: PopoverComponent,
@@ -53,22 +54,20 @@ export class LogDetailPageComponent implements OnInit {
         });
         return await popover.present();
     }
+
     makeCall(number) {
     }
+
     sendEmail() {
         // Check if sharing via email is supported
         this.socialSharing.canShareViaEmail().then(() => {
             // Share via email
-            this.socialSharing.shareViaEmail('Body', 'Subject', ['recipient@example.org']).then(() => {
-                // Success!
-                console.log("here");
+            this.socialSharing.shareViaEmail('Body', 'Subject', [this.email]).then(() => {
             }).catch(() => {
-                // Error!
-                console.log("here 1")
+                // Errore
             });
         }).catch(() => {
             // Sharing via email is not possible
-            console.log("here 2")
         });
 
     }

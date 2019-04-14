@@ -16,26 +16,26 @@
         </ion-button>
     </ion-item>
     <div *ngIf="showTitle; else elseBlock">
-    <ion-item>
-        Set Subscription Title
-        <ion-button slot="end" (click)="presentTitlePopover()">
-            <ion-icon slot="icon-only" name="create">
-            </ion-icon>
-        </ion-button>
-    </ion-item>
+        <ion-item>
+            Set Subscription Title
+            <ion-button slot="end" (click)="presentTitlePopover()">
+                <ion-icon slot="icon-only" name="create">
+                </ion-icon>
+            </ion-button>
+        </ion-item>
     </div>
     <ion-item>
         <ion-label>Show Title</ion-label>
         <ion-toggle [(ngModel)]="showTitle" (ionChange)="toggleTitle()"></ion-toggle>
     </ion-item>
     <div *ngIf="showLogo; else elseBlock2">
-    <ion-item>
-        Add Logo
-        <ion-button slot="end" (click)="persentFileChooser()">
-            <ion-icon slot="icon-only" name="create">
-            </ion-icon>
-        </ion-button>
-    </ion-item>
+        <ion-item>
+            Add Logo
+            <ion-button slot="end" (click)="persentFileChooser()">
+                <ion-icon slot="icon-only" name="create">
+                </ion-icon>
+            </ion-button>
+        </ion-item>
     </div>
     <ion-item>
         <ion-label>Show Logo</ion-label>
@@ -69,15 +69,15 @@
             </ion-icon>
         </ion-button>
     </ion-item>
-        <ng-template #elseBlock>
-            <ion-item [disabled]=true>
+    <ng-template #elseBlock>
+        <ion-item [disabled]=true>
             Set Subscription Title
             <ion-button slot="end" (click)="presentTitlePopover()">
                 <ion-icon slot="icon-only" name="create">
                 </ion-icon>
             </ion-button>
         </ion-item>
-        </ng-template>
+    </ng-template>
 
     <ng-template #elseBlock2>
         <ion-item [disabled]=true>
