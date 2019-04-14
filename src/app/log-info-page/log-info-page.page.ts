@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { Storage } from '@ionic/storage';
+import {Component, OnInit} from '@angular/core';
+import {Storage} from '@ionic/storage';
 import {Router} from '@angular/router';
 import {NavController, ToastController, AlertController} from '@ionic/angular';
-import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
+import {AndroidPermissions} from '@ionic-native/android-permissions/ngx';
 import {File} from '@ionic-native/file/ngx';
 
 @Component({
@@ -21,6 +21,7 @@ export class LogInfoPagePage implements OnInit {
     imageURL: any = 'assets/img/default-logo.png';
     showTitle: any;
     showLogo: any;
+
     constructor(private storage: Storage, private router: Router,
                 private navController: NavController, private toastController: ToastController,
                 private alertController: AlertController, private androidPermissions: AndroidPermissions,
@@ -35,32 +36,32 @@ export class LogInfoPagePage implements OnInit {
 
     ngOnInit() {
         this.storage.set('logViewAuth', false);
-        this.storage.get("password").then((val) => {
-            if(val == null){
+        this.storage.get('password').then((val) => {
+            if (val == null) {
                 this.presentAlertPrompt();
             }
         });
-        this.storage.get("title").then((val)=>{
-            if(val != null){
+        this.storage.get('title').then((val) => {
+            if (val != null) {
                 this.subscriptionTitle = val;
             }
         });
 
-        this.storage.get("logo").then((val)=> {
-            if(val != null){
-                this.file.readAsDataURL(this.file.dataDirectory, val).then( img => {
+        this.storage.get('logo').then((val) => {
+            if (val != null) {
+                this.file.readAsDataURL(this.file.dataDirectory, val).then(img => {
                     this.imageURL = img;
                 });
             }
         });
-        this.storage.get("showTitle").then((val)=>{
-            if(val !=null){
+        this.storage.get('showTitle').then((val) => {
+            if (val != null) {
                 this.showTitle = val;
             }
         });
 
-        this.storage.get("showLogo").then((val)=>{
-            if(val !=  null){
+        this.storage.get('showLogo').then((val) => {
+            if (val != null) {
 
                 this.showLogo = val;
             }
@@ -79,8 +80,8 @@ export class LogInfoPagePage implements OnInit {
             date: date,
         };
         this.storage.get(this.email).then((val) => {
-            if(val == null){
-                this.storage.set(this.email, data).then((val) =>{
+            if (val == null) {
+                this.storage.set(this.email, data).then((val) => {
                     this.clearInput();
                 });
             } else {
@@ -88,12 +89,14 @@ export class LogInfoPagePage implements OnInit {
             }
         });
     }
+
     /* Testing code for storage*/
     printAll(email) {
         this.storage.get(email).then((val) => {
             console.log('your name is ', val);
         });
     }
+
     doRefresh(event) {
         this.clearInput();
 
@@ -102,7 +105,8 @@ export class LogInfoPagePage implements OnInit {
             event.target.complete();
         }, 1000);
     }
-    clearInput(){
+
+    clearInput() {
         this.fullName = '';
         this.email = '';
         this.mobileNumber = null;
@@ -111,11 +115,13 @@ export class LogInfoPagePage implements OnInit {
         this.additionalInfo = '';
         this.presentToast();
     }
-    setPassword(password){
-        this.storage.set('password', password).then((val)=>{
+
+    setPassword(password) {
+        this.storage.set('password', password).then((val) => {
             this.presentToast();
         });
     }
+
     async presentToast() {
         const toast = await this.toastController.create({
             message: 'Successful, information have been saved.',
@@ -123,6 +129,7 @@ export class LogInfoPagePage implements OnInit {
         });
         toast.present();
     }
+
     async presentToastUnsuccessful(val) {
         const toast = await this.toastController.create({
             message: 'Unsuccessful subscription for email "' + val + '" exists.',
@@ -130,10 +137,11 @@ export class LogInfoPagePage implements OnInit {
         });
         toast.present();
     }
+
     async presentAlertPrompt() {
         const alert = await this.alertController.create({
             header: 'Setup New Password',
-            subHeader: "",
+            subHeader: '',
             inputs: [
                 {
                     name: 'password1',
@@ -150,10 +158,10 @@ export class LogInfoPagePage implements OnInit {
                 {
                     text: 'Ok',
                     handler: data => {
-                        if(data.password1 != data.password2) {
+                        if (data.password1 != data.password2) {
                             alert.subHeader = 'Password Do Not Match!';
                             return false;
-                        } else if (data.password1 == "" || data.password2 == ""){
+                        } else if (data.password1 == '' || data.password2 == '') {
                             alert.subHeader = 'Password Connot Be Empty';
                             return false;
                         } else {
