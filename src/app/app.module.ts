@@ -8,7 +8,7 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { IonicStorageModule } from '@ionic/storage';
 //import { CallNumber } from '@ionic-native/call-number';
 import {FileChooser} from '@ionic-native/file-chooser/ngx';
-
+import { File } from '@ionic-native/file/ngx';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 
 import { AppComponent } from './app.component';
@@ -40,6 +40,7 @@ import { FilePath } from '@ionic-native/file-path/ngx';
         SocialSharing,
         FileChooser,
         FilePath,
+        File,
         AndroidPermissions,
     ],
     bootstrap: [AppComponent]

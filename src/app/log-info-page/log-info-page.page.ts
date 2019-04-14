@@ -3,7 +3,7 @@ import { Storage } from '@ionic/storage';
 import {Router} from '@angular/router';
 import {NavController, ToastController, AlertController} from '@ionic/angular';
 import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
-
+import {File} from '@ionic-native/file/ngx';
 
 @Component({
     selector: 'app-log-info-page',
@@ -18,12 +18,13 @@ export class LogInfoPagePage implements OnInit {
     mobileNumber: number;
     additionalInfo: any;
     subscriptionTitle = 'Set Title from settings';
-    imageURL = 'assets/img/default-logo.png';
+    imageURL: any = 'assets/img/default-logo.png';
     showTitle: any;
     showLogo: any;
     constructor(private storage: Storage, private router: Router,
                 private navController: NavController, private toastController: ToastController,
-                private alertController: AlertController, private androidPermissions: AndroidPermissions) {
+                private alertController: AlertController, private androidPermissions: AndroidPermissions,
+                private file: File) {
 
         this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.WRITE_EXTERNAL_STORAGE).then(
             result => console.log('Has permission?', result.hasPermission),
@@ -48,8 +49,26 @@ export class LogInfoPagePage implements OnInit {
         console.log("here");
         this.storage.get("logo").then((val)=> {
             if(val != null){
-                console.log(val);
-                this.imageURL = val;
+                this.file.readAsDataURL(this.file.dataDirectory, val).then( img => {
+                    this.imageURL = img;
+                    console.log(this.imageURL);
+                    console.log(this.file.dataDirectory + val);
+                })
+
+                // this.file.resolveDirectoryUrl(this.file.dataDirectory).then((rootDir)=>{
+                //     return this.file.getFile(rootDir, val, { create: false })
+                // }).then((fileEntry)=>{
+                //     console.log(fileEntry.toURL());
+                //    this.imageURL= fileEntry.toURL();
+                //    // $cordovaFile.readAsDataURL()
+                //    //  this.file.readAsDataURL()
+                //   //  fileEntry.file(file => {
+                //   //     console.log(file);
+                //   //     this.imageURL = file.localURL;
+                //   //  });
+                // });
+                //console.log(val);
+                //this.imageURL = val;
             }
         });
       this.storage.get("showTitle").then((val)=>{

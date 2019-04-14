@@ -23,6 +23,7 @@
     "@ionic-native/android-permissions": "^5.3.0",
     "@ionic-native/call-number": "^4.20.0",
     "@ionic-native/core": "^5.3.0",
+    "@ionic-native/file": "^5.4.0",
     "@ionic-native/file-chooser": "^5.3.0",
     "@ionic-native/file-path": "^5.4.0",
     "@ionic-native/social-sharing": "^5.3.0",
@@ -100,7 +101,8 @@
       "cordova-plugin-filechooser": {},
       "call-number": {},
       "cordova-plugin-android-permissions": {},
-      "cordova-plugin-filepath": {}
+      "cordova-plugin-filepath": {},
+      "cordova-plugin-file": {}
     },
     "platforms": [
       "ios",

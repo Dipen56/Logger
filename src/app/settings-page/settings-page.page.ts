@@ -6,6 +6,7 @@ import {FileChooser} from '@ionic-native/file-chooser/ngx';
 import {Storage} from '@ionic/storage';
 import {ToastController, AlertController} from '@ionic/angular';
 import { FilePath } from '@ionic-native/file-path/ngx';
+import { File } from '@ionic-native/file/ngx';
 
 @Component({
     selector: 'app-settings-page',
@@ -17,7 +18,8 @@ export class SettingsPagePage implements OnInit {
     showLogo: any;
     constructor(private popoverController: PopoverController, private fileChooser: FileChooser,
                 private storage: Storage, private toastController: ToastController,
-                private alertController: AlertController, private filePath: FilePath) { }
+                private alertController: AlertController, private filePath: FilePath,
+                private file: File) { }
 
     ngOnInit() {
         this.storage.set('logViewAuth', false);
@@ -93,16 +95,25 @@ export class SettingsPagePage implements OnInit {
 
     async persentFileChooser(){
         await this.fileChooser.open().then((uri) =>{
-            this.filePath.resolveNativePath(uri).then((file) =>{
-                let fileLoc: string = file;
-                if(fileLoc){
-                this.storage.set("logo", fileLoc).then((val)=> {
-                    if(val != null){
-                        this.presentToast();
-                    }
+            this.filePath.resolveNativePath(uri).then((filePath) => {
+                let correctPath = filePath.substr(0, filePath.lastIndexOf('/') + 1);
+                let currentName = filePath.substring(filePath.lastIndexOf('/') + 1);
+                console.log(correctPath);
+                console.log(currentName);
+                console.log(this.file.dataDirectory);
+                // This finds the asset directory
+                // this.file.checkDir(this.file.applicationDirectory, 'assets/img/').then(_ => console.log('Directory exists')).catch(err =>
+                //     console.log('Directory doesnt exist'));
+                this.file.copyFile(correctPath, currentName, this.file.dataDirectory, currentName).then(res =>{
+                    this.storage.set("logo", currentName).then((val)=> {
+                        if(val != null){
+                            this.presentToast();
+                        }
+                    });
                 });
-                }
-            });
+                // this.file.checkDir(this.file.dataDirectory, currentName).then(_ => console.log('Directory exists')).catch(err =>
+                //   console.log('Directory doesnt exist'));
+        });
         });
     }
     async presentToast() {
