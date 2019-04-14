@@ -30,7 +30,6 @@ export class LogInfoPagePage implements OnInit {
             result => console.log('Has permission?', result.hasPermission),
             err => this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.WRITE_EXTERNAL_STORAGE)
         );
-
         this.androidPermissions.requestPermissions([this.androidPermissions.PERMISSION.WRITE_EXTERNAL_STORAGE, this.androidPermissions.PERMISSION.GET_ACCOUNTS]);
     }
 
@@ -46,43 +45,26 @@ export class LogInfoPagePage implements OnInit {
                 this.subscriptionTitle = val;
             }
         });
-        console.log("here");
+
         this.storage.get("logo").then((val)=> {
             if(val != null){
                 this.file.readAsDataURL(this.file.dataDirectory, val).then( img => {
                     this.imageURL = img;
-                    console.log(this.imageURL);
-                    console.log(this.file.dataDirectory + val);
-                })
-
-                // this.file.resolveDirectoryUrl(this.file.dataDirectory).then((rootDir)=>{
-                //     return this.file.getFile(rootDir, val, { create: false })
-                // }).then((fileEntry)=>{
-                //     console.log(fileEntry.toURL());
-                //    this.imageURL= fileEntry.toURL();
-                //    // $cordovaFile.readAsDataURL()
-                //    //  this.file.readAsDataURL()
-                //   //  fileEntry.file(file => {
-                //   //     console.log(file);
-                //   //     this.imageURL = file.localURL;
-                //   //  });
-                // });
-                //console.log(val);
-                //this.imageURL = val;
+                });
             }
         });
-      this.storage.get("showTitle").then((val)=>{
-           if(val !=null){
-               this.showTitle = val;
-           }
-       });
+        this.storage.get("showTitle").then((val)=>{
+            if(val !=null){
+                this.showTitle = val;
+            }
+        });
 
-      this.storage.get("showLogo").then((val)=>{
-          if(val !=  null){
+        this.storage.get("showLogo").then((val)=>{
+            if(val !=  null){
 
-              this.showLogo = val;
-          }
-      });
+                this.showLogo = val;
+            }
+        });
     }
 
     subscribe() {
@@ -97,7 +79,6 @@ export class LogInfoPagePage implements OnInit {
             date: date,
         };
         this.storage.get(this.email).then((val) => {
-
             if(val == null){
                 this.storage.set(this.email, data).then((val) =>{
                     this.clearInput();
