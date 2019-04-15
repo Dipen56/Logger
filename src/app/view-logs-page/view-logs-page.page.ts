@@ -2,6 +2,7 @@ import {Component, OnInit, NgZone} from '@angular/core';
 import {Storage} from '@ionic/storage';
 import {Router} from '@angular/router';
 import {Events, AlertController, PopoverController} from '@ionic/angular';
+import { ViewLogsPopoverComponent } from './view-logs-popover/view-logs-popover.component';
 
 
 @Component({
@@ -20,7 +21,7 @@ export class ViewLogsPagePage implements OnInit {
 
     constructor(private storage: Storage, private router: Router,
                 private events: Events, private zone: NgZone,
-                private alertController: AlertController,) {
+                private alertController: AlertController, private popoverController: PopoverController) {
         // used to refresh the screen.
         this.events.subscribe('updateScreen', () => {
 
@@ -121,6 +122,18 @@ export class ViewLogsPagePage implements OnInit {
             this.isSelectMode = false;
         }
         this.events.publish('updateScreen');
+    }
+
+    async presentPopover(ev: Event) {
+        const popover = await this.popoverController.create({
+            component: ViewLogsPopoverComponent,
+            event: ev,
+            translucent: true,
+            componentProps: {
+                log_key: this.key
+            }
+        });
+        return await popover.present();
     }
 
     async deleteAllLogsAlert() {

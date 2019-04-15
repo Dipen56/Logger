@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 
 import { ViewLogsPagePage } from './view-logs-page.page';
 import { LogDetailPageComponent } from './log-detail-page/log-detail-page.component';
+import { ViewLogsPopoverComponent } from './view-logs-popover/view-logs-popover.component';
 
 const routes: Routes = [
   {
@@ -26,6 +27,6 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [ViewLogsPagePage, LogDetailPageComponent]
+  declarations: [ViewLogsPagePage, LogDetailPageComponent, ViewLogsPopoverComponent]
 })
 export class ViewLogsPagePageModule {}

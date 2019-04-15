@@ -19,18 +19,21 @@ import { FormsModule } from '@angular/forms';
 import { SetTitlePopoverComponent } from './set-title-popover/set-title-popover.component';
 import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
 import { FilePath } from '@ionic-native/file-path/ngx';
+import { ViewLogsPopoverComponent} from './view-logs-page/view-logs-popover/view-logs-popover.component';
+import {ViewLogsPagePageModule} from './view-logs-page/view-logs-page.module';
+
 
 @NgModule({
 
     declarations: [AppComponent, PopoverComponent, ChangePasswordPopoverComponent, SetTitlePopoverComponent],
-    entryComponents: [PopoverComponent, ChangePasswordPopoverComponent, SetTitlePopoverComponent],
+    entryComponents: [PopoverComponent, ChangePasswordPopoverComponent, SetTitlePopoverComponent, ViewLogsPopoverComponent],
     imports: [
         BrowserModule,
         IonicModule.forRoot(),
         AppRoutingModule,
         IonicStorageModule.forRoot(),
         FormsModule,
-
+        ViewLogsPagePageModule
     ],
     providers: [
         StatusBar,
