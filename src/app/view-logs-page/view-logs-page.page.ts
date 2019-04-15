@@ -17,7 +17,6 @@ export class ViewLogsPagePage implements OnInit {
     selcetedLogs = [];
     isChecked = false;
     searchQuery: any;
-    allData: any;
 
     constructor(private storage: Storage, private router: Router,
                 private events: Events, private zone: NgZone,
@@ -66,7 +65,6 @@ export class ViewLogsPagePage implements OnInit {
     async loadAllLogs() {
         this.logs = [];
         await this.storage.forEach((value, key, index) => {
-            this.allData = this.allData + key;
             if (key != 'password' && key != 'showTitle' && key != 'showLogo' && key != 'logViewAuth' && key != 'logo') {
                 this.logs.push(value);
             }

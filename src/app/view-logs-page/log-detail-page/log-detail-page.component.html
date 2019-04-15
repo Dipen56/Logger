@@ -39,12 +39,11 @@
     </ion-item>
     <ion-item>
         <ion-label>
-            {{date}}
+            {{date | date: "dd/MM/yyyy HH:mm"}}
         </ion-label>
     </ion-item>
     <ion-item>
         <ion-label>
-            Additional Information:
             {{addtionalInformation}}
         </ion-label>
     </ion-item>

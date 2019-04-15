@@ -33,9 +33,22 @@ export class LogDetailPageComponent implements OnInit {
             this.fullName = val.fullName;
             this.email = val.email;
             this.homeNumber = val.homeNumber;
+            console.log(this.homeNumber);
+            if (this.homeNumber == undefined) {
+                this.homeNumber = 'N/A';
+            }
             this.workNumber = val.workNumber;
+            if (this.workNumber == undefined) {
+                this.workNumber = 'N/A';
+            }
             this.mobileNumber = val.mobileNumber;
+            if (this.mobileNumber == undefined) {
+                this.mobileNumber = 'N/A';
+            }
             this.addtionalInformation = val.additionalInfo;
+            if (this.addtionalInformation == undefined) {
+                this.addtionalInformation = 'No additional information';
+            }
             this.date = val.date;
         });
     }
