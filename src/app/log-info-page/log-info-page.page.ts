@@ -174,7 +174,6 @@ export class LogInfoPagePage implements OnInit {
             ],
             backdropDismiss: false,
         });
-
         await alert.present();
     }
 }
