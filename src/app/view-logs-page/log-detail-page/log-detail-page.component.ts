@@ -68,9 +68,6 @@ export class LogDetailPageComponent implements OnInit {
         return await popover.present();
     }
 
-    makeCall(number) {
-    }
-
     sendEmail() {
         // Check if sharing via email is supported
         this.socialSharing.canShareViaEmail().then(() => {
@@ -82,7 +79,5 @@ export class LogDetailPageComponent implements OnInit {
         }).catch(() => {
             // Sharing via email is not possible
         });
-
     }
-
 }

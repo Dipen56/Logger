@@ -33,7 +33,7 @@ export class PopoverComponent implements OnInit {
                     handler: () => {
                         this.deleteLog();
                         this.logDeletedMessage();
-                        this.router.navigateByUrl('/view-logs-page')
+                        this.router.navigateByUrl('/view-logs-page');
 
                     }
                 }

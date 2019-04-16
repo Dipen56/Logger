@@ -2,8 +2,7 @@ import {Component, OnInit, NgZone} from '@angular/core';
 import {Storage} from '@ionic/storage';
 import {Router} from '@angular/router';
 import {Events, AlertController, PopoverController} from '@ionic/angular';
-import { ViewLogsPopoverComponent } from './view-logs-popover/view-logs-popover.component';
-
+import {ViewLogsPopoverComponent} from './view-logs-popover/view-logs-popover.component';
 
 @Component({
     selector: 'app-view-logs-page',
@@ -17,7 +16,7 @@ export class ViewLogsPagePage implements OnInit {
     isHidden = true;
     selcetedLogs = [];
     isChecked = false;
-    searchQuery: any;
+    searchQuery: string;
 
     constructor(private storage: Storage, private router: Router,
                 private events: Events, private zone: NgZone,
@@ -40,6 +39,11 @@ export class ViewLogsPagePage implements OnInit {
         });
     }
 
+    updateScreen() {
+        console.log(this.isSelectMode);
+        this.events.publish('updateScreen');
+    }
+
     searchLogs() {
         let tempLogs = [];
 
@@ -47,7 +51,7 @@ export class ViewLogsPagePage implements OnInit {
             this.loadAllLogs();
         } else {
             for (let log of this.copyLogs) {
-                if (log.email.startsWith(this.searchQuery)) {
+                if (log.email.toUpperCase().startsWith(this.searchQuery.toUpperCase())) {
                     tempLogs.push(log);
                 }
             }
@@ -77,7 +81,6 @@ export class ViewLogsPagePage implements OnInit {
         this.isHidden = false;
         this.isSelectMode = true;
         this.events.publish('updateScreen');
-        //window.location.reload();
     }
 
     addSelectedLog(key) {
@@ -105,68 +108,21 @@ export class ViewLogsPagePage implements OnInit {
         this.events.publish('updateScreen');
     }
 
-    deleteLog() {
-        if (!this.isChecked) {
-            if (this.selcetedLogs.length != 0) {
-                for (let key of this.selcetedLogs) {
-                    this.removeFromStorage(key);
-                }
-            }
-        } else {
-            for (let key of this.selcetedLogs) {
-                this.removeFromStorage(key);
-            }
-        }
-        this.loadAllLogs();
-        if (this.logs.length === 0) {
-            this.isSelectMode = false;
-        }
-        this.events.publish('updateScreen');
-    }
-
     async presentPopover(ev: Event) {
         const popover = await this.popoverController.create({
             component: ViewLogsPopoverComponent,
             event: ev,
             translucent: true,
             componentProps: {
-                log_key: this.key
+                selectedLogs: this.selcetedLogs,
             }
         });
-        return await popover.present();
-    }
-
-    async deleteAllLogsAlert() {
-        const alert = await this.alertController.create({
-            header: 'Confirm!',
-            message: '<strong>Are you sure this will delete logs</strong>!',
-            buttons: [
-                {
-                    text: 'Cancel',
-                    role: 'cancel',
-                    cssClass: 'secondary',
-                    handler: (blah) => {
-                        console.log('Confirm Cancel: blah');
-                    }
-                }, {
-                    text: 'Okay',
-                    handler: () => {
-                        this.deleteLog();
-                    }
-                }
-            ]
+        popover.onDidDismiss().then((e) => {
+            this.isSelectMode = false;
+            this.loadAllLogs();
+            this.events.publish('updateScreen');
         });
-
-        await alert.present();
-    }
-
-    removeFromStorage(key) {
-        this.storage.remove(key);
-    }
-
-    exitSelectAll() {
-        this.isSelectMode = false;
-        this.events.publish('updateScreen');
+        return await popover.present();
     }
 
     async presentAlertPrompt(errMessage) {
@@ -180,8 +136,14 @@ export class ViewLogsPagePage implements OnInit {
                     placeholder: 'Enter Password',
                 }
             ],
-            buttons: [
-                {
+            buttons: [{
+                text: 'Cancel',
+                role: 'cancel',
+                cssClass: 'secondary',
+                handler: (blah) => {
+                    this.router.navigateByUrl('/log-info-page');
+                }
+            }, {
                     text: 'Ok',
                     handler: data => {
                         this.storage.get('password').then((val) => {

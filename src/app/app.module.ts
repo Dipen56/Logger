@@ -21,6 +21,7 @@ import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
 import { FilePath } from '@ionic-native/file-path/ngx';
 import { ViewLogsPopoverComponent} from './view-logs-page/view-logs-popover/view-logs-popover.component';
 import {ViewLogsPagePageModule} from './view-logs-page/view-logs-page.module';
+import {ViewLogsPagePage} from './view-logs-page/view-logs-page.page';
 
 
 @NgModule({
@@ -45,6 +46,7 @@ import {ViewLogsPagePageModule} from './view-logs-page/view-logs-page.module';
         FilePath,
         File,
         AndroidPermissions,
+        ViewLogsPagePage
     ],
     bootstrap: [AppComponent]
 })
