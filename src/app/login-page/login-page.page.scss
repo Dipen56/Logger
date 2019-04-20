@@ -1,0 +1,38 @@
+ion-content.login-screen {
+ --background: none;
+  background-image: linear-gradient(to top, #004bff, #0075ff, #0093ff, #00acfa, #00c0e9, #00c4e5, #00c8df, #00cbd9, #15c2dd, #31b9de, #48afdb, #5ca5d6);
+}
+.heading{
+  top: 20%;
+  width: 100%;
+  position: absolute;
+  text-align: center;
+}
+.title{
+  font-size: 4rem;
+
+}
+.subtitle{
+  font-size: 1rem;
+
+}
+.login-screen-content{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+ion-item {
+  border-radius: 30px !important;
+  padding-left: 30px !important;
+  padding-right: 30px !important;
+  font-size: 0.9em;
+  margin-bottom: 10px;
+  margin-top: 8px;
+  border: 1px solid #ffffff;
+  border-bottom: 0px !important;
+  box-shadow: none !important;
+  background-color: white;
+}
