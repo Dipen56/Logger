@@ -11,29 +11,29 @@
         <div class="auth">
             <ion-item>
                 <ion-label position="floating">First Name</ion-label>
-                <ion-input type="text" autofocus="true" required="true"></ion-input>
+                <ion-input type="text" autofocus="true" required [(ngModel)]="firstName"></ion-input>
             </ion-item>
             <ion-item>
                 <ion-label position="floating">Last Name</ion-label>
-                <ion-input type="text"  required="true"></ion-input>
+                <ion-input type="text"  required [(ngModel)]="lastName"></ion-input>
             </ion-item>
             <ion-item>
                 <ion-label position="floating">Username</ion-label>
-                <ion-input type="text"  required="true"></ion-input>
+                <ion-input type="text"  required [(ngModel)]="username"></ion-input>
             </ion-item>
             <ion-item>
                 <ion-label position="floating">Password</ion-label>
-                <ion-input type="password" required="true" ></ion-input>
+                <ion-input type="password" required [(ngModel)]="password"></ion-input>
             </ion-item>
             <ion-item>
                 <ion-label position="floating">Re-Enter Password</ion-label>
-                <ion-input type="password" required="true" ></ion-input>
+                <ion-input type="password" required [(ngModel)]="re_entered_password"></ion-input>
             </ion-item>
             <ion-item>
                 <ion-label position="floating">What is my favourite hair color? </ion-label>
-                <ion-input type="text" required="true"></ion-input>
+                <ion-input type="text" required [(ngModel)]="question"></ion-input>
             </ion-item>
         </div>
-        <ion-button class="login-btn">Sign Up</ion-button>
+        <ion-button class="login-btn" (click)="signupUser()">Sign Up</ion-button>
     </div>
 </ion-content>

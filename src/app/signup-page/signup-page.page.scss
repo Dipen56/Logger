@@ -42,10 +42,6 @@ ion-content.signup-screen {
 }
 
 .auth {
-  //display: inline-block;
-  //border-radius: 30px !important;
-  //padding-left: 30px !important;
-  //padding-right: 30px !important;
   padding: 10px 10px 20px 10px;
   font-size: 0.9em;
   margin-bottom: 10px;
@@ -56,21 +52,11 @@ ion-content.signup-screen {
   -webkit-box-shadow: 10px 10px 43px -31px rgba(0, 0, 0, 1);
   -moz-box-shadow: 10px 10px 43px -31px rgba(0, 0, 0, 1);
   box-shadow: 10px 10px 43px -31px rgba(0, 0, 0, 1) !important;
-  //box-shadow: none !important;
-  //background-color: white;
-  //box-shadow: 0 8px 6px -6px #252626;
 }
 
 ion-item {
-  //border-radius: 30px !important;
-  //padding-left: 30px !important;
-  //padding-right: 30px !important;
   font-size: 0.9em;
-  //margin-bottom: 15px;
-  //border: 1px solid #ffffff;
-  //border-bottom: 0px !important;
   background-color: white;
-  //--show-full-highlight: 0px;
 }
 
 .login-btn {
