@@ -1,16 +1,27 @@
 <ion-content padding class="login-screen">
-    <div class="heading">
-    <ion-label class="title">Hello <br></ion-label>
-    <ion-label class="subtitle">Sign in to your account</ion-label>
+    <div class="logo-wrapper">
+        <div class="logo">
+            <ion-img id="img" src='assets/img/logo_transparent.png'></ion-img>
         </div>
-    <div class="login-screen-content">
-        <ion-item>
-            <ion-label position="floating">Username</ion-label>
-            <ion-input type="text" autofocus="true" required="true" class="username-input"></ion-input>
-        </ion-item>
-        <ion-item>
-            <ion-label position="floating">Password</ion-label>
-            <ion-input type="password" required="true" class="password-input"></ion-input>
-        </ion-item>
+        <div class="title">
+            <ion-label id="title">Welcome</ion-label>
+        </div>
+    </div>
+    <div class="heading">
+        <div class="auth">
+            <ion-item>
+                <ion-label position="floating">Username</ion-label>
+                <ion-input type="text" autofocus="true" required="true" class="username-input"></ion-input>
+            </ion-item>
+
+            <ion-item>
+                <ion-label position="floating">Password</ion-label>
+                <ion-input type="password" required="true" class="password-input"></ion-input>
+            </ion-item>
+            <div class="forgot-password">
+                <ion-label id="forgot-password-label">Forgot Password?</ion-label>
+            </div>
+        </div>
+        <ion-button class="login-btn">Login</ion-button>
     </div>
 </ion-content>
