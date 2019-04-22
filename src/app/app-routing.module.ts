@@ -1,20 +1,22 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import {NgModule} from '@angular/core';
+import {Routes, RouterModule} from '@angular/router';
 
 const routes: Routes = [
     {
         path: '',
-        redirectTo: 'login-page',
+        redirectTo: 'signup-page',
         pathMatch: 'full',
     },
-    { path: 'log-info-page', loadChildren: './log-info-page/log-info-page.module#LogInfoPagePageModule' },
-    { path: 'view-logs-page', loadChildren: './view-logs-page/view-logs-page.module#ViewLogsPagePageModule'},
-    { path: 'settings-page', loadChildren: './settings-page/settings-page.module#SettingsPagePageModule' },
-  { path: 'login-page', loadChildren: './login-page/login-page.module#LoginPagePageModule' },
+    {path: 'log-info-page', loadChildren: './log-info-page/log-info-page.module#LogInfoPagePageModule'},
+    {path: 'view-logs-page', loadChildren: './view-logs-page/view-logs-page.module#ViewLogsPagePageModule'},
+    {path: 'settings-page', loadChildren: './settings-page/settings-page.module#SettingsPagePageModule'},
+    {path: 'login-page', loadChildren: './login-page/login-page.module#LoginPagePageModule'},
+    {path: 'signup-page', loadChildren: './signup-page/signup-page.module#SignupPagePageModule'},
 ];
 
 @NgModule({
     imports: [RouterModule.forRoot(routes, {onSameUrlNavigation: 'reload'})],
     exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule {
+}

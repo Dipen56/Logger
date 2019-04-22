@@ -1,4 +1,4 @@
-ion-content.login-screen {
+ion-content.signup-screen {
   --background: #5C3C4C;
   //--background: none;
   //background-image: linear-gradient(to right top, #0066ff, #0070ff, #0078ff, #0081ff, #0089ff);
@@ -10,14 +10,14 @@ ion-content.login-screen {
 
 .logo-wrapper {
   width: 85%;
-  height: 40%;
+  height: 30%;
   margin: auto;
   position: inherit;
 }
 
 .logo {
   margin: auto;
-  width: 100%;
+  width: 80%;
   // if inherit from the parent it will get in's value i.e 85%
   height: 70%;
   position: inherit;
@@ -33,7 +33,7 @@ ion-content.login-screen {
 
 #title {
   font-family: Tahoma, Geneva, sans-serif;
-  font-size: 2.5rem;
+  font-size: 2.0rem;
   color: #D5DBA6;
 }
 
@@ -46,30 +46,31 @@ ion-content.login-screen {
   //border-radius: 30px !important;
   //padding-left: 30px !important;
   //padding-right: 30px !important;
+  padding: 10px 10px 20px 10px;
   font-size: 0.9em;
   margin-bottom: 10px;
-  margin-top: 20px;
   border: 0px solid #ffffff;
   border-bottom: 0px !important;
-
+  border-radius: 30px !important;
+  background-color: white;
+  -webkit-box-shadow: 10px 10px 43px -31px rgba(0, 0, 0, 1);
+  -moz-box-shadow: 10px 10px 43px -31px rgba(0, 0, 0, 1);
+  box-shadow: 10px 10px 43px -31px rgba(0, 0, 0, 1) !important;
   //box-shadow: none !important;
   //background-color: white;
   //box-shadow: 0 8px 6px -6px #252626;
 }
 
 ion-item {
-  border-radius: 30px !important;
-  padding-left: 30px !important;
-  padding-right: 30px !important;
+  //border-radius: 30px !important;
+  //padding-left: 30px !important;
+  //padding-right: 30px !important;
   font-size: 0.9em;
-  margin-bottom: 15px;
-  border: 1px solid #ffffff;
-  border-bottom: 0px !important;
-  -webkit-box-shadow: 10px 10px 43px -31px rgba(0, 0, 0, 1);
-  -moz-box-shadow: 10px 10px 43px -31px rgba(0, 0, 0, 1);
-  box-shadow: 10px 10px 43px -31px rgba(0, 0, 0, 1) !important;
+  //margin-bottom: 15px;
+  //border: 1px solid #ffffff;
+  //border-bottom: 0px !important;
   background-color: white;
-  --show-full-highlight: 0px;
+  //--show-full-highlight: 0px;
 }
 
 .login-btn {
