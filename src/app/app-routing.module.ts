@@ -9,6 +9,7 @@ const routes: Routes = [
     {path: 'settings-page', loadChildren: './settings-page/settings-page.module#SettingsPagePageModule'},
     {path: 'login-page', loadChildren: './login-page/login-page.module#LoginPagePageModule'},
     {path: 'signup-page', loadChildren: './signup-page/signup-page.module#SignupPagePageModule', canActivate: [SignupGuard]},
+    {path: 'dashboard-page', loadChildren: './dashboard-page/dashboard-page.module#DashboardPagePageModule'},
 ];
 
 @NgModule({
