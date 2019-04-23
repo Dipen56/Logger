@@ -22,6 +22,8 @@ import { FilePath } from '@ionic-native/file-path/ngx';
 import { ViewLogsPopoverComponent} from './view-logs-page/view-logs-popover/view-logs-popover.component';
 import {ViewLogsPagePageModule} from './view-logs-page/view-logs-page.module';
 import {ViewLogsPagePage} from './view-logs-page/view-logs-page.page';
+import {SignupGuard} from './signup-page/signup.guard';
+import {SignupPagePageModule} from './signup-page/signup-page.module';
 
 
 @NgModule({
@@ -34,7 +36,8 @@ import {ViewLogsPagePage} from './view-logs-page/view-logs-page.page';
         AppRoutingModule,
         IonicStorageModule.forRoot(),
         FormsModule,
-        ViewLogsPagePageModule
+        ViewLogsPagePageModule,
+
     ],
     providers: [
         StatusBar,
@@ -46,7 +49,8 @@ import {ViewLogsPagePage} from './view-logs-page/view-logs-page.page';
         FilePath,
         File,
         AndroidPermissions,
-        ViewLogsPagePage
+        ViewLogsPagePage,
+        SignupGuard
     ],
     bootstrap: [AppComponent]
 })

@@ -1,5 +1,6 @@
 import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
+import {SignupGuard} from './signup-page/signup.guard';
 
 const routes: Routes = [
     {path: '', redirectTo: 'signup-page', pathMatch: 'full'},
@@ -7,7 +8,7 @@ const routes: Routes = [
     {path: 'view-logs-page', loadChildren: './view-logs-page/view-logs-page.module#ViewLogsPagePageModule'},
     {path: 'settings-page', loadChildren: './settings-page/settings-page.module#SettingsPagePageModule'},
     {path: 'login-page', loadChildren: './login-page/login-page.module#LoginPagePageModule'},
-    {path: 'signup-page', loadChildren: './signup-page/signup-page.module#SignupPagePageModule'},
+    {path: 'signup-page', loadChildren: './signup-page/signup-page.module#SignupPagePageModule', canActivate: [SignupGuard]},
 ];
 
 @NgModule({

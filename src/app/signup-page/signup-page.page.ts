@@ -33,7 +33,7 @@ export class SignupPagePage implements OnInit {
                 password: this.password,
                 question: this.question
             };
-            this.storage.set(this.username, data).then((val) => {
+            this.storage.set('login', data).then((val) => {
                 this.presentToastSuccess('Details Saved.').then(res => {
                     this.router.navigate(['login-page']);
                 });
@@ -54,7 +54,7 @@ export class SignupPagePage implements OnInit {
         } else if (this.password == undefined || this.re_entered_password == undefined) {
             this.presentToastError('Password Cannot Be Empty.');
             return false;
-        } else if (this.password.split(). < 2) {
+        } else if (this.password.split('').length < 3) {
             this.presentToastError('Password Must Be Larger Then 4 Characters.');
             return false;
         } else {
