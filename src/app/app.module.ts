@@ -23,13 +23,13 @@ import { ViewLogsPopoverComponent} from './view-logs-page/view-logs-popover/view
 import {ViewLogsPagePageModule} from './view-logs-page/view-logs-page.module';
 import {ViewLogsPagePage} from './view-logs-page/view-logs-page.page';
 import {SignupGuard} from './signup-page/signup.guard';
-import {SignupPagePageModule} from './signup-page/signup-page.module';
-
+import {AddEventModalComponent} from './dashboard-page/add-event-modal/add-event-modal.component';
+import {DashboardPagePageModule} from './dashboard-page/dashboard-page.module';
 
 @NgModule({
 
-    declarations: [AppComponent, PopoverComponent, ChangePasswordPopoverComponent, SetTitlePopoverComponent],
-    entryComponents: [PopoverComponent, ChangePasswordPopoverComponent, SetTitlePopoverComponent, ViewLogsPopoverComponent],
+    declarations: [AppComponent, PopoverComponent, ChangePasswordPopoverComponent, SetTitlePopoverComponent, AddEventModalComponent],
+    entryComponents: [PopoverComponent, ChangePasswordPopoverComponent, SetTitlePopoverComponent, ViewLogsPopoverComponent, AddEventModalComponent],
     imports: [
         BrowserModule,
         IonicModule.forRoot(),
@@ -37,6 +37,7 @@ import {SignupPagePageModule} from './signup-page/signup-page.module';
         IonicStorageModule.forRoot(),
         FormsModule,
         ViewLogsPagePageModule,
+        DashboardPagePageModule
 
     ],
     providers: [

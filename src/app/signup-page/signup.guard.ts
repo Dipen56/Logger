@@ -12,8 +12,8 @@ export class SignupGuard implements CanActivate {
 
     }
 
-    canActivate(route: ActivatedRouteSnapshot): boolean {
-        this.storage.get('login').then((res) => {
+  canActivate(route: ActivatedRouteSnapshot): boolean {
+       this.storage.get('login').then((res) => {
             this.login = res;
             if (this.login != null) {
                 this.router.navigate(['login-page']);
@@ -22,5 +22,7 @@ export class SignupGuard implements CanActivate {
                 return true;
             }
         });
+        this.router.navigate(['login-page']);
+        return false;
     }
 }
