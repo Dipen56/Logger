@@ -11,7 +11,8 @@
         <div class="auth">
             <ion-item>
                 <ion-label position="floating">Username</ion-label>
-                <ion-input type="text" autofocus="true" required [(ngModel)]="username" class="username-input"></ion-input>
+                <ion-input type="text" autofocus="true" required [(ngModel)]="username"
+                           class="username-input"></ion-input>
             </ion-item>
 
             <ion-item>
@@ -22,6 +23,8 @@
                 <ion-label id="forgot-password-label">Forgot Password?</ion-label>
             </div>
         </div>
-        <ion-button class="login-btn" (click)="login()">Login</ion-button>
+        <div>
+            <ion-button class="login-btn" (click)="login()">Login</ion-button>
+        </div>
     </div>
 </ion-content>

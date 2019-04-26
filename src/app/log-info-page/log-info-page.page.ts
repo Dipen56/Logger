@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Storage} from '@ionic/storage';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {NavController, ToastController, AlertController} from '@ionic/angular';
 import {AndroidPermissions} from '@ionic-native/android-permissions/ngx';
 import {File} from '@ionic-native/file/ngx';
@@ -14,46 +14,33 @@ export class LogInfoPagePage implements OnInit {
     fullName: string;
     email: any;
     homeNumber: number;
-    workNumber: number;
     mobileNumber: number;
     additionalInfo: any;
-    subscriptionTitle = 'Set Title from settings';
-    imageURL: any = 'assets/img/default-logo.png';
+    eventTitle: string;
+    logo: any = 'assets/img/default-logo.png';
     showTitle: any;
     showLogo: any;
+    eventID: any;
+    eventObject: any;
+    logs = [];
 
     constructor(private storage: Storage, private router: Router,
                 private navController: NavController, private toastController: ToastController,
                 private alertController: AlertController, private androidPermissions: AndroidPermissions,
-                private file: File) {
+                private file: File, private route: ActivatedRoute) {
 
         this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.WRITE_EXTERNAL_STORAGE).then(
             result => console.log('Has permission?', result.hasPermission),
             err => this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.WRITE_EXTERNAL_STORAGE)
         );
         this.androidPermissions.requestPermissions([this.androidPermissions.PERMISSION.WRITE_EXTERNAL_STORAGE, this.androidPermissions.PERMISSION.GET_ACCOUNTS]);
+
     }
 
     ngOnInit() {
-        this.storage.set('logViewAuth', false);
-        this.storage.get('password').then((val) => {
-            if (val == null) {
-                this.presentAlertPrompt();
-            }
-        });
-        this.storage.get('title').then((val) => {
-            if (val != null) {
-                this.subscriptionTitle = val;
-            }
-        });
+        this.eventID = this.route.snapshot.paramMap.get('id');
+        this.findEvents();
 
-        this.storage.get('logo').then((val) => {
-            if (val != null) {
-                this.file.readAsDataURL(this.file.dataDirectory, val).then(img => {
-                    this.imageURL = img;
-                });
-            }
-        });
         this.storage.get('showTitle').then((val) => {
             if (val != null) {
                 this.showTitle = val;
@@ -68,33 +55,42 @@ export class LogInfoPagePage implements OnInit {
         });
     }
 
+    async findEvents() {
+        await this.storage.get('events').then(events => {
+            for (let event of events) {
+                if (event.eventID == this.eventID) {
+                    this.eventObject = event;
+                    this.eventTitle = event.eventName;
+                    this.logo = event.logo;
+                    this.logo = event.logs;
+                }
+            }
+
+        });
+    }
+
+    async addLog(data) {
+        this.logs.push(data);
+        await this.storage.get('events').then(events => {
+            for (let event of events) {
+                if (event.eventID == this.eventID) {
+                    event.logs = this.logs;
+                }
+            }
+        });
+    }
+
     subscribe() {
         let date = new Date();
         let data = {
             fullName: this.fullName,
             email: this.email,
             homeNumber: this.homeNumber,
-            workNumber: this.workNumber,
             mobileNumber: this.mobileNumber,
             additionalInfo: this.additionalInfo,
             date: date,
         };
-        this.storage.get(this.email).then((val) => {
-            if (val == null) {
-                this.storage.set(this.email, data).then((val) => {
-                    this.clearInput();
-                });
-            } else {
-                this.presentToastUnsuccessful(this.email);
-            }
-        });
-    }
-
-    /* Testing code for storage*/
-    printAll(email) {
-        this.storage.get(email).then((val) => {
-            console.log('your name is ', val);
-        });
+        this.addLog(data);
     }
 
     doRefresh(event) {
@@ -116,12 +112,6 @@ export class LogInfoPagePage implements OnInit {
         this.presentToast();
     }
 
-    setPassword(password) {
-        this.storage.set('password', password).then((val) => {
-            this.presentToast();
-        });
-    }
-
     async presentToast() {
         const toast = await this.toastController.create({
             message: 'Successful, information have been saved.',
@@ -136,44 +126,5 @@ export class LogInfoPagePage implements OnInit {
             duration: 1500
         });
         toast.present();
-    }
-
-    async presentAlertPrompt() {
-        const alert = await this.alertController.create({
-            header: 'Setup New Password',
-            subHeader: '',
-            inputs: [
-                {
-                    name: 'password1',
-                    type: 'password',
-                    placeholder: 'Enter Password',
-                },
-                {
-                    name: 'password2',
-                    type: 'password',
-                    placeholder: 'Re-enter Password',
-                },
-            ],
-            buttons: [
-                {
-                    text: 'Ok',
-                    handler: data => {
-                        if (data.password1 != data.password2) {
-                            alert.subHeader = 'Password Do Not Match!';
-                            return false;
-                        } else if (data.password1 == '' || data.password2 == '') {
-                            alert.subHeader = 'Password Connot Be Empty';
-                            return false;
-                        } else {
-                            this.setPassword(data.password1);
-                            return true;
-                        }
-                    },
-
-                }
-            ],
-            backdropDismiss: false,
-        });
-        await alert.present();
     }
 }

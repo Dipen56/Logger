@@ -1,4 +1,30 @@
+ion-content.create-event-modal {
+  position: relative;
+}
+
+#submit-btn {
+  width: 100%;
+  margin-top: 20px;
+  -webkit-margin-start: 0px;
+  margin-inline-start: 0px;
+  -webkit-margin-end: 0px;
+  margin-inline-end: 0px;
+  --border-radius: 30px !important;
+  height: 56px;
+  --background: #D5DBA6;
+  color: #5C3C4C;
+}
+
 ion-icon {
   color: #D5DBA6;
   padding: 10px;
+}
+
+#close-btn {
+  --padding-start: 0px !important;
+  --padding-end: 5px !important;
+  --background: unset;
+  --background-focused: unset;
+  --background-activated: unset;
+  --box-shadow: unset;
 }

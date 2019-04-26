@@ -12,15 +12,11 @@
         <ion-refresher-content></ion-refresher-content>
     </ion-refresher>
     <div *ngIf="showLogo; else elseBlock2">
-    <ion-item ng-show='true'>
-        <ion-img style="width: 100%; height: 500px;" src={{imageURL}}></ion-img>
-    </ion-item>
+        <ion-img ng-show='true' id="logo" src={{logo}}></ion-img>
     </div>
 
-    <div *ngIf="showTitle; else elseBlock">
-    <ion-item ng-show='true'>
-        <ion-label>{{subscriptionTitle}}</ion-label>
-    </ion-item>
+    <div *ngIf="showTitle; else elseBlock" class="title">
+        <ion-label ng-show='true' id="title">{{eventTitle}}</ion-label>
     </div>
 
     <ion-item>
@@ -32,27 +28,23 @@
         <ion-input type="email" required [(ngModel)]="email"></ion-input>
     </ion-item>
     <ion-item>
-        <ion-label position="floating" >Home Number</ion-label>
-        <ion-input type="number" [(ngModel)]="homeNumber" ></ion-input>
+        <ion-label position="floating">Mobile Number *</ion-label>
+        <ion-input type="number" required [(ngModel)]="mobileNumber"></ion-input>
     </ion-item>
     <ion-item>
-        <ion-label position="floating">Work Number</ion-label>
-        <ion-input type="number" [(ngModel)]="workNumber"></ion-input>
-    </ion-item>
-    <ion-item>
-        <ion-label position="floating" >Mobile Number</ion-label>
-        <ion-input type="number" [(ngModel)]="mobileNumber"></ion-input>
+        <ion-label position="floating">Home Number</ion-label>
+        <ion-input type="number" [(ngModel)]="homeNumber"></ion-input>
     </ion-item>
     <ion-item>
         <ion-label position="floating">Additional Information</ion-label>
-        <ion-textarea [(ngModel)]="additionalInfo"></ion-textarea>
+        <ion-textarea [(ngModel)]="additionalInfo" rows="5"></ion-textarea>
     </ion-item>
-    <ion-button color="primary" (click)="subscribe()">Subscribe</ion-button>
+    <ion-button (click)="subscribe()" id="subscribe-btn">Subscribe</ion-button>
 
     <ng-template #elseBlock>
         <ion-item hidden>
-        <ion-label>{{subscriptionTitle}} here</ion-label>
-    </ion-item>
+            <ion-label>{{subscriptionTitle}} here</ion-label>
+        </ion-item>
     </ng-template>
 
     <ng-template #elseBlock2>

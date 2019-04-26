@@ -21,6 +21,11 @@ export class SignupPagePage implements OnInit {
     }
 
     ngOnInit() {
+        this.storage.get('login').then(val=>{
+            if(val !=null){
+                this.router.navigate(['login-page']);
+            }
+        });
     }
 
     signupUser() {

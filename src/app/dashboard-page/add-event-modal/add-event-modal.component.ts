@@ -1,5 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {ModalController, NavParams} from '@ionic/angular';
+import {ModalController, NavParams, ToastController} from '@ionic/angular';
+import {Storage} from '@ionic/storage';
+import {FilePath} from '@ionic-native/file-path/ngx';
+import {File} from '@ionic-native/file/ngx';
+import {FileChooser} from '@ionic-native/file-chooser/ngx';
 
 @Component({
     selector: 'app-add-event-modal',
@@ -7,20 +11,123 @@ import {ModalController, NavParams} from '@ionic/angular';
     styleUrls: ['./add-event-modal.component.scss']
 })
 export class AddEventModalComponent implements OnInit {
-    myParameter: boolean;
-    myOtherParameter: Date;
+    eventName = '';
+    location = '';
+    dateTime: any;
+    logo: any;
+    eventDisc = '';
 
-    constructor(private modalController: ModalController, private navParams: NavParams) {
+    constructor(private modalController: ModalController, private navParams: NavParams,
+                private storage: Storage, private toastController: ToastController, private filePath: FilePath,
+                private file: File, private fileChooser: FileChooser) {
     }
 
     ngOnInit() {
-       // this.myParameter = this.navParams.get('aParameter');
-       // this.myOtherParameter = this.navParams.get('otherParameter');
+        // this is how you get data from another page to the modal.
+        // this.myParameter = this.navParams.get('aParameter');
+        // this.myOtherParameter = this.navParams.get('otherParameter');
     }
 
-    async myDismiss() {
-       // const result: Date = new Date();
+    async submit() {
+        //this.storage.remove('events');
+        if (this.checkFields()) {
+            await this.storage.get('events').then(val => {
+                if (val == null) {
+                    let data = [{
+                        eventID: 0,
+                        eventName: this.eventName,
+                        location: this.location,
+                        dateTime: this.dateTime,
+                        logo: this.logo,
+                        eventDisc: this.eventDisc,
+                        logs: []
+                    }];
+                    this.storage.set('events', data).then(val => {
+                        if (val != null) {
+                            this.presentToastSuccess('Event has been saved');
+                            this.closeModal();
+                        }
+                    });
+                } else {
+                    let newData = [];
+                    for (let i of val) {
+                        let data = i;
+                        newData.push(data);
+                    }
+                    let newVal = {
+                        eventID: val.length,
+                        eventName: this.eventName,
+                        location: this.location,
+                        dateTime: this.dateTime,
+                        logo: this.logo,
+                        eventDisc: this.eventDisc,
+                        logs: []
+                    };
+                    newData.push(newVal);
+                    this.storage.set('events', newData).then(val => {
+                        if (val != null) {
+                            this.presentToastSuccess('Event has been saved');
+                            this.closeModal();
+                        }
+                    });
+                }
+            });
+        } else {
+            this.presentToastError('All fields need to be filled in.');
+        }
 
+        // const result: Date = new Date();
+        // This is how you pass data between modals
         //await this.modalController.dismiss(result);
+    }
+
+    checkFields(): boolean {
+        if (this.eventName == '' || this.location == '' || this.dateTime == undefined || this.eventDisc == '') {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    async closeModal() {
+        await this.modalController.dismiss();
+    }
+
+    async presentToastError(msg) {
+        const toast = await this.toastController.create({
+            message: 'Error: ' + msg,
+            duration: 1500
+        });
+        toast.color = 'danger';
+        toast.present();
+    }
+
+    async presentToastSuccess(msg) {
+        const toast = await this.toastController.create({
+            message: 'Success: ' + msg,
+            duration: 1500
+        });
+        toast.color = 'success';
+        toast.present();
+    }
+
+    async persentFileChooser() {
+        await this.fileChooser.open().then((uri) => {
+            this.filePath.resolveNativePath(uri).then((filePath) => {
+                let correctPath = filePath.substr(0, filePath.lastIndexOf('/') + 1);
+                let currentName = filePath.substring(filePath.lastIndexOf('/') + 1);
+                this.file.copyFile(correctPath, currentName, this.file.dataDirectory, currentName).then(res => {
+                    //this.logo = currentName;
+                        this.file.readAsDataURL(this.file.dataDirectory, currentName).then(img => {
+                            this.logo = img;
+                        });
+                    // this.storage.set('logo', currentName).then((val) => {
+                    //     if (val != null) {
+                    //         this.presentToast();
+                    //     }
+                    // });
+                });
+            });
+        });
     }
 }
