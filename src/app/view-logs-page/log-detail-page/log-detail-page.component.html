@@ -1,10 +1,10 @@
 <ion-header>
     <ion-toolbar>
-        <ion-button slot="start" href='/view-logs-page'>
+        <ion-button slot="start" href='/view-logs-page/{{eventID}}' class="btn back-btn">
             <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
         </ion-button>
         <ion-title>Log Details</ion-title>
-        <ion-button slot="end" (click)="presentPopover($event)">
+        <ion-button slot="end" (click)="presentPopover($event)" class="btn more-btn">
             <ion-icon slot="icon-only" name="more"></ion-icon>
         </ion-button>
     </ion-toolbar>
@@ -12,39 +12,41 @@
 
 <ion-content padding>
     <ion-item>
+        <ion-icon name="contact" slot="start"></ion-icon>
         <ion-label>
             {{fullName}}
         </ion-label>
     </ion-item>
     <ion-item (click)="sendEmail()">
+        <ion-icon name="mail" slot="start"></ion-icon>
         <ion-label>
             {{email}}
         </ion-label>
         <ion-icon slot="end" name="arrow-forward"></ion-icon>
     </ion-item>
     <ion-item>
-        <ion-label>
-            {{homeNumber}}
-        </ion-label>
-    </ion-item>
-    <ion-item>
-        <ion-label>
-            {{workNumber}}
-        </ion-label>
-    </ion-item>
-    <ion-item>
+        <ion-icon name="call" slot="start"></ion-icon>
         <ion-label>
             {{mobileNumber}}
         </ion-label>
     </ion-item>
     <ion-item>
+        <ion-icon name="home" slot="start"></ion-icon>
+        <ion-label>
+            {{homeNumber}}
+        </ion-label>
+    </ion-item>
+    <ion-item>
+        <ion-icon name="calendar" slot="start"></ion-icon>
         <ion-label>
             {{date | date: "dd/MM/yyyy HH:mm"}}
         </ion-label>
     </ion-item>
     <ion-item>
+        <ion-icon name="information-circle" slot="start"></ion-icon>
         <ion-label>
             {{addtionalInformation}}
         </ion-label>
     </ion-item>
+
 </ion-content>

@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {Storage} from '@ionic/storage';
 import {CallNumber} from '@ionic-native/call-number';
 import {PopoverController} from '@ionic/angular';
@@ -15,45 +15,52 @@ import {Alert} from 'selenium-webdriver';
 export class LogDetailPageComponent implements OnInit {
 
     log: any;
-    key: any;
+    logKey: any;
+    eventID: any;
     fullName: any;
     email: any;
     homeNumber: any;
-    workNumber: any;
     mobileNumber: any;
     addtionalInformation: any;
     date: any;
 
     constructor(private storage: Storage, private route: ActivatedRoute,
-                private popoverController: PopoverController, private socialSharing: SocialSharing) {
-        this.key = this.route.snapshot.paramMap.get('id');
-        // Or to get a key/value pair
-        storage.get(this.key).then((val) => {
-            this.log = val;
-            this.fullName = val.fullName;
-            this.email = val.email;
-            this.homeNumber = val.homeNumber;
-            console.log(this.homeNumber);
-            if (this.homeNumber == undefined) {
-                this.homeNumber = 'N/A';
-            }
-            this.workNumber = val.workNumber;
-            if (this.workNumber == undefined) {
-                this.workNumber = 'N/A';
-            }
-            this.mobileNumber = val.mobileNumber;
-            if (this.mobileNumber == undefined) {
-                this.mobileNumber = 'N/A';
-            }
-            this.addtionalInformation = val.additionalInfo;
-            if (this.addtionalInformation == undefined) {
-                this.addtionalInformation = 'No additional information';
-            }
-            this.date = val.date;
-        });
+                private popoverController: PopoverController, private socialSharing: SocialSharing,
+                private router: Router) {
+        this.eventID = this.route.snapshot.paramMap.get('id');
+        this.logKey = this.route.snapshot.paramMap.get('email');
     }
 
     ngOnInit() {
+        this.loadLog();
+    }
+
+    async loadLog() {
+        await this.storage.get('events').then(events => {
+            if (events != null) {
+                for (let event of events) {
+                    if (event.eventID == this.eventID) {
+                        for (let log of event.logs) {
+                            if (log.email == this.logKey) {
+                                this.log = log;
+                                this.fullName = this.log.fullName;
+                                this.email = this.log.email;
+                                this.homeNumber = this.log.homeNumber;
+                                this.mobileNumber = this.log.mobileNumber;
+                                this.addtionalInformation = this.log.additionalInfo;
+                                if (this.homeNumber == undefined) {
+                                    this.homeNumber = 'No Home Number';
+                                }
+                                if (this.addtionalInformation == undefined) {
+                                    this.addtionalInformation = 'No Additional Information';
+                                }
+                                this.date = this.log.date;
+                            }
+                        }
+                    }
+                }
+            }
+        });
     }
 
     async presentPopover(ev: Event) {
@@ -62,8 +69,12 @@ export class LogDetailPageComponent implements OnInit {
             event: ev,
             translucent: true,
             componentProps: {
-                log_key: this.key
+                eventID: this.eventID,
+                log_key: this.logKey
             }
+        });
+        popover.onDidDismiss().then(val => {
+            this.router.navigateByUrl('view-logs-page/' + this.eventID);
         });
         return await popover.present();
     }
