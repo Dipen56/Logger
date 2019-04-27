@@ -1,6 +1,6 @@
 import {Component, OnInit, NgZone} from '@angular/core';
 import {Storage} from '@ionic/storage';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {Events, AlertController, PopoverController} from '@ionic/angular';
 import {ViewLogsPopoverComponent} from './view-logs-popover/view-logs-popover.component';
 
@@ -17,10 +17,11 @@ export class ViewLogsPagePage implements OnInit {
     selcetedLogs = [];
     isChecked = false;
     searchQuery: string;
-
+    eventID: any;
     constructor(private storage: Storage, private router: Router,
                 private events: Events, private zone: NgZone,
-                private alertController: AlertController, private popoverController: PopoverController) {
+                private alertController: AlertController, private popoverController: PopoverController,
+                private route: ActivatedRoute) {
         // used to refresh the screen.
         this.events.subscribe('updateScreen', () => {
 
@@ -31,12 +32,13 @@ export class ViewLogsPagePage implements OnInit {
     }
 
     ngOnInit() {
+        this.eventID = this.route.snapshot.paramMap.get('id');
         this.loadAllLogs();
-        this.storage.get('logViewAuth').then((val) => {
-            if (!val) {
-                this.presentAlertPrompt('\'Enter admin password to access logs\'');
-            }
-        });
+        // this.storage.get('logViewAuth').then((val) => {
+        //     if (!val) {
+        //         this.presentAlertPrompt('\'Enter admin password to access logs\'');
+        //     }
+        // });
     }
 
     updateScreen() {
@@ -68,14 +70,28 @@ export class ViewLogsPagePage implements OnInit {
     }
 
     async loadAllLogs() {
-        this.logs = [];
-        await this.storage.forEach((value, key, index) => {
-            if (key != 'password' && key != 'showTitle' && key != 'showLogo' && key != 'logViewAuth' && key != 'logo') {
-                this.logs.push(value);
+        this.logs =[];
+        await this.storage.get('events').then(events => {
+            for (let event of events) {
+                if (event.eventID == this.eventID) {
+                    console.log(event.logs);
+                    this.logs = event.logs;
+                }
             }
         });
         this.copyLogs = this.logs;
     }
+
+    // async loadAllLogs() {
+    //     this.logs = [];
+    //     await this.storage.forEach((value, key, index) => {
+    //
+    //         // if (key != 'password' && key != 'showTitle' && key != 'showLogo' && key != 'logViewAuth' && key != 'logo') {
+    //         //     this.logs.push(value);
+    //         // }
+    //     });
+    //     this.copyLogs = this.logs;
+    // }
 
     pressEvent(key) {
         this.isHidden = false;
@@ -125,43 +141,43 @@ export class ViewLogsPagePage implements OnInit {
         return await popover.present();
     }
 
-    async presentAlertPrompt(errMessage) {
-        const alert = await this.alertController.create({
-            header: 'Authentication!',
-            subHeader: errMessage,
-            inputs: [
-                {
-                    name: 'password1',
-                    type: 'password',
-                    placeholder: 'Enter Password',
-                }
-            ],
-            buttons: [{
-                text: 'Cancel',
-                role: 'cancel',
-                cssClass: 'secondary',
-                handler: (blah) => {
-                    this.router.navigateByUrl('/log-info-page');
-                }
-            }, {
-                    text: 'Ok',
-                    handler: data => {
-                        this.storage.get('password').then((val) => {
-                            if (data.password1 != val) {
-                                this.presentAlertPrompt('Password is incorrect try again');
-                                return false;
-                            } else {
-                                this.storage.set('logViewAuth', true);
-                                return true;
-                            }
-                        });
-                    },
-
-                }
-            ],
-            backdropDismiss: false,
-        });
-
-        await alert.present();
-    }
+    // async presentAlertPrompt(errMessage) {
+    //     const alert = await this.alertController.create({
+    //         header: 'Authentication!',
+    //         subHeader: errMessage,
+    //         inputs: [
+    //             {
+    //                 name: 'password1',
+    //                 type: 'password',
+    //                 placeholder: 'Enter Password',
+    //             }
+    //         ],
+    //         buttons: [{
+    //             text: 'Cancel',
+    //             role: 'cancel',
+    //             cssClass: 'secondary',
+    //             handler: (blah) => {
+    //                 this.router.navigateByUrl('/log-info-page');
+    //             }
+    //         }, {
+    //                 text: 'Ok',
+    //                 handler: data => {
+    //                     this.storage.get('password').then((val) => {
+    //                         if (data.password1 != val) {
+    //                             this.presentAlertPrompt('Password is incorrect try again');
+    //                             return false;
+    //                         } else {
+    //                             this.storage.set('logViewAuth', true);
+    //                             return true;
+    //                         }
+    //                     });
+    //                 },
+    //
+    //             }
+    //         ],
+    //         backdropDismiss: false,
+    //     });
+    //
+    //     await alert.present();
+    // }
 }

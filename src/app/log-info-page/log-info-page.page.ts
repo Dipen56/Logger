@@ -22,7 +22,6 @@ export class LogInfoPagePage implements OnInit {
     showLogo: any;
     eventID: any;
     eventObject: any;
-    logs = [];
 
     constructor(private storage: Storage, private router: Router,
                 private navController: NavController, private toastController: ToastController,
@@ -62,7 +61,7 @@ export class LogInfoPagePage implements OnInit {
                     this.eventObject = event;
                     this.eventTitle = event.eventName;
                     this.logo = event.logo;
-                    this.logo = event.logs;
+                    this.logs = event.logs;
                 }
             }
 
@@ -75,22 +74,25 @@ export class LogInfoPagePage implements OnInit {
             for (let event of events) {
                 if (event.eventID == this.eventID) {
                     event.logs = this.logs;
+                    this.clearInput();
+                    console.log(event);
                 }
             }
         });
     }
 
     subscribe() {
-        let date = new Date();
-        let data = {
-            fullName: this.fullName,
-            email: this.email,
-            homeNumber: this.homeNumber,
-            mobileNumber: this.mobileNumber,
-            additionalInfo: this.additionalInfo,
-            date: date,
-        };
-        this.addLog(data);
+        // let date = new Date();
+        // let data = {
+        //     fullName: this.fullName,
+        //     email: this.email,
+        //     homeNumber: this.homeNumber,
+        //     mobileNumber: this.mobileNumber,
+        //     additionalInfo: this.additionalInfo,
+        //     date: date,
+        // };
+        //this.addLog(data);
+        this.addEvent();
     }
 
     doRefresh(event) {
@@ -106,7 +108,6 @@ export class LogInfoPagePage implements OnInit {
         this.fullName = '';
         this.email = '';
         this.mobileNumber = null;
-        this.workNumber = null;
         this.homeNumber = null;
         this.additionalInfo = '';
         this.presentToast();
@@ -127,4 +128,43 @@ export class LogInfoPagePage implements OnInit {
         });
         toast.present();
     }
+
+    async addEvent() {
+        let tempEvent = [];
+        await this.storage.get('events').then(events => {
+            if (events != null) {
+                tempEvent = events;
+                for (let i in events) {
+                    if (events[i].eventID == this.eventID) {
+                        let newLogs = events[i].logs;
+                        let date = new Date();
+                        newLogs.push({
+                            fullName: this.fullName,
+                            email: this.email,
+                            homeNumber: this.homeNumber,
+                            mobileNumber: this.mobileNumber,
+                            additionalInfo: this.additionalInfo,
+                            date: date,
+                        });
+                        let data = {
+                            eventID: events[i].eventID,
+                            eventName: events[i].eventName,
+                            location: events[i].location,
+                            dateTime: events[i].dateTime,
+                            logo: events[i].logo,
+                            eventDisc: events[i].eventDisc,
+                            logs: newLogs
+                        };
+                        tempEvent[i] = data;
+                        this.storage.set('events', tempEvent).then(val => {
+                            console.log(val);
+                        });
+                    }
+                }
+            }
+        });
+
+    }
+
+
 }

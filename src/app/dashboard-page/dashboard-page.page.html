@@ -6,9 +6,7 @@
 
 <ion-content padding>
     <ion-card *ngFor="let event of events">
-        <ion-item ng-show='true'>
-            <ion-img style="width: 100%; height: 500px;" src={{event.logo}}></ion-img>
-        </ion-item>
+            <ion-img src={{event.logo}} id="img"></ion-img>
         <ion-card-header>
             <ion-card-title>{{event.eventName}}</ion-card-title>
             <ion-card-subtitle>{{event.location}} {{event.dateTime | date: "dd/MM/yyyy HH:mm"}}</ion-card-subtitle>
@@ -21,7 +19,7 @@
             <ion-icon name="swap" slot="start"></ion-icon>
             <ion-label>Subscribe Mode</ion-label>
         </ion-item>
-        <ion-item href="#" class="activated">
+        <ion-item href='/view-logs-page/{{event.eventID}}' class="activated">
             <ion-icon name="clipboard" slot="start"></ion-icon>
             <ion-label>View Logs</ion-label>
         </ion-item>
