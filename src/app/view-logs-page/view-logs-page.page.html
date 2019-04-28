@@ -1,49 +1,38 @@
 <ion-header>
     <div *ngIf="!isSelectMode; else selectModeBlockHeader">
-    <ion-toolbar>
-        <ion-buttons slot="start">
-            <ion-menu-button></ion-menu-button>
-        </ion-buttons>
-        <ion-title>View Logs</ion-title>
-    </ion-toolbar>
-        </div>
+        <ion-toolbar>
+            <ion-buttons slot="start">
+                <ion-menu-button></ion-menu-button>
+            </ion-buttons>
+            <ion-title>View Logs</ion-title>
+        </ion-toolbar>
+    </div>
     <ng-template #selectModeBlockHeader>
         <ion-toolbar>
-            <ion-checkbox [hidden]="isHidden" (click)="selectALl()" ></ion-checkbox>
+            <ion-checkbox id='checkbox' [hidden]="isHidden" (click)="selectALl()" slot="start"></ion-checkbox>
             <ion-title>View Logs</ion-title>
-            <ion-button slot="end" (click)="presentPopover($event)">
+            <ion-button slot="end" (click)="presentPopover($event)" id="btn">
                 <ion-icon slot="icon-only" name="more"></ion-icon>
             </ion-button>
         </ion-toolbar>
     </ng-template>
 </ion-header>
 
-<ion-content padding>
-    <ion-item>
-    <ion-button slot="end">
-        <ion-icon slot="icon-only" name="search"></ion-icon>
-    </ion-button>
-    <ion-input type="search" placeholder="Search by email" [(ngModel)]="searchQuery" (ngModelChange)="searchLogs()"></ion-input>
-    </ion-item>
+<ion-content >
+    <ion-searchbar type="email" animated placeholder="Search by Email" [(ngModel)]="searchQuery" (ngModelChange)="searchLogs()" class="search"></ion-searchbar>
     <div *ngIf="!isSelectMode; else selectModeBlockBody">
-        <ion-item (press)="pressEvent(log.email)" (click)="goToLogDetailPage(log.email)" detail *ngFor="let log of logs">
-
+        <ion-item (press)="pressEvent(log.email)" detail *ngFor="let log of logs" href='/log/{{eventID}}/{{log.email}}'>
             <ion-label>
                 {{log.fullName}}
-            </ion-label>
-            <ion-label >
-                {{log.date | date: "dd/MM/yyyy"}}
             </ion-label>
         </ion-item>
     </div>
     <ng-template #selectModeBlockBody>
         <ion-item detail *ngFor="let log of logs">
-            <ion-checkbox  (click)="addSelectedLog(log.email)" [hidden]="isHidden" [checked]="isChecked"  slot="start"></ion-checkbox>
+            <ion-checkbox (click)="addSelectedLog(log.email)" [hidden]="isHidden" [checked]="isChecked"
+                          slot="start"></ion-checkbox>
             <ion-label>
                 {{log.fullName}}
-            </ion-label>
-            <ion-label>
-                {{log.date}}
             </ion-label>
         </ion-item>
     </ng-template>

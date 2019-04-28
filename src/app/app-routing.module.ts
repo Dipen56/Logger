@@ -12,6 +12,7 @@ const routes: Routes = [
    // {path: 'signup-page', loadChildren: './signup-page/signup-page.module#SignupPagePageModule', canActivate: [SignupGuard]},
     {path: 'signup-page', loadChildren: './signup-page/signup-page.module#SignupPagePageModule'},
     {path: 'dashboard-page', loadChildren: './dashboard-page/dashboard-page.module#DashboardPagePageModule'},
+    //{path: 'log/:id', component: LogDetailPageComponent}
 ];
 
 // loadchildern will load the components module and then it will look in there for its children

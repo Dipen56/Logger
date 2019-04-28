@@ -15,7 +15,7 @@ const routes: Routes = [
         component: ViewLogsPagePage
     },
     {
-        path: ':id',
+        path: 'log/:id/:email',
         component: LogDetailPageComponent
     }
 ];

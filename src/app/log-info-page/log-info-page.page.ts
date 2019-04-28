@@ -61,37 +61,13 @@ export class LogInfoPagePage implements OnInit {
                     this.eventObject = event;
                     this.eventTitle = event.eventName;
                     this.logo = event.logo;
-                    this.logs = event.logs;
                 }
             }
 
-        });
-    }
-
-    async addLog(data) {
-        this.logs.push(data);
-        await this.storage.get('events').then(events => {
-            for (let event of events) {
-                if (event.eventID == this.eventID) {
-                    event.logs = this.logs;
-                    this.clearInput();
-                    console.log(event);
-                }
-            }
         });
     }
 
     subscribe() {
-        // let date = new Date();
-        // let data = {
-        //     fullName: this.fullName,
-        //     email: this.email,
-        //     homeNumber: this.homeNumber,
-        //     mobileNumber: this.mobileNumber,
-        //     additionalInfo: this.additionalInfo,
-        //     date: date,
-        // };
-        //this.addLog(data);
         this.addEvent();
     }
 
@@ -109,23 +85,23 @@ export class LogInfoPagePage implements OnInit {
         this.email = '';
         this.mobileNumber = null;
         this.homeNumber = null;
-        this.additionalInfo = '';
-        this.presentToast();
     }
 
-    async presentToast() {
+    async presentToastError(msg) {
         const toast = await this.toastController.create({
-            message: 'Successful, information have been saved.',
+            message: 'Error: ' + msg,
             duration: 1500
         });
+        toast.color = 'danger';
         toast.present();
     }
 
-    async presentToastUnsuccessful(val) {
+    async presentToastSuccess(msg) {
         const toast = await this.toastController.create({
-            message: 'Unsuccessful subscription for email "' + val + '" exists.',
+            message: 'Success: ' + msg,
             duration: 1500
         });
+        toast.color = 'success';
         toast.present();
     }
 
@@ -157,7 +133,8 @@ export class LogInfoPagePage implements OnInit {
                         };
                         tempEvent[i] = data;
                         this.storage.set('events', tempEvent).then(val => {
-                            console.log(val);
+                            this.presentToastSuccess('subscription Saved');
+                            this.clearInput();
                         });
                     }
                 }

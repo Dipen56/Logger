@@ -1,0 +1,31 @@
+#search-icon {
+  color: lightgray;
+}
+
+ion-item {
+  margin: 5px;
+  border: 5px solid ghostwhite;
+  border-bottom: 0px !important;
+  border-radius: 7px !important;
+  -webkit-box-shadow: 10px 10px 43px -31px rgba(0, 0, 0, 1);
+  -moz-box-shadow: 10px 10px 43px -31px rgba(0, 0, 0, 1);
+  box-shadow: 10px 10px 43px -31px rgba(0, 0, 0, 1) !important;
+  --border-style: unset;
+}
+
+#checkbox {
+  margin-left: 23px !important;
+  margin-right: 5px !important;
+  height: 23px;
+  width: 23px;
+}
+
+#btn {
+  --padding-start: 0px !important;
+  --padding-end: 5px !important;
+  --background: unset;
+  --background-focused: unset;
+  --background-activated: unset;
+  --box-shadow: unset;
+  margin-right: 10px;
+}

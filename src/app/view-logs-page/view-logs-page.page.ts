@@ -18,13 +18,13 @@ export class ViewLogsPagePage implements OnInit {
     isChecked = false;
     searchQuery: string;
     eventID: any;
+
     constructor(private storage: Storage, private router: Router,
                 private events: Events, private zone: NgZone,
                 private alertController: AlertController, private popoverController: PopoverController,
                 private route: ActivatedRoute) {
         // used to refresh the screen.
         this.events.subscribe('updateScreen', () => {
-
             this.zone.run(() => {
                 console.log('force update the screen');
             });
@@ -34,21 +34,14 @@ export class ViewLogsPagePage implements OnInit {
     ngOnInit() {
         this.eventID = this.route.snapshot.paramMap.get('id');
         this.loadAllLogs();
-        // this.storage.get('logViewAuth').then((val) => {
-        //     if (!val) {
-        //         this.presentAlertPrompt('\'Enter admin password to access logs\'');
-        //     }
-        // });
     }
 
     updateScreen() {
-        console.log(this.isSelectMode);
         this.events.publish('updateScreen');
     }
 
     searchLogs() {
         let tempLogs = [];
-
         if (this.searchQuery == '') {
             this.loadAllLogs();
         } else {
@@ -60,38 +53,19 @@ export class ViewLogsPagePage implements OnInit {
         }
         this.logs = [];
         this.logs = tempLogs;
-        console.log(this.logs);
-    }
-
-    goToLogDetailPage(id) {
-        if (!this.isSelectMode) {
-            this.router.navigateByUrl('/view-logs-page/' + id);
-        }
     }
 
     async loadAllLogs() {
-        this.logs =[];
+        this.logs = [];
         await this.storage.get('events').then(events => {
             for (let event of events) {
                 if (event.eventID == this.eventID) {
-                    console.log(event.logs);
                     this.logs = event.logs;
                 }
             }
         });
         this.copyLogs = this.logs;
     }
-
-    // async loadAllLogs() {
-    //     this.logs = [];
-    //     await this.storage.forEach((value, key, index) => {
-    //
-    //         // if (key != 'password' && key != 'showTitle' && key != 'showLogo' && key != 'logViewAuth' && key != 'logo') {
-    //         //     this.logs.push(value);
-    //         // }
-    //     });
-    //     this.copyLogs = this.logs;
-    // }
 
     pressEvent(key) {
         this.isHidden = false;
@@ -141,43 +115,4 @@ export class ViewLogsPagePage implements OnInit {
         return await popover.present();
     }
 
-    // async presentAlertPrompt(errMessage) {
-    //     const alert = await this.alertController.create({
-    //         header: 'Authentication!',
-    //         subHeader: errMessage,
-    //         inputs: [
-    //             {
-    //                 name: 'password1',
-    //                 type: 'password',
-    //                 placeholder: 'Enter Password',
-    //             }
-    //         ],
-    //         buttons: [{
-    //             text: 'Cancel',
-    //             role: 'cancel',
-    //             cssClass: 'secondary',
-    //             handler: (blah) => {
-    //                 this.router.navigateByUrl('/log-info-page');
-    //             }
-    //         }, {
-    //                 text: 'Ok',
-    //                 handler: data => {
-    //                     this.storage.get('password').then((val) => {
-    //                         if (data.password1 != val) {
-    //                             this.presentAlertPrompt('Password is incorrect try again');
-    //                             return false;
-    //                         } else {
-    //                             this.storage.set('logViewAuth', true);
-    //                             return true;
-    //                         }
-    //                     });
-    //                 },
-    //
-    //             }
-    //         ],
-    //         backdropDismiss: false,
-    //     });
-    //
-    //     await alert.present();
-    // }
 }
