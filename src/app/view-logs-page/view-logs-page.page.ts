@@ -87,8 +87,11 @@ export class ViewLogsPagePage implements OnInit {
     selectALl() {
         if (!this.isChecked) {
             for (let log of this.logs) {
+                console.log(log);
                 let key = log.email;
-                this.selcetedLogs.push(key);
+                if (!this.selcetedLogs.includes(key)) {
+                    this.selcetedLogs.push(key);
+                }
             }
             this.isChecked = true;
         } else {
@@ -98,6 +101,12 @@ export class ViewLogsPagePage implements OnInit {
         this.events.publish('updateScreen');
     }
 
+    deselectLogs() {
+        this.isSelectMode = false;
+        this.selcetedLogs = [];
+        this.isChecked = false;
+    }
+
     async presentPopover(ev: Event) {
         const popover = await this.popoverController.create({
             component: ViewLogsPopoverComponent,
@@ -105,10 +114,11 @@ export class ViewLogsPagePage implements OnInit {
             translucent: true,
             componentProps: {
                 selectedLogs: this.selcetedLogs,
+                eventID: this.eventID
             }
         });
         popover.onDidDismiss().then((e) => {
-            this.isSelectMode = false;
+            this.deselectLogs();
             this.loadAllLogs();
             this.events.publish('updateScreen');
         });

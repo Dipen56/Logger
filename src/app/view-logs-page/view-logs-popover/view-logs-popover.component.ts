@@ -13,21 +13,19 @@ import {SocialSharing} from '@ionic-native/social-sharing/ngx';
 })
 export class ViewLogsPopoverComponent implements OnInit {
     popover: any;
-    selectedLogs: any;
+    selectedLogs = [];
+    eventID: any;
 
     constructor(private viewLogPage: ViewLogsPagePage, private popoverController: PopoverController,
                 private navParams: NavParams, private storage: Storage, private alertController: AlertController,
                 private socialSharing: SocialSharing, private toastController: ToastController) {
-        this.selectedLogs = this.navParams.get('selectedLogs');
         // popover is implied?
-        //this.popover = this.navParams.get('popover');
+        // this.popover = this.navParams.get('popover');
     }
 
     ngOnInit() {
-    }
-
-    exitSelectAll() {
-        this.popover.dismiss();
+        this.selectedLogs = this.navParams.get('selectedLogs');
+        this.eventID = this.navParams.get('eventID');
     }
 
     emailSelectedLogs() {
@@ -50,11 +48,11 @@ export class ViewLogsPopoverComponent implements OnInit {
             header: 'Confirm!',
             message: '<strong>Are you sure this will delete logs</strong>!',
             buttons: [
-                 {
+                {
                     text: 'Okay',
                     handler: () => {
                         this.deleteLog();
-                        this.logDeletedMessage();
+                        this.closePopover();
                     }
                 }
             ]
@@ -62,24 +60,48 @@ export class ViewLogsPopoverComponent implements OnInit {
         await alert.present();
     }
 
-    deleteLog() {
-        if (this.selectedLogs.length != 0) {
-            for (let key of this.selectedLogs) {
-                this.removeFromStorage(key);
+    async deleteLog() {
+        let tempLogs = [];
+        let tempEvent = [];
+        await this.storage.get('events').then(events => {
+            if (events != null) {
+                tempEvent = events;
+                for (let i in events) {
+                    if (events[i].eventID == this.eventID) {
+                        for (let j in events[i].logs) {
+                            if (!this.selectedLogs.includes(events[i].logs[j].email)) {
+                                tempLogs.push(events[i].logs[j]);
+                            }
+                        }
+                            let data = {
+                                eventID: events[i].eventID,
+                                eventName: events[i].eventName,
+                                location: events[i].location,
+                                dateTime: events[i].dateTime,
+                                logo: events[i].logo,
+                                eventDisc: events[i].eventDisc,
+                                logs: tempLogs
+                            };
+                            tempEvent[i] = data;
+                            this.storage.set('events', tempEvent).then(val => {
+                                this.presentToastSuccess('Log Deleted');
+                            });
+                    }
+                }
             }
-        }
-        this.popover.dismiss();
-    }
-
-    removeFromStorage(key) {
-        this.storage.remove(key);
-    }
-
-    async logDeletedMessage() {
-        const toast = await this.toastController.create({
-            message: 'Logs deleted successfully.',
-            duration: 2000
         });
+    }
+
+    async closePopover() {
+        await this.popoverController.dismiss();
+    }
+
+    async presentToastSuccess(msg) {
+        const toast = await this.toastController.create({
+            message: 'Success: ' + msg,
+            duration: 1500
+        });
+        toast.color = 'success';
         toast.present();
     }
 }
