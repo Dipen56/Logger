@@ -9,84 +9,62 @@
 
 <ion-content padding>
     <ion-item>
-        Change Password
-        <ion-button slot="end" (click)="presentChangePasswordPopover()">
-            <ion-icon slot="icon-only" name="create">
-            </ion-icon>
-        </ion-button>
+        <ion-label position="floating">Location*</ion-label>
+        <ion-input required [(ngModel)]="location"></ion-input>
+    </ion-item>
+    <ion-item>
+        <ion-label>Pick Date & Time*</ion-label>
+        <ion-datetime required display-format="MMM DD, YYYY HH:mm" [(ngModel)]="dateTime"></ion-datetime>
+    </ion-item>
+    <ion-item>
+        <ion-label>Show Title</ion-label>
+        <ion-toggle [(ngModel)]="showTitle"></ion-toggle>
     </ion-item>
     <div *ngIf="showTitle; else elseBlock">
         <ion-item>
-            Set Subscription Title
-            <ion-button slot="end" (click)="presentTitlePopover()">
-                <ion-icon slot="icon-only" name="create">
-                </ion-icon>
-            </ion-button>
+            <ion-label position="floating">Set Subscription Title</ion-label>
+            <ion-input type="text" required [(ngModel)]="eventName"  placeholder='{{eventName}}'></ion-input>
         </ion-item>
     </div>
     <ion-item>
-        <ion-label>Show Title</ion-label>
-        <ion-toggle [(ngModel)]="showTitle" (ionChange)="toggleTitle()"></ion-toggle>
+        <ion-label position="floating">Event Description* <i style="font-size: 12px;">(100 characters max)</i>
+        </ion-label>
+        <ion-textarea required rows="3" maxlength="100" [(ngModel)]="eventDisc"></ion-textarea>
     </ion-item>
-    <div *ngIf="showLogo; else elseBlock2">
-        <ion-item>
-            Add Logo
-            <ion-button slot="end" (click)="persentFileChooser()">
-                <ion-icon slot="icon-only" name="create">
-                </ion-icon>
-            </ion-button>
-        </ion-item>
-    </div>
     <ion-item>
         <ion-label>Show Logo</ion-label>
-        <ion-toggle [(ngModel)]="showLogo" (ionChange)="toggleLogo()"></ion-toggle>
+        <ion-toggle [(ngModel)]="showLogo"></ion-toggle>
     </ion-item>
-    <ion-item>
-        Clear Data
-        <ion-button slot="end" (click)="presentDeleteConformationAlert()">
-            <ion-icon slot="icon-only" name="trash">
-            </ion-icon>
-        </ion-button>
-    </ion-item>
-    <ion-item>
-        Feedback
-        <ion-button slot="end">
-            <ion-icon slot="icon-only" name="create">
-            </ion-icon>
-        </ion-button>
-    </ion-item>
-    <ion-item>
-        Donations
-        <ion-button slot="end">
-            <ion-icon slot="icon-only" name="create">
-            </ion-icon>
-        </ion-button>
-    </ion-item>
-    <ion-item>
-        About
-        <ion-button slot="end">
-            <ion-icon slot="icon-only" name="information-circle">
-            </ion-icon>
-        </ion-button>
-    </ion-item>
+
+    <div *ngIf="showLogo; else elseBlock2">
+        <ion-item (click)="persentFileChooser()">
+            <ion-icon slot="end" name="arrow-forward"></ion-icon>
+            <ion-label>
+                Select Logo
+            </ion-label>
+        </ion-item>
+        <div class="logo-label">
+            <ion-label id="logo-preview-label">Logo Preview</ion-label>
+        </div>
+        <ion-img src={{image}} id="img"></ion-img>
+    </div>
+
     <ng-template #elseBlock>
         <ion-item [disabled]=true>
-            Set Subscription Title
-            <ion-button slot="end" (click)="presentTitlePopover()">
-                <ion-icon slot="icon-only" name="create">
-                </ion-icon>
-            </ion-button>
+            <ion-label position="floating">Set Subscription Title</ion-label>
+            <ion-input type="text" required [(ngModel)]="title"></ion-input>
         </ion-item>
     </ng-template>
 
     <ng-template #elseBlock2>
-        <ion-item [disabled]=true>
-            Add Logo
-            <ion-button slot="end" (click)="persentFileChooser()">
-                <ion-icon slot="icon-only" name="create">
-                </ion-icon>
-            </ion-button>
+        <ion-item [disabled]=true (click)="persentFileChooser()">
+            <ion-icon slot="icon-only" name="arrow-forward"></ion-icon>
+            <ion-label>
+                Select Logo
+            </ion-label>
         </ion-item>
     </ng-template>
-
+    <ion-button class="update-btn" (click)="update()">
+        Update
+    </ion-button>
 </ion-content>

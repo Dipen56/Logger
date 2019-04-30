@@ -40,13 +40,13 @@ export class AppComponent {
         this.platform.ready().then(() => {
             this.statusBar.styleDefault();
             this.splashScreen.hide();
-            this.storage.get('showTitle').then((val) => {
-                if (val == null) {
-                    this.storage.set('showTitle', true);
-                }
-            });
-            this.storage.set('showLogo', true);
-            // this.storage.set('logViewAuth', false);
+            // this.storage.get('showTitle').then((val) => {
+            //     if (val == null) {
+            //         this.storage.set('showTitle', true);
+            //     }
+            // });
+            // this.storage.set('showLogo', true);
+            // // this.storage.set('logViewAuth', false);
         });
     }
 }

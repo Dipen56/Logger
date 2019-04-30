@@ -24,3 +24,7 @@ ion-title {
   font-size: 1.25em !important;
   border: 1px solid transparent;
 }
+
+.custom-popover{
+  --width: unset !important;
+}

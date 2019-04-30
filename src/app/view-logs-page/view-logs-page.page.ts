@@ -115,7 +115,8 @@ export class ViewLogsPagePage implements OnInit {
             componentProps: {
                 selectedLogs: this.selcetedLogs,
                 eventID: this.eventID
-            }
+            },
+            cssClass: "custom-popover",
         });
         popover.onDidDismiss().then((e) => {
             this.deselectLogs();

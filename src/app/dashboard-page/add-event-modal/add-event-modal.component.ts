@@ -30,6 +30,10 @@ export class AddEventModalComponent implements OnInit {
 
     async submit() {
         //this.storage.remove('events');
+        let showImage = false;
+        if (this.logo != undefined) {
+            showImage = true;
+        }
         if (this.checkFields()) {
             await this.storage.get('events').then(val => {
                 if (val == null) {
@@ -40,7 +44,9 @@ export class AddEventModalComponent implements OnInit {
                         dateTime: this.dateTime,
                         logo: this.logo,
                         eventDisc: this.eventDisc,
-                        logs: []
+                        logs: [],
+                        showTitle: true,
+                        showImage: showImage,
                     }];
                     this.storage.set('events', data).then(val => {
                         if (val != null) {
@@ -61,7 +67,9 @@ export class AddEventModalComponent implements OnInit {
                         dateTime: this.dateTime,
                         logo: this.logo,
                         eventDisc: this.eventDisc,
-                        logs: []
+                        logs: [],
+                        showTitle: true,
+                        showImage: showImage,
                     };
                     newData.push(newVal);
                     this.storage.set('events', newData).then(val => {
@@ -118,9 +126,9 @@ export class AddEventModalComponent implements OnInit {
                 let currentName = filePath.substring(filePath.lastIndexOf('/') + 1);
                 this.file.copyFile(correctPath, currentName, this.file.dataDirectory, currentName).then(res => {
                     //this.logo = currentName;
-                        this.file.readAsDataURL(this.file.dataDirectory, currentName).then(img => {
-                            this.logo = img;
-                        });
+                    this.file.readAsDataURL(this.file.dataDirectory, currentName).then(img => {
+                        this.logo = img;
+                    });
                     // this.storage.set('logo', currentName).then((val) => {
                     //     if (val != null) {
                     //         this.presentToast();

@@ -80,6 +80,8 @@ export class ViewLogsPopoverComponent implements OnInit {
                                 dateTime: events[i].dateTime,
                                 logo: events[i].logo,
                                 eventDisc: events[i].eventDisc,
+                                showTitle: events[i].showTitle,
+                                showImage: events[i].showImage,
                                 logs: tempLogs
                             };
                             tempEvent[i] = data;
