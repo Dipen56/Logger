@@ -129,11 +129,6 @@ export class AddEventModalComponent implements OnInit {
                     this.file.readAsDataURL(this.file.dataDirectory, currentName).then(img => {
                         this.logo = img;
                     });
-                    // this.storage.set('logo', currentName).then((val) => {
-                    //     if (val != null) {
-                    //         this.presentToast();
-                    //     }
-                    // });
                 });
             });
         });

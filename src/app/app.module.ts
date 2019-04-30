@@ -16,7 +16,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { PopoverComponent } from './popover/popover.component';
 import { ChangePasswordPopoverComponent } from './change-password-popover/change-password-popover.component';
 import { FormsModule } from '@angular/forms';
-import { SetTitlePopoverComponent } from './set-title-popover/set-title-popover.component';
 import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
 import { FilePath } from '@ionic-native/file-path/ngx';
 import { ViewLogsPopoverComponent} from './view-logs-page/view-logs-popover/view-logs-popover.component';
@@ -28,8 +27,8 @@ import {DashboardPagePageModule} from './dashboard-page/dashboard-page.module';
 
 @NgModule({
 
-    declarations: [AppComponent, PopoverComponent, ChangePasswordPopoverComponent, SetTitlePopoverComponent, AddEventModalComponent],
-    entryComponents: [PopoverComponent, ChangePasswordPopoverComponent, SetTitlePopoverComponent, ViewLogsPopoverComponent, AddEventModalComponent],
+    declarations: [AppComponent, PopoverComponent, ChangePasswordPopoverComponent,  AddEventModalComponent],
+    entryComponents: [PopoverComponent, ChangePasswordPopoverComponent,  ViewLogsPopoverComponent, AddEventModalComponent],
     imports: [
         BrowserModule,
         IonicModule.forRoot(),

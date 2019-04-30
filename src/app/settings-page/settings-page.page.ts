@@ -1,7 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {PopoverController} from '@ionic/angular';
-import {ChangePasswordPopoverComponent} from '../change-password-popover/change-password-popover.component';
-import {SetTitlePopoverComponent} from '../set-title-popover/set-title-popover.component';
 import {FileChooser} from '@ionic-native/file-chooser/ngx';
 import {Storage} from '@ionic/storage';
 import {ToastController, AlertController} from '@ionic/angular';
@@ -56,10 +54,8 @@ export class SettingsPagePage implements OnInit {
                 let correctPath = filePath.substr(0, filePath.lastIndexOf('/') + 1);
                 let currentName = filePath.substring(filePath.lastIndexOf('/') + 1);
                 this.file.copyFile(correctPath, currentName, this.file.dataDirectory, currentName).then(res => {
-                    this.storage.set('logo', currentName).then((val) => {
-                        if (val != null) {
-                            this.presentToast();
-                        }
+                    this.file.readAsDataURL(this.file.dataDirectory, currentName).then(img => {
+                        this.image = img;
                     });
                 });
             });
