@@ -9,11 +9,11 @@
 
 <ion-content padding>
     <ion-item>
-        <ion-label position="floating">Location*</ion-label>
+        <ion-label position="floating">Location</ion-label>
         <ion-input required [(ngModel)]="location"></ion-input>
     </ion-item>
     <ion-item>
-        <ion-label>Pick Date & Time*</ion-label>
+        <ion-label>Pick Date & Time</ion-label>
         <ion-datetime required display-format="MMM DD, YYYY HH:mm" [(ngModel)]="dateTime"></ion-datetime>
     </ion-item>
     <ion-item>
@@ -27,7 +27,7 @@
         </ion-item>
     </div>
     <ion-item>
-        <ion-label position="floating">Event Description* <i style="font-size: 12px;">(100 characters max)</i>
+        <ion-label position="floating">Event Description <i style="font-size: 12px;">(100 characters max)</i>
         </ion-label>
         <ion-textarea required rows="3" maxlength="100" [(ngModel)]="eventDisc"></ion-textarea>
     </ion-item>

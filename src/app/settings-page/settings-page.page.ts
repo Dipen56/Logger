@@ -20,6 +20,9 @@ export class SettingsPagePage implements OnInit {
     eventID: any;
     eventName: any;
     image: any;
+    location: any;
+    dateTime: any;
+    eventDisc: any;
 
     constructor(private popoverController: PopoverController, private fileChooser: FileChooser,
                 private storage: Storage, private toastController: ToastController,
@@ -47,22 +50,6 @@ export class SettingsPagePage implements OnInit {
         });
     }
 
-    // async presentTitlePopover(ev: Event) {
-    //     var popover = await this.popoverController.create({
-    //         component: SetTitlePopoverComponent,
-    //         event: ev,
-    //         translucent: true
-    //     });
-    //     popover.onDidDismiss().then((detail) => {
-    //         if (detail !== null) {
-    //             console.log('The result:', detail.data);
-    //         }
-    //     });
-    //     await popover.present();
-    //
-    // }
-
-
     async persentFileChooser() {
         await this.fileChooser.open().then((uri) => {
             this.filePath.resolveNativePath(uri).then((filePath) => {
@@ -79,39 +66,41 @@ export class SettingsPagePage implements OnInit {
         });
     }
 
-    async presentToast() {
-        const toast = await this.toastController.create({
-            message: 'Successful, information have been saved.',
-            duration: 1500
-        });
-        toast.present();
-    }
 
     async update() {
-            let tempEvent = [];
-            await this.storage.get('events').then(events => {
-                if (events != null) {
-                    tempEvent = events;
-                    for (let i in events) {
-                        if (events[i].eventID == this.eventID) {
-                            let data = {
-                                eventID: events[i].eventID,
-                                eventName: this.eventName,
-                                location: events[i].location,
-                                dateTime: events[i].dateTime,
-                                logo: this.image,
-                                eventDisc: events[i].eventDisc,
-                                showTitle: this.showTitle,
-                                showImage: this.showLogo,
-                                logs: events[i].logs
-                            };
-                            tempEvent[i] = data;
-                            this.storage.set('events', tempEvent).then(val => {
-                                //this.presentToastSuccess('Log Deleted');
-                            });
-                        }
+        let tempEvent = [];
+        await this.storage.get('events').then(events => {
+            if (events != null) {
+                tempEvent = events;
+                for (let i in events) {
+                    if (events[i].eventID == this.eventID) {
+                        let data = {
+                            eventID: events[i].eventID,
+                            eventName: this.eventName,
+                            location: this.location,
+                            dateTime: this.dateTime,
+                            logo: this.image,
+                            eventDisc: this.eventDisc,
+                            showTitle: this.showTitle,
+                            showImage: this.showLogo,
+                            logs: events[i].logs
+                        };
+                        tempEvent[i] = data;
+                        this.storage.set('events', tempEvent).then(val => {
+                            this.presentToastSuccess('Event Updated');
+                        });
                     }
                 }
-            });
+            }
+        });
+    }
+
+    async presentToastSuccess(msg) {
+        const toast = await this.toastController.create({
+            message: 'Success: ' + msg,
+            duration: 1500
+        });
+        toast.color = 'success';
+        toast.present();
     }
 }
