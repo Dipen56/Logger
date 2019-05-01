@@ -60,7 +60,7 @@ export class LoginPagePage implements OnInit {
                     role: 'cancel',
                     cssClass: 'secondary',
                     handler: (blah) => {
-                        console.log('Confirm Cancel: blah');
+                        this.alertController.dismiss();
                     }
                 }, {
                     text: 'Okay',
@@ -70,6 +70,8 @@ export class LoginPagePage implements OnInit {
                                 if (res.question == data.name) {
                                     this.alertController.dismiss();
                                     this.showPasswordAlert(res.username, res.password);
+                                } else {
+                                    this.presentToastError('Incorrect Answer...');
                                 }
                             }
                         });
