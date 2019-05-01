@@ -20,7 +20,7 @@
                 <ion-input type="password" required [(ngModel)]="password" class="password-input"></ion-input>
             </ion-item>
             <div class="forgot-password">
-                <ion-label id="forgot-password-label">Forgot Password?</ion-label>
+                <ion-label id="forgot-password-label" (click)="forgotPasswordAlert()">Forgot Password?</ion-label>
             </div>
         </div>
         <div>
