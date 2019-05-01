@@ -1,43 +1,46 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>admin-setting-page</ion-title>
-  </ion-toolbar>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+        <ion-title>admin-setting-page</ion-title>
+    </ion-toolbar>
 </ion-header>
 
 <ion-content padding>
-  <ion-item>
-    Change Password
-    <ion-button slot="start" (click)="presentChangePasswordPopover()">
-      <ion-icon slot="icon-only" name="lock">
-      </ion-icon>
-    </ion-button>
-  </ion-item>
-  <ion-item>
-    Clear All Data
-    <ion-button slot="start" (click)="presentDeleteConformationAlert()">
-      <ion-icon slot="icon-only" name="trash">
-      </ion-icon>
-    </ion-button>
-  </ion-item>
-  <ion-item>
-    Feedback
-    <ion-button slot="start">
-      <ion-icon slot="icon-only" name="happy">
-      </ion-icon>
-    </ion-button>
-  </ion-item>
-  <ion-item>
-    Donations
-    <ion-button slot="start">
-      <ion-icon slot="icon-only" name="heart">
-      </ion-icon>
-    </ion-button>
-  </ion-item>
-  <ion-item>
-    About
-    <ion-button slot="start">
-      <ion-icon slot="icon-only" name="information-circle">
-      </ion-icon>
-    </ion-button>
-  </ion-item>
+    <ion-item>
+        Change Password
+        <ion-button slot="start" (click)="presentChangePasswordPopover()">
+            <ion-icon slot="icon-only" name="lock">
+            </ion-icon>
+        </ion-button>
+    </ion-item>
+    <ion-item>
+        Clear All Data
+        <ion-button slot="start" (click)="presentDeleteConformationAlert()">
+            <ion-icon slot="icon-only" name="trash">
+            </ion-icon>
+        </ion-button>
+    </ion-item>
+    <ion-item>
+        Feedback
+        <ion-button slot="start">
+            <ion-icon slot="icon-only" name="happy">
+            </ion-icon>
+        </ion-button>
+    </ion-item>
+    <ion-item>
+        Donations
+        <ion-button slot="start">
+            <ion-icon slot="icon-only" name="heart">
+            </ion-icon>
+        </ion-button>
+    </ion-item>
+    <ion-item>
+        About
+        <ion-button slot="start">
+            <ion-icon slot="icon-only" name="information-circle">
+            </ion-icon>
+        </ion-button>
+    </ion-item>
 </ion-content>

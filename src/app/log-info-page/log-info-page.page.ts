@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Storage} from '@ionic/storage';
 import {ActivatedRoute, Router} from '@angular/router';
-import {NavController, ToastController, AlertController} from '@ionic/angular';
+import {NavController, ToastController, AlertController, MenuController} from '@ionic/angular';
 import {AndroidPermissions} from '@ionic-native/android-permissions/ngx';
 import {File} from '@ionic-native/file/ngx';
 
@@ -26,7 +26,7 @@ export class LogInfoPagePage implements OnInit {
     constructor(private storage: Storage, private router: Router,
                 private navController: NavController, private toastController: ToastController,
                 private alertController: AlertController, private androidPermissions: AndroidPermissions,
-                private file: File, private route: ActivatedRoute) {
+                private file: File, private route: ActivatedRoute, private menuController: MenuController) {
 
         this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.WRITE_EXTERNAL_STORAGE).then(
             result => console.log('Has permission?', result.hasPermission),
@@ -52,6 +52,12 @@ export class LogInfoPagePage implements OnInit {
                 this.showLogo = val;
             }
         });
+    }
+
+    ionViewWillEnter() {
+        this.menuController.enable(false, 'admin-panel');
+        this.menuController.enable(true, 'public-panel');
+        this.menuController.enable(false, 'sub-panel');
     }
 
     async findEvents() {
@@ -140,8 +146,5 @@ export class LogInfoPagePage implements OnInit {
                 }
             }
         });
-
     }
-
-
 }

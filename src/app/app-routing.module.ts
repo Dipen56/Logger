@@ -9,7 +9,7 @@ const routes: Routes = [
     {path: 'login-page', loadChildren: './login-page/login-page.module#LoginPagePageModule'},
     {path: 'signup-page', loadChildren: './signup-page/signup-page.module#SignupPagePageModule'},
     {path: 'dashboard-page', loadChildren: './dashboard-page/dashboard-page.module#DashboardPagePageModule'},
-  { path: 'admin-setting-page', loadChildren: './admin-setting-page/admin-setting-page.module#AdminSettingPagePageModule' },
+    {path: 'admin-setting-page', loadChildren: './admin-setting-page/admin-setting-page.module#AdminSettingPagePageModule'},
 ];
 
 // loadchildern will load the components module and then it will look in there for its children

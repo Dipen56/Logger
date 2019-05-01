@@ -11,20 +11,36 @@ import {Storage} from '@ionic/storage';
 })
 export class AppComponent {
     // these are the pages that gets loaded in teh menu
-    public appPages = [
+    public adminPanel = [
         {
-            title: 'Subscribe',
-            url: '/log-info-page'
+            title: 'Dashboard',
+            url: '/dashboard-page'
         },
         {
-            title: 'View Logs',
-            url: '/view-logs-page'
+            title: 'Setting',
+            url: '/admin-setting-page'
         },
         {
-            title: 'Settings',
-            url: '/settings-page',
-            icon: 'settings'
+            title: 'Sign Out',
+            url: '/login-page',
         }
+    ];
+    public subPanel = [
+        {
+            title: 'Dashboard',
+            url: '/dashboard-page'
+        },
+        {
+            title: 'Sign Out',
+            url: '/login-page',
+        }
+    ];
+
+    public publicPanel = [
+        {
+            title: 'Admin Panel',
+            url: '/login-page'
+        },
     ];
 
     constructor(

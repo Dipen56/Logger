@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ModalController} from '@ionic/angular';
+import {MenuController, ModalController} from '@ionic/angular';
 import {Storage} from '@ionic/storage';
 import {AddEventModalComponent} from './add-event-modal/add-event-modal.component';
 
@@ -11,11 +11,18 @@ import {AddEventModalComponent} from './add-event-modal/add-event-modal.componen
 export class DashboardPagePage implements OnInit {
     events = [];
 
-    constructor(private modalController: ModalController, private storage: Storage) {
+    constructor(private modalController: ModalController, private storage: Storage,
+                private menuController: MenuController) {
     }
 
     ngOnInit() {
         this.loadEvent();
+    }
+
+    ionViewWillEnter() {
+        this.menuController.enable(true, 'admin-panel');
+        this.menuController.enable(false, 'public-panel');
+        this.menuController.enable(false, 'sub-panel');
     }
 
     async openModal() {
@@ -31,18 +38,15 @@ export class DashboardPagePage implements OnInit {
         modal.onDidDismiss().then(val => {
             this.loadEvent();
         });
-            //this is how you get the data passed by the modal
-            // if (detail !== null) {
-            //     console.log('The result:', detail.data);
-            // }
-
-
+        //this is how you get the data passed by the modal
+        // if (detail !== null) {
+        //     console.log('The result:', detail.data);
+        // }
         await modal.present();
     }
 
     async loadEvent() {
         await this.storage.get('events').then(val => {
-            console.log(val);
             this.events = val;
         });
     }

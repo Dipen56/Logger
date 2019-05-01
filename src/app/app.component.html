@@ -1,25 +1,69 @@
 <ion-app>
-  <ion-split-pane>
-    <ion-menu>
-      <ion-header>
-        <ion-toolbar>
-          <ion-title>Menu</ion-title>
-        </ion-toolbar>
-      </ion-header>
+    <ion-split-pane>
+        <ion-menu menuId='admin-panel'>
+            <ion-header>
+                <ion-toolbar>
+                    <ion-title>Menu</ion-title>
+                </ion-toolbar>
+            </ion-header>
 
-      <ion-content>
-        <ion-list>
-          <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages">
-            <ion-item [routerDirection]="'root'" [routerLink]="[p.url]">
-              <!--<ion-icon slot="end" [name]="p.icon"></ion-icon>-->
-              <ion-label>
-                {{p.title}}
-              </ion-label>
-            </ion-item>
-          </ion-menu-toggle>
-        </ion-list>
-      </ion-content>
-    </ion-menu>
-    <ion-router-outlet main></ion-router-outlet>
-  </ion-split-pane>
+            <ion-content>
+                <ion-list>
+                    <ion-menu-toggle auto-hide="false" *ngFor="let p of adminPanel">
+                        <ion-item [routerDirection]="'root'" [routerLink]="[p.url]">
+                            <!--<ion-icon slot="end" [name]="p.icon"></ion-icon>-->
+                            <ion-label>
+                                {{p.title}}
+                            </ion-label>
+                        </ion-item>
+                    </ion-menu-toggle>
+                </ion-list>
+            </ion-content>
+        </ion-menu>
+
+        <ion-menu menuId="sub-panel">
+            <ion-header>
+                <ion-toolbar>
+                    <ion-title>Menu</ion-title>
+                </ion-toolbar>
+            </ion-header>
+
+            <ion-content>
+                <ion-list>
+                    <ion-menu-toggle auto-hide="false" *ngFor="let p of subPanel">
+                        <ion-item [routerDirection]="'root'" [routerLink]="[p.url]">
+                            <!--<ion-icon slot="end" [name]="p.icon"></ion-icon>-->
+                            <ion-label>
+                                {{p.title}}
+                            </ion-label>
+                        </ion-item>
+                    </ion-menu-toggle>
+                </ion-list>
+            </ion-content>
+        </ion-menu>
+
+        <ion-menu id="public-panel">
+            <ion-header>
+                <ion-toolbar>
+                    <ion-title>Menu</ion-title>
+                </ion-toolbar>
+            </ion-header>
+
+            <ion-content>
+                <ion-list>
+                    <ion-menu-toggle auto-hide="false" *ngFor="let p of publicPanel">
+                        <ion-item [routerDirection]="'root'" [routerLink]="[p.url]">
+                            <!--<ion-icon slot="end" [name]="p.icon"></ion-icon>-->
+                            <ion-label>
+                                {{p.title}}
+                            </ion-label>
+                        </ion-item>
+                    </ion-menu-toggle>
+                </ion-list>
+            </ion-content>
+        </ion-menu>
+        <ion-router-outlet main></ion-router-outlet>
+    </ion-split-pane>
 </ion-app>
+
+

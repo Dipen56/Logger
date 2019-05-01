@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {PopoverController} from '@ionic/angular';
+import {MenuController, PopoverController} from '@ionic/angular';
 import {FileChooser} from '@ionic-native/file-chooser/ngx';
 import {Storage} from '@ionic/storage';
 import {ToastController, AlertController} from '@ionic/angular';
@@ -25,12 +25,18 @@ export class SettingsPagePage implements OnInit {
     constructor(private popoverController: PopoverController, private fileChooser: FileChooser,
                 private storage: Storage, private toastController: ToastController,
                 private alertController: AlertController, private filePath: FilePath,
-                private file: File, private route: ActivatedRoute) {
+                private file: File, private route: ActivatedRoute, private menuController: MenuController) {
         this.eventID = this.route.snapshot.paramMap.get('id');
     }
 
     ngOnInit() {
         this.loadEvent();
+    }
+
+    ionViewWillEnter() {
+        this.menuController.enable(false, 'admin-panel');
+        this.menuController.enable(false, 'public-panel');
+        this.menuController.enable(true, 'sub-panel');
     }
 
     async loadEvent() {

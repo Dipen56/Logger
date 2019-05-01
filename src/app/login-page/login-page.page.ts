@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Storage} from '@ionic/storage';
 import {Router} from '@angular/router';
 import {ToastController} from '@ionic/angular';
+import {MenuController} from '@ionic/angular';
 
 @Component({
     selector: 'app-login-page',
@@ -13,26 +14,31 @@ export class LoginPagePage implements OnInit {
     password: any;
 
     constructor(private storage: Storage, private router: Router,
-                private toastController: ToastController) {
+                private toastController: ToastController, private  menuController: MenuController) {
     }
 
     ngOnInit() {
         // this.storage.clear();
     }
 
+    ionViewWillEnter() {
+        this.menuController.enable(false);
+    }
+
     login() {
         this.storage.get('login').then(res => {
             if (res != null) {
-                if(res.username.toUpperCase() == this.username.toUpperCase()){
-                    if (res.password == this.password){
+                if (res.username.toUpperCase() == this.username.toUpperCase()) {
+                    if (res.password == this.password) {
                         this.router.navigate(['dashboard-page']);
                     }
                 } else {
-                    this.presentToastError("");
+                    this.presentToastError('');
                 }
             }
         });
     }
+
     async presentToastError(msg) {
         const toast = await this.toastController.create({
             message: 'Error: ' + msg,

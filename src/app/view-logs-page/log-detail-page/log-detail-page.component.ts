@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Storage} from '@ionic/storage';
 import {CallNumber} from '@ionic-native/call-number';
-import {PopoverController} from '@ionic/angular';
+import {MenuController, PopoverController} from '@ionic/angular';
 import {PopoverComponent} from '../../popover/popover.component';
 import {SocialSharing} from '@ionic-native/social-sharing/ngx';
 import {Alert} from 'selenium-webdriver';
@@ -26,13 +26,19 @@ export class LogDetailPageComponent implements OnInit {
 
     constructor(private storage: Storage, private route: ActivatedRoute,
                 private popoverController: PopoverController, private socialSharing: SocialSharing,
-                private router: Router) {
+                private router: Router, private menuController: MenuController) {
         this.eventID = this.route.snapshot.paramMap.get('id');
         this.logKey = this.route.snapshot.paramMap.get('email');
     }
 
     ngOnInit() {
         this.loadLog();
+    }
+
+    ionViewWillEnter() {
+        this.menuController.enable(false, 'admin-panel');
+        this.menuController.enable(false, 'public-panel');
+        this.menuController.enable(true, 'sub-panel');
     }
 
     async loadLog() {

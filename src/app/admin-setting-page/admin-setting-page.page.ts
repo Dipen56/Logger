@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {ChangePasswordPopoverComponent} from '../change-password-popover/change-password-popover.component';
+import {MenuController} from '@ionic/angular';
 
 @Component({
   selector: 'app-admin-setting-page',
@@ -8,10 +9,15 @@ import {ChangePasswordPopoverComponent} from '../change-password-popover/change-
 })
 export class AdminSettingPagePage implements OnInit {
 
-  constructor() { }
+  constructor(private menuController: MenuController) { }
 
   ngOnInit() {
   }
+    ionViewWillEnter() {
+        this.menuController.enable(true, "admin-panel");
+        this.menuController.enable(false,"public-panel");
+        this.menuController.enable(false,"sub-panel");
+    }
     // async presentChangePasswordPopover(ev: Event) {
     //     var popover = await this.popoverController.create({
     //         component: ChangePasswordPopoverComponent,

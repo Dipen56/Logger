@@ -1,7 +1,7 @@
 import {Component, OnInit, NgZone} from '@angular/core';
 import {Storage} from '@ionic/storage';
 import {ActivatedRoute, Router} from '@angular/router';
-import {Events, AlertController, PopoverController} from '@ionic/angular';
+import {Events, AlertController, PopoverController, MenuController} from '@ionic/angular';
 import {ViewLogsPopoverComponent} from './view-logs-popover/view-logs-popover.component';
 
 @Component({
@@ -22,7 +22,7 @@ export class ViewLogsPagePage implements OnInit {
     constructor(private storage: Storage, private router: Router,
                 private events: Events, private zone: NgZone,
                 private alertController: AlertController, private popoverController: PopoverController,
-                private route: ActivatedRoute) {
+                private route: ActivatedRoute, private menuController: MenuController) {
         // used to refresh the screen.
         this.events.subscribe('updateScreen', () => {
             this.zone.run(() => {
@@ -34,6 +34,12 @@ export class ViewLogsPagePage implements OnInit {
     ngOnInit() {
         this.eventID = this.route.snapshot.paramMap.get('id');
         this.loadAllLogs();
+    }
+
+    ionViewWillEnter() {
+        this.menuController.enable(false, 'admin-panel');
+        this.menuController.enable(false, 'public-panel');
+        this.menuController.enable(true, 'sub-panel');
     }
 
     updateScreen() {
@@ -116,7 +122,7 @@ export class ViewLogsPagePage implements OnInit {
                 selectedLogs: this.selcetedLogs,
                 eventID: this.eventID
             },
-            cssClass: "custom-popover",
+            cssClass: 'custom-popover',
         });
         popover.onDidDismiss().then((e) => {
             this.deselectLogs();
