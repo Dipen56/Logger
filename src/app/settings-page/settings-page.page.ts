@@ -46,6 +46,9 @@ export class SettingsPagePage implements OnInit {
                     if (events[i].eventID == this.eventID) {
                         this.showTitle = events[i].showTitle;
                         this.showLogo = events[i].showImage;
+                        this.location = events[i].location;
+                        this.dateTime = events[i].dateTime;
+                        this.eventDisc = events[i].eventDisc;
                         this.image = events[i].logo;
                         this.eventName = events[i].eventName;
                     }
@@ -78,11 +81,11 @@ export class SettingsPagePage implements OnInit {
                     if (events[i].eventID == this.eventID) {
                         let data = {
                             eventID: events[i].eventID,
-                            eventName: this.eventName,
-                            location: this.location,
+                            eventName: this.eventName.trim(),
+                            location: this.location.trim(),
                             dateTime: this.dateTime,
                             logo: this.image,
-                            eventDisc: this.eventDisc,
+                            eventDisc: this.eventDisc.trim(),
                             showTitle: this.showTitle,
                             showImage: this.showLogo,
                             logs: events[i].logs

@@ -27,7 +27,7 @@ export class ChangePasswordPopoverComponent implements OnInit {
                         firstName: val.firstName,
                         lastName: val.lastName,
                         username: val.username,
-                        password: this.newPassword,
+                        password: this.newPassword.trim(),
                         question: val.question
                     };
                     this.storage.set('login', data).then((res) => {
@@ -46,14 +46,14 @@ export class ChangePasswordPopoverComponent implements OnInit {
     }
 
     validateDetails() {
-        if (this.oldPassword == undefined || this.newPassword == undefined || this.reenteredPassword == undefined) {
+        if (this.oldPassword.trim() == undefined || this.newPassword.trim() == undefined || this.reenteredPassword.trim() == undefined) {
             this.presentToastError('Please Fill in Everything.');
             return false;
         }
-        if (this.newPassword != this.reenteredPassword) {
+        if (this.newPassword.trim() != this.reenteredPassword.trim()) {
             this.presentToastError('Password Do Not Match.');
             return false;
-        } else if (this.newPassword.split('').length < 3) {
+        } else if (this.newPassword.trim().split('').length < 3) {
             this.presentToastError('Password Must Be Larger Then 4 Characters.');
             return false;
         } else {

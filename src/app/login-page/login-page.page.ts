@@ -29,7 +29,7 @@ export class LoginPagePage implements OnInit {
     login() {
         this.storage.get('login').then(res => {
             if (res != null) {
-                if (res.username.toUpperCase() == this.username.toUpperCase()) {
+                if (res.username.toUpperCase().trim() == this.username.toUpperCase().trim()) {
                     if (res.password == this.password) {
 
                         this.router.navigate(['dashboard-page']);
@@ -67,7 +67,7 @@ export class LoginPagePage implements OnInit {
                     handler: data => {
                         this.storage.get('login').then(res => {
                             if (res != null) {
-                                if (res.question == data.name) {
+                                if (res.question.toUpperCase() == data.name.toUpperCase().trim()) {
                                     this.alertController.dismiss();
                                     this.showPasswordAlert(res.username, res.password);
                                 } else {

@@ -15,7 +15,7 @@ export class LogInfoPagePage implements OnInit {
     email: any;
     homeNumber: number;
     mobileNumber: number;
-    additionalInfo: any;
+    additionalInfo: any = '';
     eventTitle: string;
     logo: any = 'assets/img/default-logo.png';
     showTitle: any;
@@ -121,11 +121,11 @@ export class LogInfoPagePage implements OnInit {
                         let newLogs = events[i].logs;
                         let date = new Date();
                         newLogs.push({
-                            fullName: this.fullName,
-                            email: this.email,
+                            fullName: this.fullName.trim(),
+                            email: this.email.trim(),
                             homeNumber: this.homeNumber,
                             mobileNumber: this.mobileNumber,
-                            additionalInfo: this.additionalInfo,
+                            additionalInfo: this.additionalInfo.trim(),
                             date: date,
                         });
                         let data = {
@@ -139,7 +139,7 @@ export class LogInfoPagePage implements OnInit {
                         };
                         tempEvent[i] = data;
                         this.storage.set('events', tempEvent).then(val => {
-                            this.presentToastSuccess('subscription Saved');
+                            this.presentToastSuccess('Subscription Saved');
                             this.clearInput();
                         });
                     }

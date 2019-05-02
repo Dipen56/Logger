@@ -48,11 +48,11 @@ export class ViewLogsPagePage implements OnInit {
 
     searchLogs() {
         let tempLogs = [];
-        if (this.searchQuery == '') {
+        if (this.searchQuery.trim() == '') {
             this.loadAllLogs();
         } else {
             for (let log of this.copyLogs) {
-                if (log.email.toUpperCase().startsWith(this.searchQuery.toUpperCase())) {
+                if (log.email.toUpperCase().startsWith(this.searchQuery.toUpperCase().trim())) {
                     tempLogs.push(log);
                 }
             }
@@ -89,7 +89,6 @@ export class ViewLogsPagePage implements OnInit {
         }
     }
 
-    // this not workign yet
     selectALl() {
         if (!this.isChecked) {
             for (let log of this.logs) {

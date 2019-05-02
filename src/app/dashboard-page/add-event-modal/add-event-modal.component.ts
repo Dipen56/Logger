@@ -38,12 +38,12 @@ export class AddEventModalComponent implements OnInit {
             await this.storage.get('events').then(val => {
                 if (val == null) {
                     let data = [{
-                        eventID: 0,
-                        eventName: this.eventName,
-                        location: this.location,
+                        eventID: this.generateID(),
+                        eventName: this.eventName.trim(),
+                        location: this.location.trim(),
                         dateTime: this.dateTime,
                         logo: this.logo,
-                        eventDisc: this.eventDisc,
+                        eventDisc: this.eventDisc.trim(),
                         logs: [],
                         showTitle: true,
                         showImage: showImage,
@@ -61,12 +61,12 @@ export class AddEventModalComponent implements OnInit {
                         newData.push(data);
                     }
                     let newVal = {
-                        eventID: val.length,
-                        eventName: this.eventName,
-                        location: this.location,
+                        eventID: this.generateID(),
+                        eventName: this.eventName.trim(),
+                        location: this.location.trim(),
                         dateTime: this.dateTime,
                         logo: this.logo,
-                        eventDisc: this.eventDisc,
+                        eventDisc: this.eventDisc.trim(),
                         logs: [],
                         showTitle: true,
                         showImage: showImage,
@@ -90,7 +90,8 @@ export class AddEventModalComponent implements OnInit {
     }
 
     checkFields(): boolean {
-        if (this.eventName == '' || this.location == '' || this.dateTime == undefined || this.eventDisc == '') {
+        if (this.eventName.trim() == '' || this.location.trim() == ''
+            || this.dateTime.trim() == undefined || this.eventDisc.trim() == '') {
             return false;
         } else {
             return true;
@@ -132,5 +133,9 @@ export class AddEventModalComponent implements OnInit {
                 });
             });
         });
+    }
+
+    generateID() {
+        return Math.random().toString(36).substr(2, 9);
     }
 }

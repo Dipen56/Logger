@@ -48,6 +48,7 @@ export class DashboardPagePage implements OnInit {
     async loadEvent() {
         await this.storage.get('events').then(val => {
             this.events = val;
+            this.events.reverse();
         });
     }
 }

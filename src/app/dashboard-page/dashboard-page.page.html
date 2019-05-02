@@ -9,9 +9,9 @@
 
 <ion-content padding>
     <ion-card *ngFor="let event of events">
-        <ion-img src={{event.logo}} id="img"></ion-img>
+        <ion-img src={{event.logo}} id="img" *ngIf=event.showImage></ion-img>
         <ion-card-header>
-            <ion-card-title>{{event.eventName}}</ion-card-title>
+            <ion-card-title *ngIf=event.showTitle>{{event.eventName}}</ion-card-title>
             <ion-card-subtitle>{{event.location}} {{event.dateTime | date: "dd/MM/yyyy HH:mm"}}</ion-card-subtitle>
         </ion-card-header>
 

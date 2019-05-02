@@ -36,11 +36,11 @@ export class SignupPagePage implements OnInit {
         let isDetailValid = this.validateDetails();
         if (isDetailValid) {
             let data = {
-                firstName: this.firstName,
-                lastName: this.lastName,
-                username: this.username,
-                password: this.password,
-                question: this.question
+                firstName: this.firstName.trim(),
+                lastName: this.lastName.trim(),
+                username: this.username.trim(),
+                password: this.password.trim(),
+                question: this.question.trim()
             };
             this.storage.set('login', data).then((val) => {
                 this.presentToastSuccess('Details Saved.').then(res => {
@@ -52,18 +52,18 @@ export class SignupPagePage implements OnInit {
     }
 
     validateDetails() {
-        if (this.firstName == undefined || this.lastName == undefined || this.username == undefined || this.question == undefined ||
-            this.password == undefined || this.re_entered_password == undefined) {
+        if (this.firstName.trim() == undefined || this.lastName.trim() == undefined || this.username.trim() == undefined || this.question.trim() == undefined
+            || this.password.trim() == undefined || this.re_entered_password.trim() == undefined) {
             this.presentToastError('Please Fill in Everything.');
             return false;
         }
-        if (this.password != this.re_entered_password) {
+        if (this.password.trim() != this.re_entered_password.trim()) {
             this.presentToastError('Password Do Not Match.');
             return false;
-        } else if (this.password == undefined || this.re_entered_password == undefined) {
+        } else if (this.password.trim() == undefined || this.re_entered_password.trim() == undefined) {
             this.presentToastError('Password Cannot Be Empty.');
             return false;
-        } else if (this.password.split('').length < 3) {
+        } else if (this.password.trim().split('').length < 3) {
             this.presentToastError('Password Must Be Larger Then 4 Characters.');
             return false;
         } else {
