@@ -5,7 +5,7 @@ import {Storage} from '@ionic/storage';
 import {ToastController, AlertController} from '@ionic/angular';
 import {FilePath} from '@ionic-native/file-path/ngx';
 import {File} from '@ionic-native/file/ngx';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
     selector: 'app-settings-page',
@@ -25,7 +25,8 @@ export class SettingsPagePage implements OnInit {
     constructor(private popoverController: PopoverController, private fileChooser: FileChooser,
                 private storage: Storage, private toastController: ToastController,
                 private alertController: AlertController, private filePath: FilePath,
-                private file: File, private route: ActivatedRoute, private menuController: MenuController) {
+                private file: File, private route: ActivatedRoute, private menuController: MenuController,
+                private router: Router) {
         this.eventID = this.route.snapshot.paramMap.get('id');
     }
 
@@ -71,6 +72,46 @@ export class SettingsPagePage implements OnInit {
         });
     }
 
+    async presentAlertDeleteEvent() {
+        const alert = await this.alertController.create({
+            header: 'Confirm!',
+            message: 'Are you sure! <strong> Once deleted can not be undone. </strong>!!!',
+            buttons: [
+                {
+                    text: 'Cancel',
+                    role: 'cancel',
+                    cssClass: 'secondary',
+                    handler: (blah) => {
+                    }
+                }, {
+                    text: 'Okay',
+                    handler: () => {
+                        this.deleteEvent();
+                    }
+                }
+            ]
+        });
+
+        await alert.present();
+    }
+
+
+    async deleteEvent() {
+        await this.storage.get('events').then(events => {
+            if (events != null) {
+                for (let i in events) {
+                    if (events[i].eventID == this.eventID) {
+                        events.splice(i, 1);
+                    }
+                }
+            }
+            this.storage.set('events', events).then(val => {
+                this.router.navigateByUrl('dashboard-page');
+                this.presentToastSuccess('Event Deleted');
+            });
+        });
+
+    }
 
     async update() {
         let tempEvent = [];
