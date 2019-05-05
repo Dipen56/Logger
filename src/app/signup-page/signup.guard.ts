@@ -7,7 +7,6 @@ import {Storage} from '@ionic/storage';
     providedIn: 'root'
 })
 export class SignupGuard implements CanActivate {
-    login: any;
 
     constructor(private router: Router, private storage: Storage) {
     }
@@ -19,7 +18,6 @@ export class SignupGuard implements CanActivate {
         | boolean
         | UrlTree {
         return this.storage.get('login').then((res) => {
-            this.login = res;
             if (res != null) {
                 this.router.navigate(['login-page']);
                 return false;
