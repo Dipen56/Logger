@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 
-import {Platform} from '@ionic/angular';
+import {ModalController, Platform} from '@ionic/angular';
 import {SplashScreen} from '@ionic-native/splash-screen/ngx';
 import {StatusBar} from '@ionic-native/status-bar/ngx';
 import {Storage} from '@ionic/storage';
@@ -47,7 +47,7 @@ export class AppComponent {
         private platform: Platform,
         private splashScreen: SplashScreen,
         private statusBar: StatusBar,
-        private storage: Storage
+        public modalController: ModalController,
     ) {
         this.initializeApp();
     }
@@ -55,14 +55,9 @@ export class AppComponent {
     initializeApp() {
         this.platform.ready().then(() => {
             this.statusBar.styleDefault();
+            this.statusBar.overlaysWebView(false);
+            this.statusBar.backgroundColorByHexString('#5C3C4C');
             this.splashScreen.hide();
-            // this.storage.get('showTitle').then((val) => {
-            //     if (val == null) {
-            //         this.storage.set('showTitle', true);
-            //     }
-            // });
-            // this.storage.set('showLogo', true);
-            // // this.storage.set('logViewAuth', false);
         });
     }
 }

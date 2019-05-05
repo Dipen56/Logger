@@ -9,24 +9,24 @@ import {Storage} from '@ionic/storage';
 export class SignupGuard implements CanActivate {
     login: any;
 
-    constructor(private router: Router, private storage: Storage) { }
+    constructor(private router: Router, private storage: Storage) {
+    }
 
-    canEnter(): boolean {
-        this.storage.get('login').then((res) => {
+    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean
+        | UrlTree>
+        | Promise<boolean
+        | UrlTree>
+        | boolean
+        | UrlTree {
+        return this.storage.get('login').then((res) => {
             this.login = res;
-            if (this.login != null) {
+            if (res != null) {
                 this.router.navigate(['login-page']);
                 return false;
             } else {
                 return true;
             }
         });
-        this.router.navigate(['login-page']);
-        return false;
-    }
-
-    canActivate(route: ActivatedRouteSnapshot): boolean {
-        return false;
     }
 
 }

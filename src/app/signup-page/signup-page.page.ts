@@ -1,8 +1,7 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnChanges, OnInit} from '@angular/core';
 import {Storage} from '@ionic/storage';
 import {MenuController, ToastController} from '@ionic/angular';
 import {Router} from '@angular/router';
-import {SignupGuard} from './signup.guard';
 
 @Component({
     selector: 'app-signup-page',
@@ -18,16 +17,17 @@ export class SignupPagePage implements OnInit {
     question: string;
 
     constructor(private storage: Storage, private toastController: ToastController,
-                private router: Router, private  menuController: MenuController,
-                private guard: SignupGuard) {
+                private router: Router, private  menuController: MenuController) {
     }
 
     ngOnInit() {
+        // this.guard.canEnter();
     }
 
-    ionViewCanEnter() {
-        this.guard.canEnter();
-    }
+    // ionViewCanEnter() {
+    //     this.guard.canEnter();
+    //     // console.log('here')
+    // }
 
     ionViewWillEnter() {
         this.menuController.enable(false);

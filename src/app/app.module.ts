@@ -24,10 +24,11 @@ import {ViewLogsPagePage} from './view-logs-page/view-logs-page.page';
 import {SignupGuard} from './signup-page/signup.guard';
 import {AddEventModalComponent} from './dashboard-page/add-event-modal/add-event-modal.component';
 import {DashboardPagePageModule} from './dashboard-page/dashboard-page.module';
+import { SplashComponent } from './splash/splash.component';
 
 @NgModule({
 
-    declarations: [AppComponent, PopoverComponent, ChangePasswordPopoverComponent,  AddEventModalComponent],
+    declarations: [AppComponent, PopoverComponent, ChangePasswordPopoverComponent,  AddEventModalComponent, SplashComponent],
     entryComponents: [PopoverComponent, ChangePasswordPopoverComponent,  ViewLogsPopoverComponent, AddEventModalComponent],
     imports: [
         BrowserModule,
@@ -43,7 +44,6 @@ import {DashboardPagePageModule} from './dashboard-page/dashboard-page.module';
         StatusBar,
         SplashScreen,
         { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-        // CallNumber
         SocialSharing,
         FileChooser,
         FilePath,
