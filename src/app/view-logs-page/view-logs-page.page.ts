@@ -33,13 +33,13 @@ export class ViewLogsPagePage implements OnInit {
 
     ngOnInit() {
         this.eventID = this.route.snapshot.paramMap.get('id');
-        this.loadAllLogs();
     }
 
     ionViewWillEnter() {
         this.menuController.enable(false, 'admin-panel');
         this.menuController.enable(false, 'public-panel');
         this.menuController.enable(true, 'sub-panel');
+        this.loadAllLogs();
     }
 
     updateScreen() {
@@ -129,6 +129,10 @@ export class ViewLogsPagePage implements OnInit {
             this.events.publish('updateScreen');
         });
         return await popover.present();
+    }
+
+    goToLogView(email) {
+        this.router.navigate(['log/' + this.eventID + '/' + email]);
     }
 
 }

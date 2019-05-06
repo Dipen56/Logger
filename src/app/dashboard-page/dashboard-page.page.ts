@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {MenuController, ModalController} from '@ionic/angular';
 import {Storage} from '@ionic/storage';
 import {AddEventModalComponent} from './add-event-modal/add-event-modal.component';
+import {Router} from '@angular/router';
 
 @Component({
     selector: 'app-dashboard-page',
@@ -12,7 +13,7 @@ export class DashboardPagePage implements OnInit {
     events = [];
 
     constructor(private modalController: ModalController, private storage: Storage,
-                private menuController: MenuController) {
+                private menuController: MenuController, private router: Router) {
     }
 
     ngOnInit() {
@@ -52,5 +53,9 @@ export class DashboardPagePage implements OnInit {
                 this.events.reverse();
             }
         });
+    }
+
+    goToLogViewPage(eventID) {
+        this.router.navigate(['log-info-page/' + eventID]);
     }
 }

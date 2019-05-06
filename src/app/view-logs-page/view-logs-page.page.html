@@ -22,7 +22,7 @@
     <ion-searchbar type="email" animated placeholder="Search by Email" [(ngModel)]="searchQuery"
                    (ngModelChange)="searchLogs()" class="search"></ion-searchbar>
     <div *ngIf="!isSelectMode; else selectModeBlockBody">
-        <ion-item (press)="pressEvent(log.email)" detail *ngFor="let log of logs" href='/log/{{eventID}}/{{log.email}}'>
+        <ion-item (press)="pressEvent(log.email)" detail *ngFor="let log of logs" (click)="goToLogView(log.email)">
             <ion-label>
                 {{log.fullName}}
             </ion-label>
