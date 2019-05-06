@@ -54,8 +54,4 @@ export class DashboardPagePage implements OnInit {
             }
         });
     }
-
-    goToLogViewPage(eventID) {
-        this.router.navigate(['log-info-page/' + eventID]);
-    }
 }

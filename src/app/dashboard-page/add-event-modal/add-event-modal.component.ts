@@ -30,12 +30,13 @@ export class AddEventModalComponent implements OnInit {
 
     async submit() {
         //this.storage.remove('events');
-        let showImage = false;
-        if (this.logo != undefined) {
-            showImage = true;
-        }
+
         if (this.checkFields()) {
             await this.storage.get('events').then(val => {
+                let showImage = false;
+                if (this.logo != undefined) {
+                    showImage = true;
+                }
                 if (val == null) {
                     let data = [{
                         eventID: this.generateID(),

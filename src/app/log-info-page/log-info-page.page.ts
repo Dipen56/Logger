@@ -39,19 +39,6 @@ export class LogInfoPagePage implements OnInit {
     ngOnInit() {
         this.eventID = this.route.snapshot.paramMap.get('id');
         this.findEvents();
-
-        this.storage.get('showTitle').then((val) => {
-            if (val != null) {
-                this.showTitle = val;
-            }
-        });
-
-        this.storage.get('showLogo').then((val) => {
-            if (val != null) {
-
-                this.showLogo = val;
-            }
-        });
     }
 
     ionViewWillEnter() {
@@ -67,6 +54,8 @@ export class LogInfoPagePage implements OnInit {
                     this.eventObject = event;
                     this.eventTitle = event.eventName;
                     this.logo = event.logo;
+                    this.showLogo = event.showImage;
+                    this.showTitle = event.showTitle;
                 }
             }
 
@@ -135,6 +124,8 @@ export class LogInfoPagePage implements OnInit {
                             dateTime: events[i].dateTime,
                             logo: events[i].logo,
                             eventDisc: events[i].eventDisc,
+                            showTitle: events[i].showTitle,
+                            showImage: events[i].showImage,
                             logs: newLogs
                         };
                         tempEvent[i] = data;
