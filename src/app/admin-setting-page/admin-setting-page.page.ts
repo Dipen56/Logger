@@ -9,9 +9,8 @@ import {Storage} from '@ionic/storage';
     templateUrl: './admin-setting-page.page.html',
     styleUrls: ['./admin-setting-page.page.scss'],
 })
+/* This class is used to show the admin setting panel*/
 export class AdminSettingPagePage implements OnInit {
-
-
     constructor(private menuController: MenuController, private popoverController: PopoverController,
                 private alertController: AlertController, private router: Router,
                 private storage: Storage, private toastController: ToastController) {
@@ -20,6 +19,7 @@ export class AdminSettingPagePage implements OnInit {
     ngOnInit() {
     }
 
+    /* Used to change the nav menu */
     ionViewWillEnter() {
         this.menuController.enable(true, 'admin-panel');
         this.menuController.enable(false, 'public-panel');
@@ -38,10 +38,10 @@ export class AdminSettingPagePage implements OnInit {
         await popover.present();
     }
 
-    //
+    /* Used to delete all the data in the app*/
     async clearData() {
         await this.storage.clear();
-        this.presentToastSuccess("All Data Has Been Deleted!");
+        this.presentToastSuccess('All Data Has Been Deleted!');
         this.router.navigateByUrl('signup-page');
     }
 

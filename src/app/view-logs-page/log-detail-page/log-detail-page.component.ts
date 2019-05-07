@@ -1,17 +1,16 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Storage} from '@ionic/storage';
-import {CallNumber} from '@ionic-native/call-number';
 import {MenuController, PopoverController} from '@ionic/angular';
 import {PopoverComponent} from '../../popover/popover.component';
 import {SocialSharing} from '@ionic-native/social-sharing/ngx';
-import {Alert} from 'selenium-webdriver';
 
 @Component({
     selector: 'app-log-detail-page',
     templateUrl: './log-detail-page.component.html',
     styleUrls: ['./log-detail-page.component.scss']
 })
+/* Shows the detail of the selected log */
 export class LogDetailPageComponent implements OnInit {
 
     log: any;

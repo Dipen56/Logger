@@ -9,6 +9,7 @@ import {Router} from '@angular/router';
     templateUrl: './dashboard-page.page.html',
     styleUrls: ['./dashboard-page.page.scss'],
 })
+/* Dashboard class displays all event details */
 export class DashboardPagePage implements OnInit {
     events = [];
 

@@ -7,6 +7,7 @@ import {NavParams, PopoverController, ToastController} from '@ionic/angular';
     templateUrl: './change-password-popover.component.html',
     styleUrls: ['./change-password-popover.component.scss']
 })
+/* This class is used to create the pop over to change the password */
 export class ChangePasswordPopoverComponent implements OnInit {
     newPassword: any;
     reenteredPassword: any;

@@ -10,6 +10,8 @@ import {FileChooser} from '@ionic-native/file-chooser/ngx';
     templateUrl: './add-event-modal.component.html',
     styleUrls: ['./add-event-modal.component.scss']
 })
+/* This class is used create new events
+* data structure = {events: [event details: values, Logs: [ log details: values] ]} */
 export class AddEventModalComponent implements OnInit {
     eventName = '';
     location = '';
@@ -29,8 +31,6 @@ export class AddEventModalComponent implements OnInit {
     }
 
     async submit() {
-        //this.storage.remove('events');
-
         if (this.checkFields()) {
             await this.storage.get('events').then(val => {
                 let showImage = false;
@@ -127,7 +127,6 @@ export class AddEventModalComponent implements OnInit {
                 let correctPath = filePath.substr(0, filePath.lastIndexOf('/') + 1);
                 let currentName = filePath.substring(filePath.lastIndexOf('/') + 1);
                 this.file.copyFile(correctPath, currentName, this.file.dataDirectory, currentName).then(res => {
-                    //this.logo = currentName;
                     this.file.readAsDataURL(this.file.dataDirectory, currentName).then(img => {
                         this.logo = img;
                     });

@@ -12,6 +12,7 @@ import {ActivatedRoute, Router} from '@angular/router';
     templateUrl: './settings-page.page.html',
     styleUrls: ['./settings-page.page.scss'],
 })
+/* This class used too edit a event settings */
 export class SettingsPagePage implements OnInit {
     showTitle: any;
     showLogo: any;

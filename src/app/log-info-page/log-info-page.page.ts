@@ -10,6 +10,7 @@ import {File} from '@ionic-native/file/ngx';
     templateUrl: './log-info-page.page.html',
     styleUrls: ['./log-info-page.page.scss'],
 })
+/* This class is the store front and is what the users will see */
 export class LogInfoPagePage implements OnInit {
     fullName: string;
     email: any;

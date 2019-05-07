@@ -9,6 +9,7 @@ import {ViewLogsPopoverComponent} from './view-logs-popover/view-logs-popover.co
     templateUrl: './view-logs-page.page.html',
     styleUrls: ['./view-logs-page.page.scss'],
 })
+/* Shows all the logs for an event */
 export class ViewLogsPagePage implements OnInit {
     logs = [];
     copyLogs = [];
