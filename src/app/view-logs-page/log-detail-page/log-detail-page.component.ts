@@ -23,6 +23,7 @@ export class LogDetailPageComponent implements OnInit {
     mobileNumber: any;
     addtionalInformation: any;
     date: any;
+    eventName: any;
 
     constructor(private storage: Storage, private route: ActivatedRoute,
                 private popoverController: PopoverController, private socialSharing: SocialSharing,
@@ -48,6 +49,7 @@ export class LogDetailPageComponent implements OnInit {
                     if (event.eventID == this.eventID) {
                         for (let log of event.logs) {
                             if (log.email == this.logKey) {
+                                this.eventName = event.eventName;
                                 this.log = log;
                                 this.fullName = this.log.fullName;
                                 this.email = this.log.email;
@@ -89,7 +91,7 @@ export class LogDetailPageComponent implements OnInit {
         // Check if sharing via email is supported
         this.socialSharing.canShareViaEmail().then(() => {
             // Share via email
-            this.socialSharing.shareViaEmail('Body', 'Subject', [this.email]).then(() => {
+            this.socialSharing.shareViaEmail('Thank you for attending the event...', this.eventName, [this.email]).then(() => {
             }).catch(() => {
                 // Errore
             });
