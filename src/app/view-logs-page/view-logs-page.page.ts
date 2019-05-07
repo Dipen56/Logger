@@ -1,7 +1,7 @@
 import {Component, OnInit, NgZone} from '@angular/core';
 import {Storage} from '@ionic/storage';
 import {ActivatedRoute, Router} from '@angular/router';
-import {Events, AlertController, PopoverController, MenuController} from '@ionic/angular';
+import {Events, AlertController, PopoverController, MenuController, LoadingController} from '@ionic/angular';
 import {ViewLogsPopoverComponent} from './view-logs-popover/view-logs-popover.component';
 
 @Component({
@@ -19,11 +19,14 @@ export class ViewLogsPagePage implements OnInit {
     isChecked = false;
     searchQuery: string;
     eventID: any;
+    event: any;
+    loading: any;
 
     constructor(private storage: Storage, private router: Router,
                 private events: Events, private zone: NgZone,
                 private alertController: AlertController, private popoverController: PopoverController,
-                private route: ActivatedRoute, private menuController: MenuController) {
+                private route: ActivatedRoute, private menuController: MenuController,
+                private loadingController: LoadingController) {
         // used to refresh the screen.
         this.events.subscribe('updateScreen', () => {
             this.zone.run(() => {
@@ -34,6 +37,7 @@ export class ViewLogsPagePage implements OnInit {
 
     ngOnInit() {
         this.eventID = this.route.snapshot.paramMap.get('id');
+        this.presentLoading();
     }
 
     ionViewWillEnter() {
@@ -67,11 +71,26 @@ export class ViewLogsPagePage implements OnInit {
         await this.storage.get('events').then(events => {
             for (let event of events) {
                 if (event.eventID == this.eventID) {
+                    this.event = event;
                     this.logs = event.logs;
+                    this.logs.reverse();
                 }
             }
+        }).finally(() => {
+            this.copyLogs = this.logs;
+            this.loading.dismiss();
         });
-        this.copyLogs = this.logs;
+
+    }
+
+    async presentLoading() {
+        this.loading = await this.loadingController.create({
+            message: 'Loading...',
+            animated: true,
+            spinner: 'crescent',
+            showBackdrop: false,
+        });
+        this.loading.present();
     }
 
     pressEvent(key) {
@@ -113,6 +132,7 @@ export class ViewLogsPagePage implements OnInit {
         this.isChecked = false;
     }
 
+    /* This popover is used ot send email to all the logs*/
     async presentPopover(ev: Event) {
         const popover = await this.popoverController.create({
             component: ViewLogsPopoverComponent,
@@ -120,7 +140,8 @@ export class ViewLogsPagePage implements OnInit {
             translucent: true,
             componentProps: {
                 selectedLogs: this.selcetedLogs,
-                eventID: this.eventID
+                eventID: this.eventID,
+                event: this.event,
             },
             cssClass: 'custom-popover',
         });

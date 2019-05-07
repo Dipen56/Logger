@@ -81,6 +81,7 @@ export class LogInfoPagePage implements OnInit {
         this.email = '';
         this.mobileNumber = null;
         this.homeNumber = null;
+        this.additionalInfo = '';
     }
 
     async presentToastError(msg) {

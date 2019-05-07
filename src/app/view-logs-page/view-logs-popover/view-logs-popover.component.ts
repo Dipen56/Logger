@@ -1,6 +1,5 @@
-import {Component, OnInit, NgZone} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ViewLogsPagePage} from '../view-logs-page.page';
-import {Events} from '@ionic/angular';
 import {NavParams, PopoverController, AlertController, ToastController} from '@ionic/angular';
 import {Storage} from '@ionic/storage';
 import {SocialSharing} from '@ionic-native/social-sharing/ngx';
@@ -15,6 +14,7 @@ export class ViewLogsPopoverComponent implements OnInit {
     popover: any;
     selectedLogs = [];
     eventID: any;
+    event: any;
 
     constructor(private viewLogPage: ViewLogsPagePage, private popoverController: PopoverController,
                 private navParams: NavParams, private storage: Storage, private alertController: AlertController,
@@ -26,6 +26,7 @@ export class ViewLogsPopoverComponent implements OnInit {
     ngOnInit() {
         this.selectedLogs = this.navParams.get('selectedLogs');
         this.eventID = this.navParams.get('eventID');
+        this.event = this.navParams.get('event');
     }
 
     emailSelectedLogs() {
@@ -33,7 +34,7 @@ export class ViewLogsPopoverComponent implements OnInit {
         this.socialSharing.canShareViaEmail().then(() => {
             // Share via email
             let to = this.selectedLogs;
-            this.socialSharing.shareViaEmail('Body', 'Subject', to).then(() => {
+            this.socialSharing.shareViaEmail('Thank you for attending the event...', this.event.eventName, to).then(() => {
                 this.popover.dismiss();
             }).catch(() => {
                 // Errore
@@ -73,21 +74,21 @@ export class ViewLogsPopoverComponent implements OnInit {
                                 tempLogs.push(events[i].logs[j]);
                             }
                         }
-                            let data = {
-                                eventID: events[i].eventID,
-                                eventName: events[i].eventName,
-                                location: events[i].location,
-                                dateTime: events[i].dateTime,
-                                logo: events[i].logo,
-                                eventDisc: events[i].eventDisc,
-                                showTitle: events[i].showTitle,
-                                showImage: events[i].showImage,
-                                logs: tempLogs
-                            };
-                            tempEvent[i] = data;
-                            this.storage.set('events', tempEvent).then(val => {
-                                this.presentToastSuccess('Log Deleted');
-                            });
+                        let data = {
+                            eventID: events[i].eventID,
+                            eventName: events[i].eventName,
+                            location: events[i].location,
+                            dateTime: events[i].dateTime,
+                            logo: events[i].logo,
+                            eventDisc: events[i].eventDisc,
+                            showTitle: events[i].showTitle,
+                            showImage: events[i].showImage,
+                            logs: tempLogs
+                        };
+                        tempEvent[i] = data;
+                        this.storage.set('events', tempEvent).then(val => {
+                            this.presentToastSuccess('Log Deleted');
+                        });
                     }
                 }
             }
